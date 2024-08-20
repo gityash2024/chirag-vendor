@@ -84,8 +84,13 @@ const StepText = styled.div`
 `;
 
 const Title = styled.h2`
+font-family: 'Public Sans', sans-serif;
+  font-weight: 600; /* Regular */
   font-size: 24px;
   color: #23212A;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
   margin-bottom: 20px;
 `;
 
@@ -95,6 +100,13 @@ const Input = styled.input`
   margin-bottom: 15px;
   border: 1px solid #DBDADE;
   border-radius: 4px;
+`;
+const InputLabel=styled.label`
+  font-size: 14px;
+  color: #8D98A4;
+   font-family: 'Public Sans', sans-serif;
+  font-weight: 400; /* Regular */
+  margin-bottom: 20px !important;
 `;
 
 const Select = styled.select`
@@ -263,22 +275,30 @@ const Register = () => {
           <form onSubmit={handleSubmit}>
             {step === 1 && (
               <>
+                    <InputLabel>Full Name * </InputLabel>
+
                 <Input name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Full Name" required />
+                <InputLabel>Address 1 * </InputLabel>
                 <Input name="address1" value={formData.address1} onChange={handleInputChange} placeholder="Address line 1" required />
+                <InputLabel>Address 2 * </InputLabel>
                 <Input name="address2" value={formData.address2} onChange={handleInputChange} placeholder="Address line 2" />
+                <InputLabel>State * </InputLabel>
                 <Select name="state" value={formData.state} onChange={handleInputChange} required>
                   <option value="">Select State</option>
                   {stateOptions.map((state, index) => (
                     <option key={index} value={state}>{state}</option>
                   ))}
                 </Select>
+                <InputLabel>City * </InputLabel>
                 <Select name="city" value={formData.city} onChange={handleInputChange} required>
                   <option value="">Select City</option>
                   {cityOptions.map((city, index) => (
                     <option key={index} value={city}>{city}</option>
                   ))}
                 </Select>
+                <InputLabel>Drone License * </InputLabel>
                 <Input name="droneLicense" value={formData.droneLicense} onChange={handleInputChange} placeholder="Drone Pilot License" required />
+                <InputLabel>UIN Number * </InputLabel>
                 <Input name="uinNumber" value={formData.uinNumber} onChange={handleInputChange} placeholder="UIN Number" required />
                 <UploadContainer>
                   <UploadButton onClick={() => document.getElementById('aadhaarFront').click()}>
@@ -288,26 +308,32 @@ const Register = () => {
                     + Back side of Aadhaar card
                   </UploadButton>
                 </UploadContainer>
+
                 <input id="aadhaarFront" type="file" hidden onChange={(e) => handleFileUpload(e)} name="aadhaarFront" />
                 <input id="aadhaarBack" type="file" hidden onChange={(e) => handleFileUpload(e)} name="aadhaarBack" />
               </>
             )}
             {step === 2 && (
               <>
+                <InputLabel>Experience * </InputLabel>
                 <Input name="experience" value={formData.experience} onChange={handleInputChange} placeholder="Experience in years" type="number" required />
+                <InputLabel>Pricing * </InputLabel>
                 <Input name="pricing" value={formData.pricing} onChange={handleInputChange} placeholder="Approx Pricing for 1 acre of land service" type="number" required />
+                <InputLabel>Service Location * </InputLabel>
                 <Select name="serviceState" value={formData.serviceState} onChange={handleInputChange} required>
                   <option value="">Select State</option>
                   {stateOptions.map((state, index) => (
                     <option key={index} value={state}>{state}</option>
                   ))}
                 </Select>
+                <InputLabel>Service City * </InputLabel>
                 <Select name="serviceCity" value={formData.serviceCity} onChange={handleInputChange} required>
                   <option value="">Select City</option>
                   {cityOptions.map((city, index) => (
                     <option key={index} value={city}>{city}</option>
                   ))}
                 </Select>
+                <InputLabel>Village * </InputLabel>
                 <Input name="village" value={formData.village} onChange={handleInputChange} placeholder="Village" />
               </>
             )}
@@ -320,15 +346,22 @@ const Register = () => {
                       {formData.drones.length > 1 ?
                         <RemoveButton onClick={() => removeItem(index, 'drones')}>✕</RemoveButton>:null}
                     </FormArrayHeader>
+                    <InputLabel>Drone Details * </InputLabel>
                     <Input name="model" value={drone.model} onChange={(e) => handleInputChange(e, index, 'drones')} placeholder="Drone Model" required />
+                    <InputLabel>Drone Specs * </InputLabel>
                     <Input name="speed" value={drone.speed} onChange={(e) => handleInputChange(e, index, 'drones')} placeholder="Speed of the Drone" required />
+                    <InputLabel>Drone Flow Rate * </InputLabel>
                     <Input name="flowRate" value={drone.flowRate} onChange={(e) => handleInputChange(e, index, 'drones')} placeholder="Flow Rate of the Drone" required />
+                    <InputLabel>Drone Capacity * </InputLabel>
                     <Input name="payload" value={drone.payload} onChange={(e) => handleInputChange(e, index, 'drones')} placeholder="Payload Capacity in kgs" required />
                     <UploadButton  onClick={() => document.getElementById(`droneImage${index}`).click()}>
                       + Drone Image
                     </UploadButton>
                     <input id={`droneImage${index}`} type="file" hidden onChange={(e) => handleFileUpload(e, index, 'drones')} />
+                    <InputLabel>Drone Manufacturere * </InputLabel>
                     <Input name="manufacturer" value={drone.manufacturer} onChange={(e) => handleInputChange(e, index, 'drones')} placeholder="Manufacturer Name" required />
+                    <InputLabel>Drone YOP * </InputLabel>
+
                     <Input name="purchaseYear" value={drone.purchaseYear} onChange={(e) => handleInputChange(e, index, 'drones')} placeholder="Year of Purchase" required />
                   </FormArrayContainer>
                 ))}
@@ -344,11 +377,17 @@ const Register = () => {
                       {formData.batteries.length > 1 ?
                         <RemoveButton onClick={() => removeItem(index, 'batteries')}>✕</RemoveButton>:null}
                     </FormArrayHeader>
+                    <InputLabel>Battery Capacity * </InputLabel>
                     <Input name="capacity" value={battery.capacity} onChange={(e) => handleInputChange(e, index, 'batteries')} placeholder="Capacity" required />
+                    <InputLabel>Battery Life Cycles * </InputLabel>
                     <Input name="lifeCycles" value={battery.lifeCycles} onChange={(e) => handleInputChange(e, index, 'batteries')} placeholder="Life Cycles" required />
+                    <InputLabel>Battery Voltage * </InputLabel>
                     <Input name="voltage" value={battery.voltage} onChange={(e) => handleInputChange(e, index, 'batteries')} placeholder="Voltage" required />
+                    <InputLabel>Battery Ampere * </InputLabel>
                     <Input name="ampere" value={battery.ampere} onChange={(e) => handleInputChange(e, index, 'batteries')} placeholder="Ampere" required />
+                    <InputLabel>Battery Manufacturere * </InputLabel>
                     <Input name="manufacturer" value={battery.manufacturer} onChange={(e) => handleInputChange(e, index, 'batteries')} placeholder="Manufacturer" required />
+                    <InputLabel>Battery Purchase Year * </InputLabel>
                     <Input name="purchaseYear" value={battery.purchaseYear} onChange={(e) => handleInputChange(e, index, 'batteries')} placeholder="Year of Purchase" required />
                   </FormArrayContainer>
                 ))}

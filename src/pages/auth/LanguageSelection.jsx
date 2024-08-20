@@ -38,10 +38,14 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 150px;
+  width: 250px;
+  margin-right: 100px;
+  // margin-top: 50px;
 `;
 
 const Title = styled.h2`
+ font-family: 'Public Sans', sans-serif;
+  font-weight: 400; /* Regular */
   font-size: 24px;
   color: #23212A;
   margin-bottom: 10px;
@@ -49,6 +53,8 @@ const Title = styled.h2`
 
 const Subtitle = styled.p`
   font-size: 16px;
+   font-family: 'Public Sans', sans-serif;
+  font-weight: 400; /* Regular */
   color: #23212A;
   margin-bottom: 20px;
 `;
@@ -68,6 +74,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 100%;
 `;
 
 const LanguageSelection = () => {
@@ -89,7 +96,7 @@ const LanguageSelection = () => {
           <Logo src={chiragLogo} alt="CHIRAG Logo" />
         </LogoContainer>
         <Title>Please select your preferred language</Title>
-        <Subtitle>You can change your app language at any time from Profile {'>'} Language</Subtitle>
+        <Subtitle>You can change your app language at any time from <br/> Profile {'>'} Language</Subtitle>
         <form onSubmit={handleSubmit}>
           <Select value={language} onChange={(e) => setLanguage(e.target.value)}>
             <option value="English">English</option>

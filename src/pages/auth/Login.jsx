@@ -38,18 +38,22 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 150px;
+  width: 250px;
+  margin-right: 70px;
 `;
 
 const Title = styled.h2`
   font-size: 24px;
+   font-family: 'Public Sans', sans-serif;
+  font-weight: 400; /* Regular */
   color: #23212A;
   margin-bottom: 20px;
-  text-align: center;
 `;
 
 const Input = styled.input`
-  width: 75%;
+  width: 94%;
+   font-family: 'Public Sans', sans-serif;
+  font-weight: 400; /* Regular */
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #DBDADE;
@@ -58,7 +62,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width:80%;
+  width:100%;
   background-color: #383838;
   color: white;
   padding: 10px;
@@ -103,7 +107,7 @@ const Login = () => {
         <LogoContainer>
           <Logo src={chiragLogo} alt="CHIRAG Logo" />
         </LogoContainer>
-        <Title>Please login with your registered mobile number</Title>
+        <Title>Please login with your registered <br/>mobile number</Title>
         <form onSubmit={handleSubmit}>
           <Input
             type="tel"

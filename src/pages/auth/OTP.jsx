@@ -38,10 +38,12 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 150px;
+  width: 250px;
 `;
 
 const Title = styled.h2`
+ font-family: 'Public Sans', sans-serif;
+  font-weight: 600; /* Regular */
   font-size: 24px;
   color: #23212A;
   margin-bottom: 10px;
@@ -49,6 +51,8 @@ const Title = styled.h2`
 
 const Subtitle = styled.p`
   font-size: 16px;
+   font-family: 'Public Sans', sans-serif;
+  font-weight: 400; /* Regular */
   color: #23212A;
   margin-bottom: 20px;
 `;
@@ -62,6 +66,8 @@ const MobileNumber = styled.p`
 const OTPInputLabel = styled.p`
   font-size: 14px;
   color: #666;
+   font-family: 'Public Sans', sans-serif;
+  font-weight: 400; /* Regular */
   margin-bottom: 10px;
 `;
 
@@ -89,6 +95,8 @@ const Button = styled.button`
   background-color: #383838;
   color: white;
   padding: 10px;
+   font-family: 'Public Sans', sans-serif;
+  font-weight: 600; /* Regular */
   border: none;
   border-radius: 4px;
   cursor: pointer;

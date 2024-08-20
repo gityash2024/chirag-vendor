@@ -52,8 +52,8 @@ const MenuItem = styled(Link)`
     background-color: rgba(255, 255, 255, 0.1);
   }
   img {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     margin-right: 15px;
   }
 `;
