@@ -150,7 +150,7 @@ const RunnerAvatar = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  color: #383838;
+  color: #121212;
   background-image: url(${props => props.src});
   background-size: cover;
   background-position: center;

@@ -21,7 +21,7 @@ const LoaderOverlay = styled.div`
 
 const LoaderSpinner = styled.div`
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #383838;
+  border-top: 5px solid #121212;
   border-radius: 50%;
   width: 50px;
   height: 50px;

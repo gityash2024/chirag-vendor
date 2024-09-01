@@ -15,7 +15,7 @@ const Container = styled.div`
 const Header = styled.h1`
   font-size: 24px;
   font-weight: 600;
-  color: #383838;
+  color: #121212;
   margin-bottom: 20px;
 `;
 
@@ -41,7 +41,7 @@ const EarningItem = styled.div`
 const EarningValue = styled.div`
   font-size: 24px;
   font-weight: 600;
-  color: #383838;
+  color: #121212;
 `;
 
 const EarningLabel = styled.div`
@@ -52,7 +52,7 @@ const EarningLabel = styled.div`
 const WithdrawButton = styled.button`
   width: 20%;
   padding: 10px;
-  background-color: #383838;
+  background-color: #121212;
   border-radius: 4px;
   color: #FFFFFF;
   border: none;
@@ -71,8 +71,8 @@ const Tab = styled.button`
   padding: 10px 20px;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid ${props => props.active ? '#383838' : 'transparent'};
-  color: ${props => props.active ? '#383838' : '#8D98A4'};
+  border-bottom: 2px solid ${props => props.active ? '#121212' : 'transparent'};
+  color: ${props => props.active ? '#121212' : '#8D98A4'};
   cursor: pointer;
   font-weight: ${props => props.active ? 'bold' : 'normal'};
 `;
@@ -92,7 +92,7 @@ const TransactionItem = styled.div`
 
 const TransactionId = styled.div`
   font-weight: 600;
-  color: #383838;
+  color: #121212;
 `;
 
 const TransactionDetails = styled.div`
@@ -130,8 +130,8 @@ const PageButton = styled.button`
   padding: 5px 10px;
   border-radius: 20px;
   border: 1px solid #DBDADE;
-  background-color: ${props => props.active ? '#383838' : '#FFFFFF'};
-  color: ${props => props.active ? '#FFFFFF' : '#383838'};
+  background-color: ${props => props.active ? '#121212' : '#FFFFFF'};
+  color: ${props => props.active ? '#FFFFFF' : '#121212'};
   cursor: pointer;
   margin: 0 2px;
 `;
@@ -159,7 +159,7 @@ const ModalContent = styled.div`
 const ModalTitle = styled.h2`
   font-size: 18px;
   margin-bottom: 15px;
-  color: #383838;
+  color: #121212;
 `;
 
 const ModalInput = styled.input`
@@ -173,7 +173,7 @@ const ModalInput = styled.input`
 const ModalButton = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: #383838;
+  background-color: #121212;
   color: #FFFFFF;
   border: none;
   border-radius: 4px;

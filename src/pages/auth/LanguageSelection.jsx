@@ -47,7 +47,7 @@ const Title = styled.h2`
  font-family: 'Public Sans', sans-serif;
   font-weight: 400; /* Regular */
   font-size: 24px;
-  color: #23212A;
+  color: rgba(35, 33, 42, 0.6);
   margin-bottom: 10px;
 `;
 
@@ -55,7 +55,7 @@ const Subtitle = styled.p`
   font-size: 16px;
    font-family: 'Public Sans', sans-serif;
   font-weight: 400; /* Regular */
-  color: #23212A;
+  color: rgba(35, 33, 42, 0.6);
   margin-bottom: 20px;
 `;
 
@@ -68,7 +68,7 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-  background-color: #383838;
+  background-color: #121212;
   color: white;
   padding: 10px;
   border: none;

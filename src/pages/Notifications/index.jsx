@@ -20,7 +20,7 @@ const Header = styled.div`
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 600;
-  color: #383838;
+  color: #121212;
 `;
 
 const ActionContainer = styled.div`
@@ -29,7 +29,7 @@ const ActionContainer = styled.div`
 `;
 
 const ActionText = styled.span`
-  color: #383838;
+  color: #121212;
   text-decoration: underline;
   cursor: pointer;
   margin: 0 10px;
@@ -67,7 +67,7 @@ const NotificationContent = styled.div`
 
 const NotificationText = styled.p`
   margin: 0;
-  color: #383838;
+  color: #121212;
 `;
 
 const NotificationTime = styled.span`
@@ -93,8 +93,8 @@ const PageButton = styled.button`
   border-radius: 20px;
 
   border: 1px solid #DBDADE;
-  background-color: ${props => props.active ? '#383838' : '#FFFFFF'};
-  color: ${props => props.active ? '#FFFFFF' : '#383838'};
+  background-color: ${props => props.active ? '#121212' : '#FFFFFF'};
+  color: ${props => props.active ? '#FFFFFF' : '#121212'};
   cursor: pointer;
   margin: 0 2px;
 `;

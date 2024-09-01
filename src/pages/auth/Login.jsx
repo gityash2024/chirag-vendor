@@ -46,7 +46,7 @@ const Title = styled.h2`
   font-size: 24px;
    font-family: 'Public Sans', sans-serif;
   font-weight: 400; /* Regular */
-  color: #23212A;
+  color: rgba(35, 33, 42, 0.6);
   margin-bottom: 20px;
 `;
 
@@ -62,8 +62,8 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width:100%;
-  background-color: #383838;
+  width:94%;
+  background-color: #121212;
   color: white;
   padding: 10px;
   border: none;
@@ -76,7 +76,7 @@ const RegisterLink = styled.div`
   margin-top: 20px;
   text-align: center;
   margin-right: 70px;
-  color: #383838;
+  color: #121212;
   cursor: pointer;
   align-self: center;
 

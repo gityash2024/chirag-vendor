@@ -29,6 +29,8 @@ import RunnerCanceledBookingDetail from './pages/Calendar/RunnerCanceledBookingD
 import RunnerReachedBookingDetail from './pages/Calendar/RunnerReachedBookingDetail';
 import Register from './pages/auth/register';
 import AssignRunnerDetails from './pages/Bookings/AssignRunnerDetails';
+import GlobalStyle from './GlobalStyle';
+import AddMoney from './pages/Wallet/AddMoney';
 
 const AppContainer = styled.div`
   display: flex;
@@ -50,7 +52,7 @@ const PageContent = styled.div`
 
 const StyledToastContainer = styled(ToastContainer)`
   .Toastify__toast {
-    background-color: #383838;
+    background-color: #121212;
     color: white;
   }
   .Toastify__close-button {
@@ -64,12 +66,16 @@ const StyledToastContainer = styled(ToastContainer)`
 function App() {
   return (
     <Router>
+            <GlobalStyle /> 
+
       <AppContainer>
         <Routes>
           <Route path="/" element={<LanguageSelection />} />
           <Route path="/login" element={<Login />} />
           <Route path="/otp" element={<OTP />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/add-money" element={<AddMoney />} />
+
           <Route
             path="*"
             element={

@@ -14,7 +14,7 @@ import privacyIcon from '../assets/privacy.png';
 import logoutIcon from '../assets/logout.png';
 
 const SidebarContainer = styled.div`
-  background-color: #383838;
+  background-color: #121212;
   color: white;
   width: 250px;
   height: 100vh;
@@ -23,6 +23,7 @@ const SidebarContainer = styled.div`
 `;
 
 const Logo = styled.div`
+cursor: pointer;
   padding: 20px;
   img {
     width: 100%;
@@ -53,7 +54,7 @@ const MenuItem = styled(Link)`
   }
   img {
     width: 30px;
-    height: 30px;
+    height: 3 0px;
     margin-right: 15px;
   }
 `;
@@ -113,7 +114,7 @@ const CancelButton = styled(ModalButton)`
 `;
 
 const ConfirmButton = styled(ModalButton)`
-  background-color: #383838;
+  background-color: #121212;
   color: white;
 `;
 
@@ -149,7 +150,7 @@ const Sidebar = () => {
   return (
     <>
       <SidebarContainer>
-        <Logo>
+        <Logo onClick={() => navigate('/home')}>
           <img src={chiragLogo} alt="C.H.I.R.A.G." />
         </Logo>
         <Menu>
@@ -169,14 +170,15 @@ const Sidebar = () => {
             <MenuItem
               key={item.text}
               to={item.path}
+              className={location.pathname === item.path ? 'active' : ''}
             >
               <img src={item.icon} alt={item.text} />
               <span>{item.text}</span>
             </MenuItem>
           ))}
           <LogoutButton onClick={handleLogout}>
-            <img src={logoutIcon} alt="Logout" />
-            <span>Logout</span>
+            <img style={{width: '35px', height: '35px'}} src={logoutIcon} alt="Logout" />
+            <span style={{ marginLeft: '10px', fontWeight: '500',fontSize: '16px' }}>Logout</span>
           </LogoutButton>
         </Menu>
       </SidebarContainer>

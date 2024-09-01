@@ -30,7 +30,7 @@ const FormSection = styled.div`
   justify-content: center;
   align-items: center;
   padding: 40px;
-  overflow-y: auto;
+  overflow-y: hidden; // Changed from auto to hidden to remove scroll
 `;
 
 const FormContent = styled.div`
@@ -87,7 +87,7 @@ const Title = styled.h2`
 font-family: 'Public Sans', sans-serif;
   font-weight: 600; /* Regular */
   font-size: 24px;
-  color: #23212A;
+  color: #121212;
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -118,7 +118,7 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-  background-color: #383838;
+  background-color: #121212;
   color: white;
   padding: 10px;
   border: none;
@@ -148,7 +148,7 @@ const UploadButton = styled.button`
 
 const AddMoreButton = styled.button`
   background-color: transparent;
-  color: #383838;
+  color: #121212;
   border: none;
   cursor: pointer;
   text-decoration: underline;
@@ -241,17 +241,15 @@ const Register = () => {
     const newArray = formData[field].filter((_, i) => i !== index);
     setFormData({ ...formData, [field]: newArray });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (step < 4) {
       setStep(step + 1);
     } else {
       console.log(formData);
-      navigate('/login');
+      navigate('/add-money'); // Changed from '/login' to '/add-money'
     }
   };
-
   const stateOptions = ['State 1', 'State 2', 'State 3', 'State 4', 'State 5'];
   const cityOptions = ['City 1', 'City 2', 'City 3', 'City 4', 'City 5'];
 

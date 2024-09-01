@@ -28,8 +28,8 @@ const TopbarRight = styled.div`
 `;
 
 const TopbarIcon = styled.img`
-  width: 24px;
-  height: 24px;
+  // width: 24px;
+  // height: 24px;
   margin-left: 20px;
   cursor: pointer;
 `;

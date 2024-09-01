@@ -25,7 +25,7 @@ const Tab = styled.button`
   padding: 10px 20px;
   font-size: 16px;
   background-color: transparent;
-  color: #5B6572;
+  color: #121212;
   border: none;
   cursor: pointer;
   border-bottom: ${props => props.active ? '2px solid #000' : 'none'};
