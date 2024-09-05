@@ -7,6 +7,7 @@ import bookingsIcon from '../assets/bookings.png';
 import serviceHistoryIcon from '../assets/service-history.png';
 import calendarIcon from '../assets/calendar.png';
 import manageRunnerIcon from '../assets/manage-runner.png';
+import recommendation from '../assets/recommendation.png';
 import reportsIcon from '../assets/reports.png';
 import contactIcon from '../assets/contact.png';
 import termsIcon from '../assets/terms.png';
@@ -128,8 +129,9 @@ const Sidebar = () => {
     { icon: bookingsIcon, text: 'Bookings', path: '/bookings' },
     { icon: serviceHistoryIcon, text: 'Service History', path: '/service-history' },
     { icon: calendarIcon, text: 'Calendar', path: '/calendar' },
-    { icon: manageRunnerIcon, text: 'Manage Runner', path: '/manage-runner' },
-    { icon: reportsIcon, text: 'Reports', path: '/reports' },
+    { icon: reportsIcon, text: 'Manage Runner', path: '/manage-runner' },
+    { icon: manageRunnerIcon, text: 'Reports', path: '/reports' },
+    { icon: recommendation, text: 'Recommendation', path: '/recommendation' },
   ];
 
   const bottomMenuItems = [

@@ -31,6 +31,7 @@ import Register from './pages/auth/register';
 import AssignRunnerDetails from './pages/Bookings/AssignRunnerDetails';
 import GlobalStyle from './GlobalStyle';
 import AddMoney from './pages/Wallet/AddMoney';
+import Recommedations from './pages/Recomendations';
 
 const AppContainer = styled.div`
   display: flex;
@@ -89,6 +90,7 @@ function App() {
                       <Route path="/assign-runner/:id" element={<AssignRunnerDetails />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/bookings" element={<Bookings />} />
+                      <Route path="/recommendation" element={<Recommedations />} />
                       <Route path="/service-history" element={<ServiceHistory />} />
                       <Route path="/calendar" element={<Calendar />} />
                       <Route path="/manage-runner" element={<ManageRunner />} />
