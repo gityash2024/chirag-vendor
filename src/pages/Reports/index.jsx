@@ -7,6 +7,7 @@ import droneSprayingIcon from '../../assets/drone-spraying.png';
 import batteryEfficiencyIcon from '../../assets/battery-efficiency.png';
 import droneRoiIcon from '../../assets/drone-roi.png';
 import cropYieldIcon from '../../assets/crop-yield.png';
+import { FaDownload } from "react-icons/fa";
 
 const Container = styled.div`
   padding: 20px;
@@ -62,11 +63,40 @@ const ReportCard = styled.div`
 `;
 
 const ReportIcon = styled.img`
-  width: 50px;
-  height: 50px;
-  margin-bottom: 10px;
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+`;
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
+const SearchInput = styled.input`
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: "Public Sans" ;
+  font-size: 14px;
+`;
+
+const DownloadButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Public Sans" ;
+  font-size: 14px;
+
+  svg {
+    margin-left: 8px;
+  }
+`;
 const ReportValue = styled.span`
   font-size: 24px;
   font-weight: 600;
@@ -102,6 +132,12 @@ const Reports = () => {
       <ReportSection>
         <ReportHeader>
           <ReportTitle>Environmental Report</ReportTitle>
+          <SearchContainer>
+      <SearchInput type="text" placeholder="Booking ID" />
+      <DownloadButton>
+        Download KPI Report <FaDownload />
+      </DownloadButton>
+    </SearchContainer>
           <Select value={envFilterType} onChange={handleEnvFilterChange}>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
@@ -150,6 +186,12 @@ const Reports = () => {
       <ReportSection>
         <ReportHeader>
           <ReportTitle>Economic Report</ReportTitle>
+          <SearchContainer>
+      <SearchInput type="text" placeholder="Booking ID" />
+      <DownloadButton>
+        Download KPI Report <FaDownload />
+      </DownloadButton>
+    </SearchContainer>
           <Select value={ecoFilterType} onChange={handleEcoFilterChange}>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
