@@ -131,7 +131,7 @@ const Sidebar = () => {
     { icon: calendarIcon, text: 'Calendar', path: '/calendar' },
     { icon: reportsIcon, text: 'Manage Runner', path: '/manage-runner' },
     { icon: manageRunnerIcon, text: 'Reports', path: '/reports' },
-    { icon: recommendation, text: 'Recommendation', path: '/recommendation' },
+    { icon: recommendation, text: 'Spray Assist', path: '/recommendation' },
   ];
 
   const bottomMenuItems = [
