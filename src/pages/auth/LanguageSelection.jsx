@@ -46,17 +46,20 @@ const Logo = styled.img`
 const Title = styled.h2`
  font-family: 'Public Sans', sans-serif;
   font-weight: 400; /* Regular */
-  font-size: 24px;
+  font-size: 28px;
   color: rgba(35, 33, 42, 0.6);
   margin-bottom: 10px;
+  line-height: 32.9px;
+  
 `;
 
 const Subtitle = styled.p`
-  font-size: 16px;
+  font-size: 22px;
    font-family: 'Public Sans', sans-serif;
   font-weight: 400; /* Regular */
   color: rgba(35, 33, 42, 0.6);
   margin-bottom: 20px;
+  line-height: 24px;
 `;
 
 const Select = styled.select`
@@ -65,16 +68,41 @@ const Select = styled.select`
   margin-bottom: 20px;
   border: 1px solid #DBDADE;
   border-radius: 4px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  font-family: 'Public Sans';
+  color: rgba(75, 70, 92, 1);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='10' viewBox='0 0 14 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%23707070' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Adjust arrow position */
+  background-size: 14px 10px; /* Adjust arrow size */
+  padding-right: 40px; 
 `;
 
 const Button = styled.button`
   background-color: #121212;
   color: white;
-  padding: 10px;
+  padding: 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
+      font-size: 20px;
+    font-weight: 400;
+
+`;
+const SelectLabel = styled.p`
+  font-family: 'Rubik', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: rgba(35, 33, 42, 1);
+  margin-bottom: 10px; /* Adjust spacing as needed */
 `;
 
 const LanguageSelection = () => {
@@ -97,6 +125,8 @@ const LanguageSelection = () => {
         </LogoContainer>
         <Title>Please select your preferred language</Title>
         <Subtitle>You can change your app language at any time from <br/> Profile {'>'} Language</Subtitle>
+        <SelectLabel>Select language</SelectLabel>
+
         <form onSubmit={handleSubmit}>
           <Select value={language} onChange={(e) => setLanguage(e.target.value)}>
             <option value="English">English</option>

@@ -127,8 +127,8 @@ const Sidebar = () => {
   const menuItems = [
     { icon: homeIcon, text: 'Home', path: '/home' },
     { icon: bookingsIcon, text: 'Bookings', path: '/bookings' },
-    { icon: serviceHistoryIcon, text: 'Service History', path: '/service-history' },
     { icon: calendarIcon, text: 'Calendar', path: '/calendar' },
+    { icon: serviceHistoryIcon, text: 'Service History', path: '/service-history' },
     { icon: reportsIcon, text: 'Manage Runner', path: '/manage-runner' },
     { icon: manageRunnerIcon, text: 'Reports', path: '/reports' },
     { icon: recommendation, text: 'Spray Assist', path: '/recommendation' },

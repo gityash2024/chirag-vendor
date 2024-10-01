@@ -7,7 +7,7 @@ import CalendarToday from '@mui/icons-material/CalendarToday';
 import AccessTime from '@mui/icons-material/AccessTime';
 import Opacity from '@mui/icons-material/Opacity';
 import CloseIcon from '@mui/icons-material/Close';
-import successWithdrawalCheck from '../../assets/check-wallet.png';
+import successWithdrawalCheck from '../../assets/check-wallet.svg';
 import noBookingsImage from '../../assets/no-booking.png';
 
 const BookingsContainer = styled.div`
@@ -16,10 +16,12 @@ const BookingsContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 600;
-  color: #333;
+  color: rgba(18, 18, 18, 1);
   margin-bottom: 20px;
+  line-height: 37.6px;
+  font-family: 'Public Sans';
 `;
 const SuccessIcon = styled.img`
   width: 50px;
@@ -115,7 +117,7 @@ const TempHumidity = styled.div`
 `;
 
 const Temperature = styled.span`
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   margin-right: 10px;
 `;
@@ -142,16 +144,19 @@ const PriceSummary = styled.p`
 `;
 
 const ActionButton = styled.button`
-  width: 48%;
+  width: 102%;
   padding: 10px;
   background-color: ${props => props.primary ? '#000000' : '#FFFFFF'};
   color: ${props => props.primary ? '#FFFFFF' : '#000000'};
   border: ${props => props.primary ? 'none' : '1px solid #000000'};
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   margin-top: 15px;
+  font-family: 'Public Sans';
+  font-weight: 500;
+  line-height: 17.6px;
 `;
 
 const ButtonContainer = styled.div`
@@ -192,9 +197,9 @@ const Modal = styled.div`
 
 const ModalContent = styled.div`
   background-color: white;
-  padding: 20px;
+  padding: 38px;
   border-radius: 8px;
-  width: 300px;
+  width: 478px;
   position: relative;
 `;
 
@@ -210,22 +215,30 @@ const CloseButton = styled.button`
 
 const ModalTitle = styled.h3`
   margin-bottom: 15px;
+      font-size: 28px;
+    line-height: 38px;
+    font-weight: 600;
+    font-family: Montserrat;
 `;
 
 const PriceInput = styled.input`
-  width: 90%;
+  width: 100%;
   padding: 8px;
   margin-bottom: 15px;
 `;
 
 const SubmitButton = styled.button`
-  width: 100%;
+  width: 40%;
   padding: 10px;
-  background-color: #000;
+  background-color: rgba(56, 56, 56, 1);
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+      font-size: 14px;
+    line-height: 16.24px;
+    font-weight: 600;
+    font-family: Montserrat;
 `;
 
 const SuccessModal = styled(ModalContent)`
@@ -250,6 +263,15 @@ const EmptyStateText = styled.p`
   font-size: 18px;
   color: #666;
   text-align: center;
+`;
+
+const PriceLabel = styled.h3`
+ font-size: 12px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    line-height: 13.92px;
+    font-family: 'Public Sans';
+    color: rgba(141, 152, 164, 1);
 `;
 
 const Bookings = () => {
@@ -407,6 +429,7 @@ const Bookings = () => {
           <ModalContent>
             <CloseButton onClick={() => setShowPriceModal(false)}><CloseIcon /></CloseButton>
             <ModalTitle>Add a Price for this booking</ModalTitle>
+            <PriceLabel>Enter Price</PriceLabel> 
             <PriceInput
               type="number"
               value={price}

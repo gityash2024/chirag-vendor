@@ -15,4 +15,6 @@ body {
   strong {
     font-weight: 500; /* Medium */
   }
-  
+  .Environmental_wraper{
+    max-width: fit-content;
+  }

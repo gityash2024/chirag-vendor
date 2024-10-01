@@ -7,7 +7,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import OpacityIcon from '@mui/icons-material/Opacity';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import successWithdrawalCheck from '../../assets/check-wallet.png';
+import successWithdrawalCheck from '../../assets/check-wallet.svg';
 
 const Container = styled.div`
   padding: 20px;
@@ -26,6 +26,39 @@ const TitleContainer = styled.div`
   display: flex;
   align-items: center;
 `;
+const BookingTitle = styled.h3`
+  font-family: Public Sans;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 37.6px;
+  text-align: left;
+  color: rgba(18, 18, 18, 1);
+  margin-bottom: 10px;
+
+
+`;
+const ViewAllButton = styled.button`
+  background: none;
+  border: none;
+  color: rgba(35, 33, 42, 1);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: 'Public Sans';
+    line-height: 32.9px;
+    font-weight: 400;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const ChevronRightIcon = styled.span`
+  margin-left: 5px;
+  display: inline-block;
+`;
+
 
 const BackButton = styled.button`
   background: none;
@@ -42,7 +75,7 @@ const Title = styled.h2`
 
 const BookingId = styled.h3`
   font-size: 18px;
-  color: #333;
+  color: rgba(18, 18, 18, 1);
   margin-bottom: 10px;
 `;
 
@@ -233,12 +266,17 @@ const AssignRunnerDetails = () => {
           </BackButton>
           <Title>Assign Runner</Title>
         </TitleContainer>
+        <ViewAllButton onClick={() => navigate('/bookings')}>
+        View all <ChevronRightIcon />
+        </ViewAllButton>
       </Header>
-      <BookingId>#{booking.id}</BookingId>
+          <BookingTitle>Bookings</BookingTitle>
       <FlexContainer>
         <BookingDetailsContainer>
           <BookingDetailsCard>
+          <BookingId>#{booking.id}</BookingId>
             <DetailRow>
+
               <DetailLabel><LocationOnIcon /></DetailLabel>
               <DetailValue>{booking.address}</DetailValue>
             </DetailRow>
@@ -271,6 +309,8 @@ const AssignRunnerDetails = () => {
             <DetailRow>
               <DetailLabel><OpacityIcon /> {booking.humidity}</DetailLabel>
             </DetailRow>
+           <ActionButton onClick={handleAssignRunner}>Assign Runner</ActionButton>
+
           </BookingDetailsCard>
         </BookingDetailsContainer>
         <PaymentSummary>
@@ -295,7 +335,6 @@ const AssignRunnerDetails = () => {
           </PaymentRow>
         </PaymentSummary>
       </FlexContainer>
-      <ActionButton onClick={handleAssignRunner}>Assign Runner</ActionButton>
       {showRunnerModal && (
         <Modal>
           <ModalContent>

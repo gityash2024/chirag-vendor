@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import successWithdrawalCheck from '../../assets/check-wallet.png';
+import successWithdrawalCheck from '../../assets/check-wallet.svg';
 import CloseIcon from '@material-ui/icons/Close';
 
 const Container = styled.div`

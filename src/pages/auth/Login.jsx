@@ -48,6 +48,7 @@ const Title = styled.h2`
   font-weight: 400; /* Regular */
   color: rgba(35, 33, 42, 0.6);
   margin-bottom: 20px;
+  line-height: 28.2px;
 `;
 
 const Input = styled.input`
@@ -84,6 +85,15 @@ const RegisterLink = styled.div`
     text-decoration: underline;
   }
 `;
+const SelectLabel = styled.p`
+  font-family: 'Public Sans';
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: rgba(35, 33, 42, 1);
+  margin-bottom: 5px; /* Adjust spacing as needed */
+`;
 
 const Login = () => {
   const [mobileNumber, setMobileNumber] = useState('');
@@ -108,6 +118,7 @@ const Login = () => {
           <Logo src={chiragLogo} alt="CHIRAG Logo" />
         </LogoContainer>
         <Title>Please login with your registered <br/>mobile number</Title>
+        <SelectLabel>Mobile number</SelectLabel>
         <form onSubmit={handleSubmit}>
           <Input
             type="tel"

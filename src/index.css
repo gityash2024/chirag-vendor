@@ -15,3 +15,12 @@ p {
 strong {
   font-weight: 500; /* Medium */
 }
+.weekly{
+  min-width:289px;
+  padding:12px;
+  font-family: 'Public Sans';
+  font-size: 18.75px;
+  color: rgba(75, 70, 92, 1);
+  background: rgba(219, 218, 222, 1);
+  border-radius: 7px;
+}

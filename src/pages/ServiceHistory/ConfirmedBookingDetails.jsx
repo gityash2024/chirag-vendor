@@ -21,9 +21,12 @@ const Title = styled.h2`
 `;
 
 const BookingId = styled.h3`
-  font-size: 18px;
+  font-size: 32px;
   color: #333;
   margin-bottom: 10px;
+  font-weight: 600;
+  font-family: 'Public Sans';
+  line-height: 37.6px;
 `;
 
 const StatusBadge = styled.span`
@@ -189,11 +192,13 @@ const ConfirmedBookingDetails = () => {
   return (
     <Container>
       <Title>Bookings</Title>
-      <BookingId>#{booking.id}</BookingId>
-      <StatusBadge>{booking.status}</StatusBadge>
+      {/* <BookingId>#{booking.id}</BookingId>
+      <StatusBadge>{booking.status}</StatusBadge> */}
       <FlexContainer>
         <BookingDetails>
+          <BookingId>#{booking.id}</BookingId>
           <DetailRow>
+          <StatusBadge>{booking.status}</StatusBadge>
             <DetailLabel><LocationOnIcon /> </DetailLabel>
             <DetailValue>{booking.address}</DetailValue>
           </DetailRow>

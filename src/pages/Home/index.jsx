@@ -9,6 +9,11 @@ import carbonFootprintIcon from '../../assets/carbon-footprint-icon.png';
 import deleteIcon from '../../assets/delete-icon.png';
 import editIcon from '../../assets/edit-icon.png';
 import viewIcon from '../../assets/view-icon.png';
+import clock from '../../assets/clock.svg';
+import mappin from '../../assets/map-pin.svg';
+import material from '../../assets/material-symbols-light_water-drop-outline.svg';
+import calendar from '../../assets/calendar-event.svg';
+
 
 const HomeContainer = styled.div`
   padding: 20px;
@@ -18,7 +23,9 @@ const HomeContainer = styled.div`
 const Section = styled.section`
   margin-bottom: 30px;
 `;
-
+const Environmental_wraper = styled.div`
+  max-width:fit-content;
+`;
 const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -27,15 +34,22 @@ const SectionHeader = styled.div`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 20px;
+  font-size: 32px;
   font-weight: 600;
   color: #333;
+  line-height: 37.6px;
+    font-family: 'Public Sans';
+    color: rgba(18, 18, 18, 1);
 `;
 
 const ViewAllLink = styled(Link)`
-  color: #5CB1FF;
+  // color: #5CB1FF;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 28px;
+    font-family: 'Public Sans';
+    line-height: 32.9px;
+    font-weight: 400;
+    color: rgba(35, 33, 42, 1);
 `;
 
 const BookingRequestsContainer = styled.div`
@@ -108,15 +122,164 @@ const AcceptButton = styled(ActionButton)`
 `;
 
 
+// const RunnersTable = styled.table`
+//   width: 100%;
+//   border-collapse: collapse;
+//   font-family: 'Montserrat', sans-serif;
+// `;
+
+// const TableHead = styled.thead`
+//   background-color: #E3E6E8;
+// `;
+
+// const TableRow = styled.tr`
+//   &:nth-child(even) {
+//     background-color: #f9f9f9;
+//   }
+// `;
+
+// const TableHeader = styled.th`
+//   text-align: left;
+//   padding: 12px;
+//   font-weight: 500;
+//   // color: #333;
+//   font-size: 12px;
+//     line-height: 13.96px;
+//     font-family: 'Public Sans';
+//     color: rgba(91, 101, 114, 1);
+// `;
+
+// const TableCell = styled.td`
+//   padding: 12px;
+//   border-bottom: 1px solid #E0E0E0;
+// `;
+// const RunnerCell = styled.div`
+//   display: flex;
+//   align-items: center;
+// `;
+
+// const RunnerAvatar = styled.div`
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 50%;
+//   margin-right: 10px;
+//   background-color: #ccc;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 14px;
+//   color: #121212;
+//   background-image: url(${props => props.src});
+//   background-size: cover;
+//   background-position: center;
+// `;
+
+// const RunnerName = styled.span`
+//   vertical-align: middle;
+//   font-size: 14px;
+//   font-weight: 500;
+// `;
+
+
+const ActionIcon = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+  padding: 5px;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+`;
+
+// const ViewIcon = styled(ActionIcon)`
+//   color: #5CB1FF;
+// `;
+
+// const EditIcon = styled(ActionIcon)`
+//   color: #41B079;
+// `;
+
+// const DeleteIcon = styled(ActionIcon)`
+//   color: #F1614B;
+// `;
+
+const EnvironmentalReportContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+const ReportCard = styled.div`
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 15px;
+  flex: 1;
+  text-align: center;
+  min-width:296px;
+  max-width:300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const ReportIcon = styled.img`
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+`;
+
+const ReportValue = styled.h3`
+  font-size: 24px;
+  color: ${props => props.color || '#333'};
+  margin: 5px 0;
+`;
+
+const ReportLabel = styled.p`
+  font-size: 14px;
+  color: #666;
+`;
+
+// const RunnersTable = styled.table`
+//   width: 100%;
+//   border-collapse: collapse;
+//   font-family: 'Montserrat', sans-serif;
+//   border: 1px solid rgba(245, 246, 247, 1); /* Add border to table */
+// `;
+
+const TableHead = styled.thead`
+  background-color: rgba(245, 246, 247, 1); /* Header background color */
+`;
+
+// const TableHeader = styled.th`
+//   text-align: left;
+//   padding: 12px;
+//   font-weight: 600;
+//   color: #333;
+//   border-bottom: 1px solid rgba(245, 246, 247, 1); /* Header bottom border */
+// `;
+
+// const TableRow = styled.tr`
+//   &:nth-child(even) {
+//     background-color: #f9f9f9;
+//   }
+// `;
+
+// const TableCell = styled.td`
+//   padding: 12px;
+//   border-bottom: 1px solid rgba(245, 246, 247, 1); /* Cell border color */
+// `;
+
 const RunnersTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   font-family: 'Montserrat', sans-serif;
+  border: 1px solid rgba(245, 246, 247, 1); /* Table border */
 `;
 
-const TableHead = styled.thead`
-  background-color: #E3E6E8;
-`;
+// const TableHead = styled.thead`
+//   background-color: rgba(245, 246, 247, 1); /* Header background color */
+// `;
 
 const TableRow = styled.tr`
   &:nth-child(even) {
@@ -128,13 +291,24 @@ const TableHeader = styled.th`
   text-align: left;
   padding: 12px;
   font-weight: 600;
-  color: #333;
+  color:rgba(91, 101, 114, 1);
+
+  border-bottom: 1px solid rgba(245, 246, 247, 1); /* Header bottom border */
+
+  &:last-child {
+    text-align: right; /* Align the last header (View) to the right */
+  }
 `;
 
 const TableCell = styled.td`
   padding: 12px;
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid rgba(245, 246, 247, 1); /* Cell border color */
+
+  &:last-child {
+    text-align: right; /* Align the last column (View actions) to the right */
+  }
 `;
+
 const RunnerCell = styled.div`
   display: flex;
   align-items: center;
@@ -162,8 +336,7 @@ const RunnerName = styled.span`
   font-weight: 500;
 `;
 
-
-const ActionIcon = styled.button`
+const ViewIcon = styled.button`
   background: none;
   border: none;
   cursor: pointer;
@@ -176,49 +349,14 @@ const ActionIcon = styled.button`
   }
 `;
 
-const ViewIcon = styled(ActionIcon)`
-  color: #5CB1FF;
-`;
-
-const EditIcon = styled(ActionIcon)`
+const EditIcon = styled(ViewIcon)`
   color: #41B079;
 `;
 
-const DeleteIcon = styled(ActionIcon)`
+const DeleteIcon = styled(ViewIcon)`
   color: #F1614B;
 `;
 
-const EnvironmentalReportContainer = styled.div`
-  display: flex;
-  gap: 20px;
-`;
-
-const ReportCard = styled.div`
-  background: white;
-  border: 1px solid #E0E0E0;
-  border-radius: 8px;
-  padding: 15px;
-  flex: 1;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const ReportIcon = styled.img`
-  width: 50px;
-  height: 50px;
-  margin-bottom: 10px;
-`;
-
-const ReportValue = styled.h3`
-  font-size: 24px;
-  color: ${props => props.color || '#333'};
-  margin: 5px 0;
-`;
-
-const ReportLabel = styled.p`
-  font-size: 14px;
-  color: #666;
-`;
 
 const Home = () => {
   // Mock data
@@ -298,10 +436,10 @@ const Home = () => {
         </RunnersTable>
       </Section>
 
-      <Section>
+      <Environmental_wraper  className='Environmental_wraper'> 
         <SectionHeader>
           <SectionTitle>Environmental Report</SectionTitle>
-          <select>
+          <select className='weekly'>
             <option>Weekly</option>
             <option>Monthly</option>
             <option>Yearly</option>
@@ -324,7 +462,7 @@ const Home = () => {
             <ReportLabel>Carbon footprint</ReportLabel>
           </ReportCard>
         </EnvironmentalReportContainer>
-      </Section>
+      </Environmental_wraper >
     </HomeContainer>
   );
 };

@@ -14,10 +14,12 @@ const ServiceHistoryContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 20px;
+   font-size: 32px;
+   font-weight: 600;
+   margin-bottom: 20px;
+   color: rgba(18, 18, 18, 1);
+    font-family: 'Public Sans';
+    line-height: 32px;
 `;
 
 const CardContainer = styled.div`
@@ -127,14 +129,17 @@ const CardHeader = styled.div`
 `;
 
 const BookingId = styled.h3`
-  font-size: 18px;
-  color: #333;
+  font-size: 20px;
+  color:rgba(18, 18, 18, 1);
   margin: 0;
+  font-weight: 500;
+  font-family: 'Public Sans';
+  line-height: 23.5px;
 `;
 
 const StatusBadge = styled.span`
   display: inline-block;
-  padding: 5px 15px;
+  padding: 5px 22px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 500;
@@ -256,6 +261,10 @@ const ServiceHistory = () => {
           <RunnerInfo>
             <AvatarIcon />
             <span>{booking.runnerName}</span>
+            <AvatarIcon />
+
+            <span>{booking.runnerContact}</span>
+
           </RunnerInfo>
           <RunnerContactButton onClick={() => alert(`Calling ${booking.runnerContact}`)}>
             <Phone /> Call Now
