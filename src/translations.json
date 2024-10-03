@@ -1,0 +1,30 @@
+{
+    "en": {
+      "languageSelection": {
+        "title": "Please select your preferred language",
+        "subtitle": "You can change your app language at any time from Profile > Language",
+        "selectLabel": "Select language",
+        "continueButton": "Continue"
+      },
+      "login": {
+        "title": "Login",
+        "emailPlaceholder": "Enter your email",
+        "passwordPlaceholder": "Enter your password",
+        "loginButton": "Log In"
+      }
+    },
+    "hi": {
+      "languageSelection": {
+        "title": "कृपया अपनी पसंदीदा भाषा चुनें",
+        "subtitle": "आप किसी भी समय प्रोफ़ाइल > भाषा से अपनी ऐप भाषा बदल सकते हैं",
+        "selectLabel": "भाषा चुनें",
+        "continueButton": "जारी रखें"
+      },
+      "login": {
+        "title": "लॉग इन करें",
+        "emailPlaceholder": "अपना ईमेल दर्ज करें",
+        "passwordPlaceholder": "अपना पासवर्ड डालें",
+        "loginButton": "लॉग इन करें"
+      }
+    }
+  }

@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import loginImage from '../../assets/login-image.png';
 import chiragLogo from '../../assets/chirag-logo-dark.png';
+import { sendOtp, verifyOtp } from '../../services/commonService';
+import { toast } from 'react-toastify';
+import Loader from '../../components/Loader';
+import OtpInput from 'react-otp-input';
 
 const Container = styled.div`
   display: flex;
@@ -44,8 +48,8 @@ const Logo = styled.img`
 
 const Title = styled.h2`
   font-size: 24px;
-   font-family: 'Public Sans', sans-serif;
-  font-weight: 400; /* Regular */
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 400;
   color: rgba(35, 33, 42, 0.6);
   margin-bottom: 20px;
   line-height: 28.2px;
@@ -53,8 +57,8 @@ const Title = styled.h2`
 
 const Input = styled.input`
   width: 94%;
-   font-family: 'Public Sans', sans-serif;
-  font-weight: 400; /* Regular */
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 400;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #DBDADE;
@@ -63,7 +67,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width:94%;
+  width: 94%;
   background-color: #121212;
   color: white;
   padding: 10px;
@@ -85,6 +89,7 @@ const RegisterLink = styled.div`
     text-decoration: underline;
   }
 `;
+
 const SelectLabel = styled.p`
   font-family: 'Public Sans';
   font-size: 18px;
@@ -92,16 +97,78 @@ const SelectLabel = styled.p`
   line-height: 24px;
   text-align: left;
   color: rgba(35, 33, 42, 1);
-  margin-bottom: 5px; /* Adjust spacing as needed */
+  margin-bottom: 5px;
 `;
 
+const StyledOtpInput = styled(OtpInput)`
+  width: 94%;
+  margin-bottom: 10px;
+  
+  input {
+    width: 3rem !important;
+    height: 2rem !important;
+    margin: 0 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #DBDADE;
+  }
+`;
+
+const OtpContainer = styled.div`
+  width: 94%;
+  margin-bottom: 10px;
+
+  .otp-input {
+    width: 3rem !important;
+    height: 2rem !important;
+    margin-right: 0.5rem !important;
+    font-size: 1rem !important;
+    border-radius: 4px !important;
+    border: 1px solid #DBDADE !important;
+  }
+`;
 const Login = () => {
   const [mobileNumber, setMobileNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSendOtp = async (e) => {
     e.preventDefault();
-    navigate('/otp');
+    if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+      toast.error('Please enter a valid 10-digit mobile number');
+      return;
+    }
+    setIsLoading(true);
+    try {
+      await sendOtp({ mobileNumber });
+      setOtpSent(true);
+      toast.success('OTP sent successfully');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to send OTP');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    if (otp.length !== 4) {
+      toast.error('Please enter a valid 4-digit OTP');
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const response = await verifyOtp({ mobileNumber, otp });
+      localStorage.setItem('user', JSON.stringify(response.data));
+      toast.success('Login successful');
+      navigate('/home');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to verify OTP');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRegisterClick = () => {
@@ -110,6 +177,7 @@ const Login = () => {
 
   return (
     <Container>
+      <Loader isLoading={isLoading} />
       <ImageSection>
         <Image src={loginImage} alt="Login" />
       </ImageSection>
@@ -118,17 +186,38 @@ const Login = () => {
           <Logo src={chiragLogo} alt="CHIRAG Logo" />
         </LogoContainer>
         <Title>Please login with your registered <br/>mobile number</Title>
-        <SelectLabel>Mobile number</SelectLabel>
-        <form onSubmit={handleSubmit}>
-          <Input
-            type="tel"
-            placeholder="Mobile number"
-            value={mobileNumber}
-            onChange={(e) => setMobileNumber(e.target.value)}
-            required
-          />
-          <Button type="submit">Get OTP</Button>
-        </form>
+        {!otpSent ? (
+          <>
+            <SelectLabel>Mobile number</SelectLabel>
+            <form onSubmit={handleSendOtp}>
+              <Input
+                type="tel"
+                placeholder="Mobile number"
+                value={mobileNumber}
+                onChange={(e) => setMobileNumber(e.target.value)}
+                required
+              />
+              <Button type="submit">Get OTP</Button>
+            </form>
+          </>
+        ) : (
+          <>
+            <SelectLabel>Enter OTP</SelectLabel>
+            <form onSubmit={handleVerifyOtp}>
+            <OtpContainer>
+  <OtpInput
+    value={otp}
+    onChange={setOtp}
+    numInputs={4}
+    renderSeparator={<span></span>}
+    renderInput={(props) => <input {...props} className="otp-input" />}
+    containerStyle="display: flex; justify-content: space-between;"
+  />
+</OtpContainer>
+              <Button type="submit">Verify OTP</Button>
+            </form>
+          </>
+        )}
         <RegisterLink onClick={handleRegisterClick}>
           Don't have an account? Register
         </RegisterLink>

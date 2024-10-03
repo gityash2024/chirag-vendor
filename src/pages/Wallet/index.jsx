@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import successWithdrawalCheck from '../../assets/check-wallet.svg';
 import CloseIcon from '@material-ui/icons/Close';
+import { getWalletBalance, getTransactionHistory, requestWithdrawal } from '../../services/commonService';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 20px;
   font-family: 'Public Sans', sans-serif;
   background-color: #F4F4F4;
-  width:90%;
+  width: 90%;
   margin: 0 auto;
   border-radius: 8px;
 `;
@@ -56,10 +58,10 @@ const WithdrawButton = styled.button`
   border-radius: 4px;
   color: #FFFFFF;
   border: none;
-  border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
   margin-bottom: 20px;
+  margin-right: 20px;
 `;
 
 const Tabs = styled.div`
@@ -90,11 +92,6 @@ const TransactionItem = styled.div`
   border-radius: 10px;
 `;
 
-const TransactionId = styled.div`
-  font-weight: 600;
-  color: #121212;
-`;
-
 const TransactionDetails = styled.div`
   font-size: 14px;
   color: #8D98A4;
@@ -105,35 +102,6 @@ const TransactionAmount = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-`;
-
-const TransactionStatus = styled.span`
-  color: #41B079;
-  font-size: 12px;
-  font-weight: bold;
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 300px;
-  align-items: center;
-  margin-top: 20px;
-`;
-
-const PageInfo = styled.span`
-  margin-right: 10px;
-  color: #8D98A4;
-`;
-
-const PageButton = styled.button`
-  padding: 5px 10px;
-  border-radius: 20px;
-  border: 1px solid #DBDADE;
-  background-color: ${props => props.active ? '#121212' : '#FFFFFF'};
-  color: ${props => props.active ? '#FFFFFF' : '#121212'};
-  cursor: pointer;
-  margin: 0 2px;
 `;
 
 const Modal = styled.div`
@@ -199,20 +167,10 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-const HistoryItem = styled.div`
-  background-color: #FFFFFF;
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const HistoryDetails = styled.div``;
-
-const HistoryAmount = styled.div`
-  color: #41B079;
-  font-weight: bold;
+const NoDataMessage = styled.div`
+  text-align: center;
+  color: #8D98A4;
+  margin-top: 20px;
 `;
 
 const Wallet = () => {
@@ -220,28 +178,50 @@ const Wallet = () => {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showRequestSentModal, setShowRequestSentModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [transactions, setTransactions] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    fetchWalletBalance();
+    fetchTransactionHistory();
+  }, []);
 
-  const transactions = [
-    { id: 'AB123456', address: 'Lorem ipsum dolor sit amet, street , Area, City, 560066', price: 20000, commission: 2500, earning: 17500 },
-    { id: 'AB123457', address: 'Lorem ipsum dolor sit amet, street , Area, City, 560066', price: 20000, commission: 2500, earning: 17500 },
-    { id: 'AB123458', address: 'Lorem ipsum dolor sit amet, street , Area, City, 560066', price: 20000, commission: 2500, earning: 17500 },
-  ];
+  const fetchWalletBalance = async () => {
+    try {
+      const response = await getWalletBalance();
+      setWalletBalance(response.data.balance);
+    } catch (error) {
+      console.error('Error fetching wallet balance:', error);
+    }
+  };
 
-  const historyItems = [
-    { id: 'H1', description: 'Added Money', date: '24/08/2024 2:00 Pm', amount: 2300 },
-    { id: 'H2', description: 'Added Money', date: '24/08/2024 2:00 Pm', amount: 2300 },
-    { id: 'H3', description: 'Added Money', date: '24/08/2024 2:00 Pm', amount: 2300 },
-    { id: 'H4', description: 'Added Money', date: '24/08/2024 2:00 Pm', amount: 2300 },
-  ];
+  const fetchTransactionHistory = async () => {
+    try {
+      const response = await getTransactionHistory();
+      setTransactions(response.data);
+    } catch (error) {
+      console.error('Error fetching transaction history:', error);
+    }
+  };
 
   const handleWithdraw = () => {
     setShowWithdrawModal(true);
   };
+  const handleAddMoney = () => {
+    navigate('/add-money');
+  };
 
-  const handleWithdrawSubmit = () => {
-    setShowWithdrawModal(false);
-    setShowRequestSentModal(true);
-    setTimeout(() => setShowRequestSentModal(false), 3000);
+  const handleWithdrawSubmit = async () => {
+    try {
+      await requestWithdrawal({ amount: parseFloat(withdrawAmount) });
+      setShowWithdrawModal(false);
+      setShowRequestSentModal(true);
+      setTimeout(() => setShowRequestSentModal(false), 3000);
+      fetchWalletBalance();
+      fetchTransactionHistory();
+    } catch (error) {
+      console.error('Error requesting withdrawal:', error);
+    }
   };
 
   return (
@@ -249,59 +229,31 @@ const Wallet = () => {
       <Header>My Earnings</Header>
       <EarningsOverview>
         <EarningItem>
-          <EarningValue>Rs. 5000</EarningValue>
+          <EarningValue>Rs. {walletBalance}</EarningValue>
           <EarningLabel>Available Balance</EarningLabel>
-        </EarningItem>
-        <EarningItem>
-          <EarningValue>345</EarningValue>
-          <EarningLabel>Total Bookings</EarningLabel>
-        </EarningItem>
-        <EarningItem>
-          <EarningValue>Rs. 3000</EarningValue>
-          <EarningLabel>This Month Earnings</EarningLabel>
         </EarningItem>
       </EarningsOverview>
       <WithdrawButton onClick={handleWithdraw}>Withdraw Money</WithdrawButton>
+      <WithdrawButton onClick={handleAddMoney}>Add Money</WithdrawButton>
       <Tabs>
         <Tab active={activeTab === 'history'} onClick={() => setActiveTab('history')}>History</Tab>
         <Tab active={activeTab === 'withdrawals'} onClick={() => setActiveTab('withdrawals')}>Withdrawals</Tab>
       </Tabs>
       <TransactionList>
-        {activeTab === 'withdrawals' ? (
-          transactions.map(transaction => (
-            <TransactionItem key={transaction.id}>
-              <TransactionId>{transaction.id}</TransactionId>
-              <TransactionDetails>{transaction.address}</TransactionDetails>
+        {transactions.length > 0 ? (
+          transactions.map((transaction, index) => (
+            <TransactionItem key={index}>
+              <TransactionDetails>{transaction.description}</TransactionDetails>
               <TransactionAmount>
-                <div>
-                  <div style={{marginBottom: '10px'}}>Price Summary: ₹{transaction.price}</div>
-                  <div style={{marginBottom: '10px'}}>Admin's Commission: ₹{transaction.commission}</div>
-                  <div style={{marginBottom: '10px'}}>Your Earning: ₹{transaction.earning}</div>
-                </div>
-                <TransactionStatus>Completed</TransactionStatus>
+                <div>Amount: ₹{transaction.amount}</div>
+                <div>{new Date(transaction.date).toLocaleDateString()}</div>
               </TransactionAmount>
             </TransactionItem>
           ))
         ) : (
-          historyItems.map(item => (
-            <HistoryItem key={item.id}>
-              <HistoryDetails>
-                <div style={{marginBottom: '10px'}}>{item.description}</div>
-                <div style={{marginBottom: '10px'}}>{item.date}</div>
-              </HistoryDetails>
-              <HistoryAmount>+₹{item.amount}</HistoryAmount>
-            </HistoryItem>
-          ))
+          <NoDataMessage>No {activeTab === 'history' ? 'transaction history' : 'withdrawals'} found</NoDataMessage>
         )}
       </TransactionList>
-      <Pagination>
-        <PageInfo>1-10 of 10</PageInfo>
-        <PageButton>&lt;</PageButton>
-        <PageButton active>1</PageButton>
-        <PageButton>2</PageButton>
-        <PageButton>3</PageButton>
-        <PageButton>&gt;</PageButton>
-      </Pagination>
       {showWithdrawModal && (
         <Modal>
           <ModalContent>

@@ -1,15 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import Loader from './components/Loader';
+import NotFound from './components/404';
 
 import LanguageSelection from './pages/auth/LanguageSelection';
 import Login from './pages/auth/Login';
 import OTP from './pages/auth/OTP';
+import Register from './pages/auth/register';
 import Home from './pages/Home';
 import Bookings from './pages/Bookings';
 import ServiceHistory from './pages/ServiceHistory';
@@ -27,7 +29,6 @@ import ConfirmedBookingDetails from './pages/ServiceHistory/ConfirmedBookingDeta
 import ClosedBookingDetails from './pages/ServiceHistory/ClosedBookingDetails';
 import RunnerCanceledBookingDetail from './pages/Calendar/RunnerCanceledBookingDetail';
 import RunnerReachedBookingDetail from './pages/Calendar/RunnerReachedBookingDetail';
-import Register from './pages/auth/register';
 import AssignRunnerDetails from './pages/Bookings/AssignRunnerDetails';
 import GlobalStyle from './GlobalStyle';
 import AddMoney from './pages/Wallet/AddMoney';
@@ -64,23 +65,28 @@ const StyledToastContainer = styled(ToastContainer)`
   }
 `;
 
+const ProtectedRoute = ({ children }) => {
+  const user = localStorage.getItem('user');
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
 function App() {
   return (
     <Router>
-            <GlobalStyle /> 
-
+      <GlobalStyle />
       <AppContainer>
         <Routes>
           <Route path="/" element={<LanguageSelection />} />
           <Route path="/login" element={<Login />} />
           <Route path="/otp" element={<OTP />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/add-money" element={<AddMoney />} />
-
           <Route
             path="*"
             element={
-              <>
+              <ProtectedRoute>
                 <Sidebar />
                 <MainContent>
                   <Topbar />
@@ -106,10 +112,12 @@ function App() {
                       <Route path="/completed-booking/:id" element={<ConfirmedBookingDetails />} />
                       <Route path="/calendar-confirm-booking-details/:id" element={<RunnerReachedBookingDetail />} />
                       <Route path="/calendar-cancelled-booking-details/:id" element={<RunnerCanceledBookingDetail />} />
+                      <Route path="/add-money" element={<AddMoney />} />
+                      <Route path="*" element={<NotFound />} />
                     </Routes>
                   </PageContent>
                 </MainContent>
-              </>
+              </ProtectedRoute>
             }
           />
         </Routes>
@@ -131,14 +139,3 @@ function App() {
 }
 
 export default App;
-// import { toast } from 'react-toastify';
-
-// // In your component
-// const handleSomeAction = () => {
-//   // ... your logic
-//   toast.success("Action completed successfully!");
-//   // or
-//   toast.error("An error occurred");
-//   // or
-//   toast.info("Some information");
-// };
