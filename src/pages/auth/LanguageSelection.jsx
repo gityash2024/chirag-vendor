@@ -53,7 +53,7 @@ const Title = styled.h2`
 `;
 
 const Subtitle = styled.p`
-  font-size: 24px;
+  font-size: 20px;
    font-family: 'Public Sans', sans-serif;
   font-weight: 400;
   color: rgba(35, 33, 42, 0.6);
@@ -62,8 +62,8 @@ const Subtitle = styled.p`
 `;
 
 const Select = styled.select`
-  width: 100%;
-  padding: 10px;
+  width: 67%;
+  padding: 7px;
   margin-bottom: 20px;
   border: 1px solid #DBDADE;
   border-radius: 4px;
@@ -85,18 +85,18 @@ const Select = styled.select`
 const Button = styled.button`
   background-color: #121212;
   color: white;
-  padding: 15px;
+  padding: 7px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 100%;
+  width: 67%;
   font-size: 20px;
   font-weight: 400;
 `;
 
 const SelectLabel = styled.p`
   font-family: 'Rubik', sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 24px;
   text-align: left;
