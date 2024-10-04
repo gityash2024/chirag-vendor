@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { Block, Edit, ArrowBack } from '@material-ui/icons';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Block, Edit } from '@material-ui/icons';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { getAllRunnersList, updateRunner, uploadTos3 } from '../../services/commonService';
+import { toast } from 'react-toastify';
+import Loader from '../../components/Loader';
 
 const Container = styled.div`
   padding: 20px;
@@ -15,23 +18,20 @@ const Header = styled.div`
   align-items: center;
   margin-bottom: 20px;
 `;
+
 const BackButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
   margin-right: 10px;
 `;
+
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 600;
   color: #4B465C;
   display: flex;
   align-items: center;
-`;
-
-const BackIcon = styled(ArrowBack)`
-  cursor: pointer;
-  margin-right: 10px;
 `;
 
 const Form = styled.form`
@@ -121,15 +121,35 @@ const DroneImage = styled.img`
 const EditRunner = () => {
   const { id, isView } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const [formData, setFormData] = useState({
-    name: 'Edgar James',
-    mobile: '+918169131642',
-    email: 'khushi.doe@jethitech.com',
-    city: 'Mumbai',
-    state: 'Maharashtra',
-    vendorId: 'AB12345647',
+    name: '',
+    mobileNumber: '',
+    email: '',
+    city: '',
+    state: '',
+    vendor: '',
+    droneImages: [],
   });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchRunnerData();
+  }, [id]);
+
+  const fetchRunnerData = async () => {
+    setLoading(true);
+    try {
+      const response = await getAllRunnersList();
+      const runner = response.data.find(r => r._id === id);
+      if (runner) {
+        setFormData(runner);
+      }
+    } catch (error) {
+      toast.error('Failed to fetch runner data');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e) => {
     if (!isView) {
@@ -137,10 +157,40 @@ const EditRunner = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    formData.runnerId = id;
     e.preventDefault();
-    console.log(formData);
-    navigate('/manage-runner');
+    setLoading(true);
+    try {
+      await updateRunner(formData);
+      toast.success('Runner updated successfully');
+      navigate('/manage-runner');
+    } catch (error) {
+      toast.error('Failed to update runner');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setLoading(true);
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await uploadTos3(formData);
+        setFormData(prev => ({
+          ...prev,
+          droneImages: [...prev.droneImages, response.data.fileUrl]
+        }));
+        toast.success('Image uploaded successfully');
+      } catch (error) {
+        toast.error('Failed to upload image');
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const handleBackClick = () => {
@@ -151,113 +201,124 @@ const EditRunner = () => {
     <Container>
       <Header>
         <Title>
-        <BackButton onClick={handleBackClick}>
+          <BackButton onClick={handleBackClick}>
             <ArrowBackIcon />
           </BackButton>
           Runner Management / {isView ? 'View' : 'Edit'}
         </Title>
         {!isView ? (
-          <Button edit>
+          <Button edit onClick={handleSubmit} disabled={loading}>
             <Edit style={{ marginRight: '5px' }} />
-            Edit
+            {loading ? 'Updating...' : 'Update'}
           </Button>
         ) : (
-          <Button edit>
-            <Block style={{ marginRight: '5px' }} />
-            Block Runner
-          </Button>
+          null
+          // <Button edit>
+          //   <Block style={{ marginRight: '5px' }} />
+          //   Block Runner
+          // </Button>
         )}
       </Header>
-      <Form onSubmit={handleSubmit}>
-        <FormRow>
-          <FormGroup>
-            <Label>Name</Label>
-            <Input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              readOnly={isView}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label>Mobile</Label>
-            <Input
-              type="tel"
-              name="mobile"
-              value={formData.mobile}
-              onChange={handleChange}
-              readOnly={isView}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label>Email id</Label>
-            <Input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              readOnly={isView}
-            />
-          </FormGroup>
-        </FormRow>
-        <FormRow>
-          <FormGroup>
-            <Label>City</Label>
-            <Input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              readOnly={isView}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label>State</Label>
-            <Select
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              disabled={isView}
-            >
-              <option value="Maharashtra">Maharashtra</option>
-              <option value="Gujarat">Gujarat</option>
-              <option value="Karnataka">Karnataka</option>
-            </Select>
-          </FormGroup>
-          <FormGroup>
-            <Label>Aadhar authentication</Label>
-            <StatusBadge active>{'successful'}</StatusBadge>
-          </FormGroup>
-        </FormRow>
-        <FormRow>
-          <FormGroup>
-            <Label>Vendor</Label>
-            <Input
-              type="text"
-              name="vendorId"
-              value={formData.vendorId}
-              onChange={handleChange}
-              readOnly={isView}
-            />
-          </FormGroup>
-        </FormRow>
-        {!isView && (
-          <FormGroup>
-            <Label>Drone Image</Label>
-            <ImageUpload>
-              <p>Click or drag file to this area to upload</p>
-            </ImageUpload>
-          </FormGroup>
-        )}
-        <DroneImagesContainer>
-          <DroneImage src="/path/to/drone-image-1.jpg" alt="Drone 1" />
-          <DroneImage src="/path/to/drone-image-2.jpg" alt="Drone 2" />
-        </DroneImagesContainer>
-        <ButtonContainer>
-          <Button type="submit">Done</Button>
-        </ButtonContainer>
-      </Form>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Form onSubmit={handleSubmit}>
+          <FormRow>
+            <FormGroup>
+              <Label>Name</Label>
+              <Input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                readOnly={isView}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Mobile</Label>
+              <Input
+                type="tel"
+                name="mobileNumber"
+                value={formData.mobileNumber}
+                onChange={handleChange}
+                readOnly={isView}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Email id</Label>
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                readOnly={isView}
+              />
+            </FormGroup>
+          </FormRow>
+          <FormRow>
+            <FormGroup>
+              <Label>City</Label>
+              <Input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                readOnly={isView}
+                />
+            </FormGroup>
+            <FormGroup>
+              <Label>State</Label>
+              <Select
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                disabled={isView}
+              >
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Karnataka">Karnataka</option>
+              </Select>
+            </FormGroup>
+            <FormGroup>
+              <Label>Aadhar authentication</Label>
+              <StatusBadge active={formData.aadhaarVerified}>{formData.aadhaarVerified ? 'Verified' : 'Not Verified'}</StatusBadge>
+            </FormGroup>
+          </FormRow>
+          <FormRow>
+            <FormGroup>
+              <Label>Vendor</Label>
+              <Input
+                type="text"
+                name="vendor"
+                value={formData.vendor}
+                onChange={handleChange}
+                readOnly={isView}
+              />
+            </FormGroup>
+          </FormRow>
+          {!isView && (
+            <FormGroup>
+              <Label>Drone Image</Label>
+              <ImageUpload>
+                <input type="file" onChange={handleImageUpload} accept="image/*" />
+                <p>Click or drag file to this area to upload</p>
+              </ImageUpload>
+            </FormGroup>
+          )}
+          <DroneImagesContainer>
+            {formData.droneImages.map((image, index) => (
+              <DroneImage key={index} src={image} alt={`Drone ${index + 1}`} />
+            ))}
+          </DroneImagesContainer>
+          {!isView && (
+            <ButtonContainer>
+              <Button type="submit" disabled={loading}>
+                {loading ? 'Saving...' : 'Save'}
+              </Button>
+            </ButtonContainer>
+          )}
+        </Form>
+      )}
     </Container>
   );
 };

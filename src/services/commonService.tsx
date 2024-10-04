@@ -118,3 +118,55 @@ export const verifyCashfreePayment = (payload) => {
 }
 
 
+export const acceptBooking = (payload) => {
+  const url = `${baseUrl}/bookings/:id/accept`;
+  return instance.put(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }); 
+}
+export const getAllBookingsList = () => {
+  const url = `${baseUrl}/bookings`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }); 
+}
+
+export const assignBookingToRunner = (payload) => {
+  const url = `${baseUrl}/bookings/assign-runner`;
+  return instance.post(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }); 
+}
+
+
+
+export const getAllRunnersList = () => {
+  const url = `${baseUrl}/runners/all`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }); 
+}
+export const updateRunner = (payload) => {
+  const url = `${baseUrl}/runners/update`;
+  return instance.post(url,payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }); 
+}
+export const blockRunner = (payload) => {
+  const url = `${baseUrl}/runners/block`;
+  return instance.post(url,payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }); 
+}
