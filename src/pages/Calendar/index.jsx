@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay } from 'date-fns';
+import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, parseISO, isAfter } from 'date-fns';
 import Avatar from '@mui/icons-material/AccountCircle';
 import CalendarToday from '@mui/icons-material/CalendarToday';
 import AccessTime from '@mui/icons-material/AccessTime';
 import LocationOn from '@mui/icons-material/LocationOn';
 import Opacity from '@mui/icons-material/Opacity';
 import Phone from '@mui/icons-material/Phone';
+import { getAllBookingsList } from '../../services/commonService';
+import { toast } from 'react-toastify';
+import Loader from '../../components/Loader';
 
 const CalendarContainer = styled.div`
   display: flex;
   font-family: 'Public Sans', sans-serif;
+  height: 100vh;
 `;
 
 const CalendarColumn = styled.div`
@@ -57,6 +61,8 @@ const DayCell = styled.div`
 const BookingColumn = styled.div`
   flex: 1;
   padding: 20px;
+  overflow-y: auto;
+  max-height: 100vh;
 `;
 
 const Card = styled(Link)`
@@ -91,7 +97,7 @@ const StatusBadge = styled.span`
   font-size: 12px;
   font-weight: 500;
   color: #000000;
-  background-color: ${props => props.status === 'Completed' ? '#B1FF8C' : '#DAB4FF'};
+  background-color: ${props => props.status === 'completed' ? '#B1FF8C' : '#DAB4FF'};
 `;
 
 const BookingDetails = styled.p`
@@ -186,6 +192,26 @@ const RunnerContactButton = styled.button`
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  useEffect(() => {
+    fetchBookings();
+  }, []);
+
+  const fetchBookings = async () => {
+    setLoading(true);
+    try {
+      const response = await getAllBookingsList();
+      const vendorBookings = response.data.filter(booking => booking.vendor === user?._id);
+      setBookings(vendorBookings);
+    } catch (error) {
+      toast.error('Failed to fetch bookings');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
@@ -194,55 +220,57 @@ const Calendar = () => {
   const prevMonth = () => setCurrentDate(subMonths(currentDate, 1));
   const nextMonth = () => setCurrentDate(addMonths(currentDate, 1));
 
-  const bookings = [
-    { id: 'AB123456', status: 'Completed', address: 'Lorem ipsum dolor sit amet, street, Area, City, 560066', name: 'Sachin Doe', date: '2025-07-08', time: '02:00 PM - 04:00 PM', farmArea: '21 Acres', crop: 'Crop name', temperature: '24°', location: 'Pratapgarh, Uttarpradesh', humidity: '2%', price: '₹ 20,000', runnerName: 'Runner name', runnerContact: '0987654321' },
-    { id: 'AB123457', status: 'Confirmed', address: 'Lorem ipsum dolor sit amet, street, Area, City, 560066', name: 'John Doe', date: '2025-07-08', time: '03:00 PM - 05:00 PM', farmArea: '22 Acres', crop: 'Crop name', temperature: '25°', location: 'Pratapgarh, Uttarpradesh', humidity: '3%', price: '₹ 22,000', runnerName: 'Runner name', runnerContact: '0987654321' },
-    { id: 'AB123458', status: 'Confirmed', address: 'Lorem ipsum dolor sit amet, street, Area, City, 560066', name: 'Jane Doe', date: '2025-07-09', time: '01:00 PM - 03:00 PM', farmArea: '23 Acres', crop: 'Crop name', temperature: '26°', location: 'Pratapgarh, Uttarpradesh', humidity: '4%', price: '₹ 24,000', runnerName: 'Runner name', runnerContact: '0987654321' },
-    { id: 'AB123453', status: 'Completed', address: 'Lorem ipsum dolor sit amet, street, Area, City, 560066', name: 'Jane Doe', date: '2025-07-09', time: '01:00 PM - 03:00 PM', farmArea: '23 Acres', crop: 'Crop name', temperature: '26°', location: 'Pratapgarh, Uttarpradesh', humidity: '4%', price: '₹ 24,000', runnerName: 'Runner name', runnerContact: '0987654321' },
-    { id: 'AB123423', status: 'Completed', address: 'Lorem ipsum dolor sit amet, street, Area, City, 560066', name: 'Jane Doe', date: '2025-07-09', time: '01:00 PM - 03:00 PM', farmArea: '23 Acres', crop: 'Crop name', temperature: '26°', location: 'Pratapgarh, Uttarpradesh', humidity: '4%', price: '₹ 24,000', runnerName: 'Runner name', runnerContact: '0987654321' },
-    { id: 'AB1234343', status: 'Completed', address: 'Lorem ipsum dolor sit amet, street, Area, City, 560066', name: 'Jane Doe', date: '2025-07-09', time: '01:00 PM - 03:00 PM', farmArea: '23 Acres', crop: 'Crop name', temperature: '26°', location: 'Pratapgarh, Uttarpradesh', humidity: '4%', price: '₹ 24,000', runnerName: 'Runner name', runnerContact: '0987654321' },
-  ];
+  const filteredBookings = bookings.filter(booking => {
+    const bookingDate = parseISO(booking.date);
+    return isSameDay(bookingDate, selectedDate) && booking.status === 'completed';
+  });
 
-  const filteredBookings = bookings.filter(booking =>  booking.status === 'Completed');
-  // const filteredBookings = bookings.filter(booking => isSameDay(new Date(booking.date), selectedDate) && booking.status === 'Completed');
-  const upcomingBookings = bookings.filter(booking => new Date(booking.date) > new Date() && booking.status === 'Confirmed');
+  const upcomingBookings = bookings.filter(booking => {
+    const bookingDate = parseISO(booking.date);
+    return isAfter(bookingDate, new Date()) && booking.status === 'confirmed';
+  });
 
   const renderBookingCard = (booking) => (
-    <Card to={booking.status === 'Completed' ? `/completed-booking/${booking.id}` : `/calendar-confirm-booking-details/${booking.id}`} key={booking.id}>
+    <Card to={booking.status === 'completed' ? `/completed-booking/${booking._id}` : `/calendar-confirm-booking-details/${booking._id}`} key={booking._id}>
       <CardHeader>
-        <BookingId>#{booking.id}</BookingId>
+        <BookingId>#{booking._id}</BookingId>
         <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
       </CardHeader>
-      <BookingDetails><LocationOn /> {booking.address}</BookingDetails>
+      <BookingDetails><LocationOn /> {booking.farmLocation}</BookingDetails>
       <DateTimeRow>
-        <BookingDetails><CalendarToday /> {booking.date}</BookingDetails>
+        <BookingDetails><CalendarToday /> {format(parseISO(booking.date), 'yyyy-MM-dd')}</BookingDetails>
         <BookingDetails><AccessTime /> {booking.time}</BookingDetails>
       </DateTimeRow>
-      <BookingDetails>Booking Name: {booking.name}</BookingDetails>
-      <BookingDetails>Farm Area: {booking.farmArea}</BookingDetails>
+      <BookingDetails>Booking Name: {booking.farmerName}</BookingDetails>
+      <BookingDetails>Farm Area: {booking.farmArea} Acres</BookingDetails>
       <TempHumidityCropRow>
         <TempHumidity>
-          <Temperature>{booking.temperature}</Temperature>
-          <Humidity><Opacity /> {booking.humidity}</Humidity>
+          <Temperature>{booking.weather}</Temperature>
+          <Humidity><Opacity /> {booking.weather}</Humidity>
         </TempHumidity>
-        <Crop>Crop: {booking.crop}</Crop>
+        <Crop>Crop: {booking.cropName}</Crop>
       </TempHumidityCropRow>
-      <BookingDetails>{booking.location}</BookingDetails>
-      <PriceSummary>Price Summary: {booking.price}</PriceSummary>
-      <RunnerDetails>
-        <strong>Assigned Runner:</strong>
-        <RunnerName>
-          <RunnerInfo>
-            <AvatarIcon />
-            <span>{booking.runnerName}</span>
-          </RunnerInfo>
-          <RunnerContactButton onClick={(e) => { e.preventDefault(); alert(`Calling ${booking.runnerContact}`); }}>
-            <Phone /> Call Now
-          </RunnerContactButton>
-        </RunnerName>
-      </RunnerDetails>
+      <PriceSummary>Price Summary: ₹{booking.quotePrice}</PriceSummary>
+      {booking.runner && (
+        <RunnerDetails>
+          <strong>Assigned Runner:</strong>
+          <RunnerName>
+            <RunnerInfo>
+              <AvatarIcon />
+              <span>{booking.runner.name}</span>
+            </RunnerInfo>
+            <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
+              <Phone /> Call Now
+            </RunnerContactButton>
+          </RunnerName>
+        </RunnerDetails>
+      )}
     </Card>
   );
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <CalendarContainer>

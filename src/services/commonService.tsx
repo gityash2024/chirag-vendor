@@ -170,3 +170,24 @@ export const blockRunner = (payload) => {
     }
   }); 
 }
+export const listNotifications = (payload) => {
+  const url = `${baseUrl}/notifications/list`;
+  return instance.get(url, {
+    params: payload,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }); 
+}
+
+
+
+export const updateBooking = (payload) => {
+  const url = `${baseUrl}/bookings/${payload.id}`;
+  return instance.put(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import printIcon from '../assets/print-icon.png';
 import notificationIcon from '../assets/notification-icon.png';
 import profileIcon from '../assets/profile-icon.png';
 import { useNavigate } from 'react-router-dom';
-
+import { listNotifications } from '../services/commonService';
+import io from 'socket.io-client';
 
 const TopbarContainer = styled.div`
   display: flex;
@@ -28,24 +29,68 @@ const TopbarRight = styled.div`
 `;
 
 const TopbarIcon = styled.img`
-  // width: 24px;
-  // height: 24px;
   margin-left: 20px;
   cursor: pointer;
 `;
 
+const NotificationCount = styled.div`
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+`;
+
+const IconContainer = styled.div`
+  position: relative;
+`;
+
 const Topbar = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    fetchNotificationCount();
+    const socket = io("http://localhost:5000/");
+    
+    socket.on('newNotification', () => {
+      fetchNotificationCount();
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  const fetchNotificationCount = async () => {
+    try {
+      const response = await listNotifications({ page: 1, limit: 1, recipientRole: 'vendor' });
+      setNotificationCount(response.data.totalNotifications);
+    } catch (error) {
+      console.error('Failed to fetch notification count', error);
+    }
+  };
+
   return (
     <TopbarContainer>
-    <TopbarLeft>
-    </TopbarLeft>
-    <TopbarRight>
-      <TopbarIcon onClick={()=>navigate('/wallet')} src={printIcon} alt="Print" />
-      <TopbarIcon onClick={()=>navigate('/notification')} src={notificationIcon} alt="Notifications" />
-      <TopbarIcon onClick={()=>navigate('/profile')} src={profileIcon} alt="Profile" />
-    </TopbarRight>
-  </TopbarContainer>
+      <TopbarLeft>
+      </TopbarLeft>
+      <TopbarRight>
+        <TopbarIcon onClick={() => navigate('/wallet')} src={printIcon} alt="Print" />
+        <IconContainer>
+          <TopbarIcon onClick={() => navigate('/notification')} src={notificationIcon} alt="Notifications" />
+          {notificationCount > 0 && <NotificationCount>{notificationCount}</NotificationCount>}
+        </IconContainer>
+        <TopbarIcon onClick={() => navigate('/profile')} src={profileIcon} alt="Profile" />
+      </TopbarRight>
+    </TopbarContainer>
   );
 };
 

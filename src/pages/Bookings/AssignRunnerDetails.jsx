@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -8,6 +8,8 @@ import OpacityIcon from '@mui/icons-material/Opacity';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import successWithdrawalCheck from '../../assets/check-wallet.svg';
+import { getAllBookingsList, assignBookingToRunner, getAllRunnersList } from '../../services/commonService';
+import { toast } from 'react-toastify';
 
 const Container = styled.div`
   padding: 20px;
@@ -26,6 +28,7 @@ const TitleContainer = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const BookingTitle = styled.h3`
   font-family: Public Sans;
   font-size: 32px;
@@ -34,9 +37,8 @@ const BookingTitle = styled.h3`
   text-align: left;
   color: rgba(18, 18, 18, 1);
   margin-bottom: 10px;
-
-
 `;
+
 const ViewAllButton = styled.button`
   background: none;
   border: none;
@@ -46,8 +48,8 @@ const ViewAllButton = styled.button`
   display: flex;
   align-items: center;
   font-family: 'Public Sans';
-    line-height: 32.9px;
-    font-weight: 400;
+  line-height: 32.9px;
+  font-weight: 400;
 
   &:hover {
     text-decoration: underline;
@@ -58,7 +60,6 @@ const ChevronRightIcon = styled.span`
   margin-left: 5px;
   display: inline-block;
 `;
-
 
 const BackButton = styled.button`
   background: none;
@@ -224,38 +225,66 @@ const AssignRunnerDetails = () => {
   const [showRunnerModal, setShowRunnerModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selectedRunner, setSelectedRunner] = useState(null);
+  const [booking, setBooking] = useState(null);
+  const [runners, setRunners] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const booking = {
-    id: id,
-    address: 'Lorem ipsum dolor sit amet, street, Area, City, 560066',
-    name: 'Sachin Doe',
-    date: '13 June, 2023',
-    time: '02:00 PM - 04:00 PM',
-    contactNumber: '0987654321',
-    farmArea: '21 Acres',
-    crop: 'Crop name',
-    temperature: '24° Pratapgarh, uttrakhand',
-    humidity: '2% Mostly sunny',
+  useEffect(() => {
+    fetchBookingDetails();
+    fetchRunners();
+  }, [id]);
+
+  const fetchBookingDetails = async () => {
+    try {
+      const response = await getAllBookingsList();
+      const foundBooking = response.data.find(b => b._id === id);
+      if (foundBooking) {
+        setBooking(foundBooking);
+      } else {
+        toast.error('Booking not found');
+      }
+    } catch (error) {
+      toast.error('Failed to fetch booking details');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const runners = [
-    { id: 1, name: 'John Doe', contact: '+91 1234567890', status: 'Active' },
-    { id: 2, name: 'Jane Smith', contact: '+91 9876543210', status: 'Active' },
-    { id: 3, name: 'Mike Johnson', contact: '+91 5555555555', status: 'Inactive' },
-  ];
+  const fetchRunners = async () => {
+    try {
+      const response = await getAllRunnersList();
+      setRunners(response.data);
+    } catch (error) {
+      toast.error('Failed to fetch runners');
+    }
+  };
 
   const handleAssignRunner = () => {
     setShowRunnerModal(true);
   };
 
-  const handleRunnerSelect = (runner) => {
+  const handleRunnerSelect = async (runner) => {
     setSelectedRunner(runner);
-    setShowRunnerModal(false);
-    setShowSuccessModal(true);
-    setTimeout(() => {
-      setShowSuccessModal(false);
-    }, 2000);
+    try {
+      await assignBookingToRunner({ bookingId: booking._id, runnerId: runner._id });
+      setShowRunnerModal(false);
+      setShowSuccessModal(true);
+      setTimeout(() => {
+        setShowSuccessModal(false);
+        navigate('/bookings');
+      }, 2000);
+    } catch (error) {
+      toast.error('Failed to assign runner');
+    }
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!booking) {
+    return <p>Booking not found</p>;
+  }
 
   return (
     <Container>
@@ -267,28 +296,27 @@ const AssignRunnerDetails = () => {
           <Title>Assign Runner</Title>
         </TitleContainer>
         <ViewAllButton onClick={() => navigate('/bookings')}>
-        View all <ChevronRightIcon />
+          View all <ChevronRightIcon />
         </ViewAllButton>
       </Header>
-          <BookingTitle>Bookings</BookingTitle>
+      <BookingTitle>Bookings</BookingTitle>
       <FlexContainer>
         <BookingDetailsContainer>
           <BookingDetailsCard>
-          <BookingId>#{booking.id}</BookingId>
+            <BookingId>#{booking._id}</BookingId>
             <DetailRow>
-
               <DetailLabel><LocationOnIcon /></DetailLabel>
-              <DetailValue>{booking.address}</DetailValue>
+              <DetailValue>{booking.farmLocation}</DetailValue>
             </DetailRow>
             <DetailRow>
               <DetailLabel><CalendarTodayIcon /></DetailLabel>
-              <DetailValue>{booking.date}</DetailValue>
+              <DetailValue>{new Date(booking.date).toLocaleDateString()}</DetailValue>
               <DetailLabel style={{ marginLeft: '20px' }}><AccessTimeIcon /></DetailLabel>
               <DetailValue>{booking.time}</DetailValue>
             </DetailRow>
             <DetailRow>
               <DetailLabel>Booking Name:</DetailLabel>
-              <DetailValue>{booking.name}</DetailValue>
+              <DetailValue>{booking.farmerName}</DetailValue>
             </DetailRow>
             <DetailRow>
               <DetailLabel>Contact number:</DetailLabel>
@@ -296,42 +324,41 @@ const AssignRunnerDetails = () => {
             </DetailRow>
             <DetailRow>
               <DetailLabel>Farm Area:</DetailLabel>
-              <DetailValue>{booking.farmArea}</DetailValue>
+              <DetailValue>{booking.farmArea} Acres</DetailValue>
             </DetailRow>
             <DetailRow>
               <DetailLabel>Crop:</DetailLabel>
-              <DetailValue>{booking.crop}</DetailValue>
+              <DetailValue>{booking.cropName}</DetailValue>
             </DetailRow>
             <HorizontalLine />
             <DetailRow>
-              <DetailLabel>{booking.temperature}</DetailLabel>
+              <DetailLabel>{booking.weather}</DetailLabel>
             </DetailRow>
             <DetailRow>
-              <DetailLabel><OpacityIcon /> {booking.humidity}</DetailLabel>
+              <DetailLabel><OpacityIcon /> {booking.weather}</DetailLabel>
             </DetailRow>
-           <ActionButton onClick={handleAssignRunner}>Assign Runner</ActionButton>
-
+            <ActionButton onClick={handleAssignRunner}>Assign Runner</ActionButton>
           </BookingDetailsCard>
         </BookingDetailsContainer>
         <PaymentSummary>
           <h3>Payment Summary</h3>
           <DetailRow>
             <DetailLabel>Estimated Total:</DetailLabel>
-            <DetailValue>₹2589</DetailValue>
+            <DetailValue>₹{booking.quotePrice || 0}</DetailValue>
           </DetailRow>
           <HorizontalLine />
           <PaymentRow>
             <DetailLabel>Estimated Total</DetailLabel>
-            <DetailValue>₹1999</DetailValue>
+            <DetailValue>₹{booking.quotePrice || 0}</DetailValue>
           </PaymentRow>
           <PaymentRow>
             <DetailLabel>Taxes and fee</DetailLabel>
-            <DetailValue>₹199</DetailValue>
+            <DetailValue>₹{Math.round(booking.quotePrice * 0.1) || 0}</DetailValue>
           </PaymentRow>
           <HorizontalLine />
           <PaymentRow>
             <DetailLabel>Total</DetailLabel>
-            <DetailValue>₹2198</DetailValue>
+            <DetailValue>₹{Math.round(booking.quotePrice * 1.1) || 0}</DetailValue>
           </PaymentRow>
         </PaymentSummary>
       </FlexContainer>
@@ -351,12 +378,12 @@ const AssignRunnerDetails = () => {
               </thead>
               <tbody>
                 {runners.map(runner => (
-                  <TableRow key={runner.id}>
+                  <TableRow key={runner._id}>
                     <TableCell>{runner.name}</TableCell>
-                    <TableCell>{runner.contact}</TableCell>
-                    <TableCell>{runner.status}</TableCell>
+                    <TableCell>{runner.mobileNumber}</TableCell>
+                    <TableCell>{runner.isBlocked ? 'Inactive' : 'Active'}</TableCell>
                     <TableCell>
-                      <ActionButton onClick={() => handleRunnerSelect(runner)}>Select</ActionButton>
+                      <ActionButton onClick={() => handleRunnerSelect(runner)} disabled={runner.isBlocked}>Select</ActionButton>
                     </TableCell>
                   </TableRow>
                 ))}
