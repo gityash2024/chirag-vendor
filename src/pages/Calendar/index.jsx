@@ -232,7 +232,7 @@ const Calendar = () => {
   });
 
   const renderBookingCard = (booking) => (
-    <Card to={booking.status === 'completed' ? `/completed-booking/${booking._id}` : `/calendar-confirm-booking-details/${booking._id}`} key={booking._id}>
+    <Card to={`/booking-details/${booking._id}`} key={booking._id}>
       <CardHeader>
         <BookingId>#{booking._id}</BookingId>
         <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
