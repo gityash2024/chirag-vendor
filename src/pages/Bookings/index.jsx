@@ -423,10 +423,13 @@ const Bookings = () => {
 
     if (currentItems.length === 0) {
       return (
+        <>
+        <EmptyStateContainer></EmptyStateContainer>
         <EmptyStateContainer>
           <EmptyStateImage src={noBookingsImage} alt="No bookings" />
-          <EmptyStateText>Currently, no bookings available.</EmptyStateText>
+          <EmptyStateText>Currently, no bookings available for {activeTab}.</EmptyStateText>
         </EmptyStateContainer>
+        </>
       );
     }
 

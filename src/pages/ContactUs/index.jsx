@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
-// Import icons (replace these with actual imports when you have the assets)
 import phoneIcon from '../../assets/phone-icon.png';
 import mailIcon from '../../assets/mail-icon.png';
 import addressIcon from '../../assets/address-icon.png';
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   padding: 20px;
@@ -66,7 +65,7 @@ const TextArea = styled.textarea`
 `;
 
 const SubmitButton = styled.button`
-width: 200px;
+  width: 200px;
   grid-column: span 2;
   background-color: #333;
   color: white;
@@ -89,7 +88,7 @@ const ContactInfoContainer = styled.div`
 `;
 
 const ContactCard = styled.div`
-margin-top: 20px;
+  margin-top: 20px;
   background-color: #fff;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
@@ -112,6 +111,7 @@ const ContactTitle = styled.h3`
 
 const ContactText = styled.p`
   font-size: 14px;
+  cursor: pointer;
   color: #666;
 `;
 
@@ -123,15 +123,80 @@ const ContactUs = () => {
     phone: '',
     message: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log(formData);
+    setIsLoading(true);
+
+    if (formData.firstName.length + formData.lastName.length > 100) {
+      toast.error("Name should be 100 characters or less");
+      setIsLoading(false);
+      return;
+    }
+
+    if (formData.message.length > 500) {
+      toast.error("Message should be 500 characters or less");
+      setIsLoading(false);
+      return;
+    }
+
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      toast.error("Please enter a valid 10-digit Indian mobile number");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbyXyfdhwTFNrIxrDsmZaDY5biqot3ssgCAWwQvSKWmfwzQvo2uKZ5C9Q53ToeYfznW6/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phone: formData.phone,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      toast.success('Form submitted successfully, We will contact you soon!');
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        message: '',
+      });
+    } catch (error) {
+      toast.error('Error submitting form');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCardClick = (type) => {
+    switch (type) {
+      case 'phone':
+        window.location.href = 'tel:+1234567890';
+        break;
+      case 'mail':
+        window.location.href = 'mailto:info@chiragconnect.com';
+        break;
+      case 'address':
+        window.open('https://maps.google.com?q=3474 Don Jackson Lane, Port Huron, MI 48060', '_blank');
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -195,21 +260,23 @@ const ContactUs = () => {
             placeholder="Your message"
             required
           />
-          <SubmitButton type="submit">Send Inquiry</SubmitButton>
+          <SubmitButton type="submit" disabled={isLoading}>
+            {isLoading ? 'Sending...' : 'Send Inquiry'}
+          </SubmitButton>
         </Form>
       </FormContainer>
       <ContactInfoContainer>
-        <ContactCard>
+        <ContactCard onClick={() => handleCardClick('phone')}>
           <ContactIcon src={phoneIcon} alt="Phone" />
           <ContactTitle>Phone</ContactTitle>
           <ContactText>+1 23 456 7890</ContactText>
         </ContactCard>
-        <ContactCard>
+        <ContactCard onClick={() => handleCardClick('mail')}>
           <ContactIcon src={mailIcon} alt="Mail" />
           <ContactTitle>Mail</ContactTitle>
           <ContactText>info@chiragconnect.com</ContactText>
         </ContactCard>
-        <ContactCard>
+        <ContactCard onClick={() => handleCardClick('address')}>
           <ContactIcon src={addressIcon} alt="Address" />
           <ContactTitle>Address</ContactTitle>
           <ContactText>3474 Don Jackson Lane,<br />Port Huron, MI 48060</ContactText>
