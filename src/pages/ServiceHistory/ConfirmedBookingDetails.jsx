@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import OpacityIcon from '@mui/icons-material/Opacity';
 import PhoneIcon from '@mui/icons-material/Phone';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import fieldImage from '../../assets/field-image.png';
+import StarIcon from '@mui/icons-material/Star';
+import { getAllBookingsList } from '../../services/commonService';
+import { toast } from 'react-toastify';
+import Loader from '../../components/Loader';
+
 const Container = styled.div`
   padding: 20px;
   font-family: 'Public Sans', sans-serif;
@@ -36,7 +40,17 @@ const StatusBadge = styled.span`
   font-size: 12px;
   font-weight: 500;
   color: #000;
-  background-color: #BEF991;
+  background-color: ${props => {
+    switch(props.status) {
+      case 'requested': return '#FDF0CC';
+      case 'quote_received': return '#CDCCFD';
+      case 'confirmed': return '#E8FFF3';
+      case 'completed': return '#B1FF8C';
+      case 'closed': return '#E0E0E0';
+      case 'cancelled': return '#FFF0F1';
+      default: return '#E0E0E0';
+    }
+  }};
   margin-bottom: 20px;
 `;
 
@@ -49,7 +63,6 @@ const FlexContainer = styled.div`
 const BookingDetails = styled.div`
   background: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
-
   border: 1px solid #E0E0E0;
   border-radius: 8px;
   padding: 20px;
@@ -57,8 +70,7 @@ const BookingDetails = styled.div`
 `;
 
 const PaymentSummary = styled.div`
-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
-
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
   background: white;
   border: 1px solid #E0E0E0;
   border-radius: 8px;
@@ -92,7 +104,6 @@ const HorizontalLine = styled.hr`
 
 const RunnerCard = styled.div`
   background: white;
-  
   border: 1px solid #E0E0E0;
   border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
@@ -128,8 +139,7 @@ const CallButton = styled.button`
 `;
 
 const ServiceCard = styled.div`
-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
-
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
   background: white;
   border: 1px solid #E0E0E0;
   border-radius: 8px;
@@ -147,7 +157,7 @@ const ImageContainer = styled.div`
 const FieldImage = styled.img`
   width: 100px;
   height: 100px;
-  object75-fit: cover;
+  object-fit: cover;
   border-radius: 8px;
 `;
 
@@ -157,60 +167,64 @@ const RatingContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const CloseServiceButton = styled.button`
-  background-color: #000;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 70%;
-  display: block;
-//   margin: 0 auto;
-`;
+const ConfirmBookingDetails = () => {
+  const { id } = useParams();
+  const [booking, setBooking] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-const ConfirmedBookingDetails = () => {
-  const booking = {
-    id: 'AB123456',
-    status: 'Service completed',
-    address: 'Lorem ipsum dolor sit amet, street , Area, City, 560066',
-    name: 'Sachin Doe',
-    date: '13 June, 2023',
-    time: '09:00AM',
-    contactNumber: '0987654321',
-    farmArea: '21 Acres',
-    crop: 'Crop name',
-    temperature: '24°',
-    humidity: '2%',
-    runner: {
-      name: 'Runner name',
-      contact: '0987654321'
+  useEffect(() => {
+    fetchBookingDetails();
+  }, [id]);
+
+  const fetchBookingDetails = async () => {
+    try {
+      setLoading(true);
+      const response = await getAllBookingsList();
+      const foundBooking = response.data.find(b => b._id === id);
+      if (foundBooking) {
+        setBooking(foundBooking);
+      } else {
+        toast.error('Booking not found');
+      }
+    } catch (error) {
+      toast.error('Failed to fetch booking details');
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!booking) {
+    return <p>Booking not found</p>;
+  }
+
+  const averageRating = (booking.farmerRating && booking.vendorRating) 
+    ? ((booking.farmerRating + booking.vendorRating) / 2).toFixed(1) 
+    : null;
 
   return (
     <Container>
       <Title>Bookings</Title>
-      {/* <BookingId>#{booking.id}</BookingId>
-      <StatusBadge>{booking.status}</StatusBadge> */}
+      <BookingId>#{booking._id}</BookingId>
+      <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
       <FlexContainer>
         <BookingDetails>
-          <BookingId>#{booking.id}</BookingId>
           <DetailRow>
-          <StatusBadge>{booking.status}</StatusBadge>
             <DetailLabel><LocationOnIcon /> </DetailLabel>
-            <DetailValue>{booking.address}</DetailValue>
+            <DetailValue>{booking.farmLocation}</DetailValue>
           </DetailRow>
           <DetailRow>
             <DetailLabel><CalendarTodayIcon /> </DetailLabel>
-            <DetailValue>{booking.date}</DetailValue>
+            <DetailValue>{new Date(booking.date).toLocaleDateString()}</DetailValue>
             <DetailLabel><AccessTimeIcon /> </DetailLabel>
             <DetailValue>{booking.time}</DetailValue>
           </DetailRow>
           <DetailRow>
             <DetailLabel>Booking Name:</DetailLabel>
-            <DetailValue>{booking.name}</DetailValue>
+            <DetailValue>{booking.farmerName}</DetailValue>
           </DetailRow>
           <DetailRow>
             <DetailLabel>Contact number:</DetailLabel>
@@ -218,84 +232,102 @@ const ConfirmedBookingDetails = () => {
           </DetailRow>
           <DetailRow>
             <DetailLabel>Farm Area:</DetailLabel>
-            <DetailValue>{booking.farmArea}</DetailValue>
+            <DetailValue>{booking.farmArea} Acres</DetailValue>
           </DetailRow>
           <DetailRow>
             <DetailLabel>Crop:</DetailLabel>
-            <DetailValue>{booking.crop}</DetailValue>
+            <DetailValue>{booking.cropName}</DetailValue>
           </DetailRow>
           <DetailRow>
-            <DetailLabel>{booking.temperature}</DetailLabel>
-            <DetailLabel><OpacityIcon /> {booking.humidity}</DetailLabel>
+            <DetailLabel>{booking.weather}</DetailLabel>
+            <DetailLabel><OpacityIcon /> {booking.weather}</DetailLabel>
           </DetailRow>
         </BookingDetails>
-        <PaymentSummary>
-          <h3>Payment Summary</h3>
-          <DetailRow>
-            <DetailLabel>Estimated Total:</DetailLabel>
-            <DetailValue>₹2589</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel>Estimated Total</DetailLabel>
-            <DetailValue>₹1999</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel>Taxes and fee</DetailLabel>
-            <DetailValue>₹199</DetailValue>
-          </DetailRow>
-          <HorizontalLine />
-          <DetailRow>
-            <DetailLabel>Total</DetailLabel>
-            <DetailValue>₹2198</DetailValue>
-          </DetailRow>
-        </PaymentSummary>
+        {booking.status !== 'requested' && (
+          <PaymentSummary>
+            <h3>Payment Summary</h3>
+            <DetailRow>
+              <DetailLabel>Estimated Total:</DetailLabel>
+              <DetailValue>₹{booking.quotePrice}</DetailValue>
+            </DetailRow>
+            <DetailRow>
+              <DetailLabel>Estimated Total</DetailLabel>
+              <DetailValue>₹{booking.quotePrice}</DetailValue>
+            </DetailRow>
+            <DetailRow>
+              <DetailLabel>Taxes and fee</DetailLabel>
+              <DetailValue>₹{Math.round(booking.quotePrice * 0.1)}</DetailValue>
+            </DetailRow>
+            <HorizontalLine />
+            <DetailRow>
+              <DetailLabel>Total</DetailLabel>
+              <DetailValue>₹{Math.round(booking.quotePrice * 1.1)}</DetailValue>
+            </DetailRow>
+          </PaymentSummary>
+        )}
       </FlexContainer>
-      <RunnerCard>
-        <h3>Runner Assigned</h3>
-        <RunnerInfo>
-          <RunnerAvatar />
-          <div>
-            <div>{booking.runner.name}</div>
-            <div>Contact number: {booking.runner.contact}</div>
-          </div>
-        </RunnerInfo>
-        <CallButton><PhoneIcon /> Call Now</CallButton>
-      </RunnerCard>
-      <FlexContainer>
-        <ServiceCard>
-          <h3>Service started</h3>
-          <DetailRow>
-            <DetailLabel>Set of battery available:</DetailLabel>
-            <DetailValue>3</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel>Current Image of the field:</DetailLabel>
-          </DetailRow>
-          <ImageContainer>
-            <FieldImage src={fieldImage} alt="Field" />
-            <FieldImage src={fieldImage} alt="Field" />
-          </ImageContainer>
-        </ServiceCard>
-        <ServiceCard>
-          <h3>Service started</h3>
-          <DetailRow>
-            <DetailLabel>Image of the field after the service completed:</DetailLabel>
-          </DetailRow>
-          <ImageContainer>
-            <FieldImage src={fieldImage} alt="Field" />
-            <FieldImage src={fieldImage} alt="Field" />
-          </ImageContainer>
-        </ServiceCard>
-      </FlexContainer>
-      <h3>Please Rate the Runner</h3>
-      <RatingContainer>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <StarBorderIcon key={star} />
-        ))}
-      </RatingContainer>
-      <CloseServiceButton>Mark service closed</CloseServiceButton>
+      {booking.status !== 'requested' && booking.status !== 'quote_received' && booking.runner && (
+        <RunnerCard>
+          <h3>Runner Assigned</h3>
+          <RunnerInfo>
+            <RunnerAvatar />
+            <div>
+              <div>{booking.runner.name}</div>
+              <div>Contact number: {booking.runner.mobileNumber}</div>
+            </div>
+          </RunnerInfo>
+          <CallButton onClick={() => toast.info(`Calling ${booking.runner.mobileNumber}`)}>
+            <PhoneIcon /> Call Now
+          </CallButton>
+        </RunnerCard>
+      )}
+      {(booking.status === 'completed' || booking.status === 'closed') && (
+        <>
+          {booking.startFieldImages && booking.startFieldImages.length > 0 && (
+            <ServiceCard>
+              <h3>Service started</h3>
+              <DetailRow>
+                <DetailLabel>Set of battery available:</DetailLabel>
+                <DetailValue>{booking.batterySetAvailable}</DetailValue>
+              </DetailRow>
+              <DetailRow>
+                <DetailLabel>Current Image of the field:</DetailLabel>
+              </DetailRow>
+              <ImageContainer>
+                {booking.startFieldImages.map((image, index) => (
+                  <FieldImage key={index} src={image} alt="Field" />
+                ))}
+              </ImageContainer>
+            </ServiceCard>
+          )}
+          {booking.endFieldImages && booking.endFieldImages.length > 0 && (
+            <ServiceCard>
+              <h3>Service completed</h3>
+              <DetailRow>
+                <DetailLabel>Image of the field after the service completed:</DetailLabel>
+              </DetailRow>
+              <ImageContainer>
+                {booking.endFieldImages.map((image, index) => (
+                  <FieldImage key={index} src={image} alt="Field" />
+                ))}
+              </ImageContainer>
+            </ServiceCard>
+          )}
+        </>
+      )}
+      {averageRating && (
+        <>
+          <h3>Average Rating</h3>
+          <RatingContainer>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <StarIcon key={star} color={star <= averageRating ? 'primary' : 'disabled'} />
+            ))}
+            <span>{averageRating}</span>
+          </RatingContainer>
+        </>
+      )}
     </Container>
   );
 };
 
-export default ConfirmedBookingDetails;
+export default ConfirmBookingDetails;

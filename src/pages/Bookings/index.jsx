@@ -7,6 +7,10 @@ import AccessTime from "@mui/icons-material/AccessTime";
 import Opacity from "@mui/icons-material/Opacity";
 import CloseIcon from "@mui/icons-material/Close";
 import successWithdrawalCheck from "../../assets/check-wallet.svg";
+import Avatar from '@mui/icons-material/AccountCircle';
+
+import Phone from '@mui/icons-material/Phone';
+
 import noBookingsImage from "../../assets/no-booking.png";
 import {
   getAllBookingsList,
@@ -193,7 +197,41 @@ const PageButton = styled.button`
     cursor: not-allowed;
   }
 `;
+const RunnerDetails = styled.div`
+  margin-top: 15px;
+`;
 
+
+const RunnerName = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+`;
+
+const RunnerInfo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarIcon = styled(Avatar)`
+  margin-right: 10px;
+`;
+
+const RunnerContactButton = styled.button`
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  svg {
+    margin-right: 5px;
+  }
+`;
 const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -307,7 +345,7 @@ const Bookings = () => {
     try {
       const response = await getAllBookingsList();
       const filteredBookings = response.data.filter(
-        (booking) => booking.vendor === user
+        (booking) => booking.vendor?._id === user
       );
       const categorizedBookings = {
         "Requests via Farmer": filteredBookings.filter(
@@ -423,6 +461,20 @@ const Bookings = () => {
         {booking.quotePrice && (
           <PriceSummary>Quoted Price: ₹{booking.quotePrice}</PriceSummary>
         )}
+          {booking.runner && (
+        <RunnerDetails>
+          <strong>Assigned Runner:</strong>
+          <RunnerName>
+            <RunnerInfo>
+              <AvatarIcon />
+              <span>{booking.runner.name}</span>
+            </RunnerInfo>
+            <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
+              <Phone /> Call Now
+            </RunnerContactButton>
+          </RunnerName>
+        </RunnerDetails>
+      )}
         {(activeTab === "Requests via Farmer" ||
           activeTab === "Requests via admin") && (
           <ButtonContainer>
