@@ -4,6 +4,7 @@ import phoneIcon from '../../assets/phone-icon.png';
 import mailIcon from '../../assets/mail-icon.png';
 import addressIcon from '../../assets/address-icon.png';
 import { toast } from "react-toastify";
+import { useTranslation } from '../../TranslationContext.jsx';
 
 const Container = styled.div`
   padding: 20px;
@@ -116,6 +117,7 @@ const ContactText = styled.p`
 `;
 
 const ContactUs = () => {
+  const { translate } = useTranslation();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -134,20 +136,20 @@ const ContactUs = () => {
     setIsLoading(true);
 
     if (formData.firstName.length + formData.lastName.length > 100) {
-      toast.error("Name should be 100 characters or less");
+      toast.error(translate("contact.nameError"));
       setIsLoading(false);
       return;
     }
 
     if (formData.message.length > 500) {
-      toast.error("Message should be 500 characters or less");
+      toast.error(translate("contact.messageError"));
       setIsLoading(false);
       return;
     }
 
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!phoneRegex.test(formData.phone)) {
-      toast.error("Please enter a valid 10-digit Indian mobile number");
+      toast.error(translate("contact.phoneError"));
       setIsLoading(false);
       return;
     }
@@ -168,7 +170,7 @@ const ContactUs = () => {
         }),
       });
 
-      toast.success('Form submitted successfully, We will contact you soon!');
+      toast.success(translate("contact.successMessage"));
       setFormData({
         firstName: '',
         lastName: '',
@@ -177,7 +179,7 @@ const ContactUs = () => {
         message: '',
       });
     } catch (error) {
-      toast.error('Error submitting form');
+      toast.error(translate("contact.errorMessage"));
     } finally {
       setIsLoading(false);
     }
@@ -201,55 +203,55 @@ const ContactUs = () => {
 
   return (
     <Container>
-      <Title>Contact us</Title>
+      <Title>{translate("contact.title")}</Title>
       <FormContainer>
-        <FormTitle>Get in touch with us</FormTitle>
+        <FormTitle>{translate("contact.formTitle")}</FormTitle>
         <Form onSubmit={handleSubmit}>
           <InputGroup>
-            <Label htmlFor="firstName">First Name</Label>
+            <Label htmlFor="firstName">{translate("contact.firstName")}</Label>
             <Input
               type="text"
               id="firstName"
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              placeholder="Enter your first name"
+              placeholder={translate("contact.firstNamePlaceholder")}
               required
             />
           </InputGroup>
           <InputGroup>
-            <Label htmlFor="lastName">Last Name</Label>
+            <Label htmlFor="lastName">{translate("contact.lastName")}</Label>
             <Input
               type="text"
               id="lastName"
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              placeholder="Enter your last name"
+              placeholder={translate("contact.lastNamePlaceholder")}
               required
             />
           </InputGroup>
           <InputGroup>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{translate("contact.email")}</Label>
             <Input
               type="email"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
+              placeholder={translate("contact.emailPlaceholder")}
               required
             />
           </InputGroup>
           <InputGroup>
-            <Label htmlFor="phone">Phone</Label>
+            <Label htmlFor="phone">{translate("contact.phone")}</Label>
             <Input
               type="tel"
               id="phone"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              placeholder="Enter your phone number"
+              placeholder={translate("contact.phonePlaceholder")}
               required
             />
           </InputGroup>
@@ -257,29 +259,29 @@ const ContactUs = () => {
             name="message"
             value={formData.message}
             onChange={handleChange}
-            placeholder="Your message"
+            placeholder={translate("contact.messagePlaceholder")}
             required
           />
           <SubmitButton type="submit" disabled={isLoading}>
-            {isLoading ? 'Sending...' : 'Send Inquiry'}
+            {isLoading ? translate("contact.sendingButton") : translate("contact.sendButton")}
           </SubmitButton>
         </Form>
       </FormContainer>
       <ContactInfoContainer>
         <ContactCard onClick={() => handleCardClick('phone')}>
           <ContactIcon src={phoneIcon} alt="Phone" />
-          <ContactTitle>Phone</ContactTitle>
-          <ContactText>+1 23 456 7890</ContactText>
+          <ContactTitle>{translate("contact.phoneTitle")}</ContactTitle>
+          <ContactText>{translate("contact.phoneNumber")}</ContactText>
         </ContactCard>
         <ContactCard onClick={() => handleCardClick('mail')}>
           <ContactIcon src={mailIcon} alt="Mail" />
-          <ContactTitle>Mail</ContactTitle>
-          <ContactText>info@chiragconnect.com</ContactText>
+          <ContactTitle>{translate("contact.mailTitle")}</ContactTitle>
+          <ContactText>{translate("contact.mailAddress")}</ContactText>
         </ContactCard>
         <ContactCard onClick={() => handleCardClick('address')}>
           <ContactIcon src={addressIcon} alt="Address" />
-          <ContactTitle>Address</ContactTitle>
-          <ContactText>3474 Don Jackson Lane,<br />Port Huron, MI 48060</ContactText>
+          <ContactTitle>{translate("contact.addressTitle")}</ContactTitle>
+          <ContactText>{translate("contact.addressText")}</ContactText>
         </ContactCard>
       </ContactInfoContainer>
     </Container>

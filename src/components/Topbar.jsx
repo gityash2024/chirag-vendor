@@ -58,7 +58,7 @@ const Topbar = () => {
 
   useEffect(() => {
     fetchNotificationCount();
-    const socket = io("http://localhost:5000", {
+    const socket = io("http://192.168.172.62:5000", {
       withCredentials: true,
       transports: ['websocket']
     });

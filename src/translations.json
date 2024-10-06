@@ -1,25 +1,278 @@
 {
-    "en": {
-      "languageSelection": {
-        "title": "Please select your preferred language",
-        "subtitle": "You can change your app language at any time from Profile > Language",
-        "selectLabel": "Select language",
-        "continueButton": "Continue"
+  "en": {
+    "Privacy policy": "Privacy policy",
+    "COMMENTS": "COMMENTS",
+    "MEDIA": "MEDIA",
+    "CONTACT FORMS": "CONTACT FORMS",
+    "EMBEDDED CONTENT FROM OTHER WEBSITES": "EMBEDDED CONTENT FROM OTHER WEBSITES",
+    "commentCollection": "When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor's IP address and browser user agent string to help spam detection.",
+    "gravatarInfo": "An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: After approval of your comment, your profile picture is visible to the public in the context of your comment.",
+    "mediaWarning": "If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.",
+    "commentOptIn": "If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.",
+    "temporaryCookie": "If you have an account and you log in to this site, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.",
+    "loginCookies": "When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select 'Remember Me', your login will persist for two weeks. If you log out of your account, the login cookies will be removed.",
+    "editCookie": "If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.",
+    "embeddedContent": "Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.",
+    "dataCollection": "These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracing your interaction with the embedded content if you have an account and are logged in to that website.",
+    "termsAndConditions": {
+      "Terms and Conditions": "Terms and Conditions",
+      "COMMENTS": "COMMENTS",
+      "commentCollection": "When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor's IP address and browser user agent string to help spam detection.",
+      "gravatarInfo": "An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: After approval of your comment, your profile picture is visible to the public in the context of your comment.",
+      "MEDIA": "MEDIA",
+      "mediaWarning": "If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.",
+      "CONTACT FORMS": "CONTACT FORMS",
+      "commentOptIn": "If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.",
+      "temporaryCookie": "If you have an account and you log in to this site, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.",
+      "loginCookies": "When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select 'Remember Me', your login will persist for two weeks. If you log out of your account, the login cookies will be removed.",
+      "editCookie": "If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.",
+      "EMBEDDED CONTENT FROM OTHER WEBSITES": "EMBEDDED CONTENT FROM OTHER WEBSITES",
+      "embeddedContent": "Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.",
+      "dataCollection": "These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracing your interaction with the embedded content if you have an account and are logged in to that website."
+    },
+    "contact": {
+      "title": "Contact us",
+      "formTitle": "Get in touch with us",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastNamePlaceholder": "Enter your last name",
+      "emailPlaceholder": "Enter your email",
+      "phonePlaceholder": "Enter your phone number",
+      "messagePlaceholder": "Your message",
+      "sendButton": "Send Inquiry",
+      "sendingButton": "Sending...",
+      "nameError": "Name should be 100 characters or less",
+      "messageError": "Message should be 500 characters or less",
+      "phoneError": "Please enter a valid 10-digit Indian mobile number",
+      "successMessage": "Form submitted successfully, We will contact you soon!",
+      "errorMessage": "Error submitting form",
+      "phoneTitle": "Phone",
+      "phoneNumber": "+1 23 456 7890",
+      "mailTitle": "Mail",
+      "mailAddress": "info@chiragconnect.com",
+      "addressTitle": "Address",
+      "addressText": "3474 Don Jackson Lane,<br />Port Huron, MI 48060"
+    },
+    "recommendations": {
+      "title": "Spray Guide",
+      "selectCrop": "Please select the crop",
+      "nextButton": "Next",
+      "recommendationFor": "Recommendation for crop",
+      "readCarefully": "Please read the Recommendation carefully!",
+      "checkboxLabel": "I have read all the recommendations carefully.",
+      "doneButton": "Done",
+      "crops": {
+        "rice": "Rice",
+        "maize": "Maize",
+        "groundnut": "Groundnut",
+        "pigeonPea": "Pigeon pea",
+        "soybean": "Soybean",
+        "sugarcane": "Sugarcane",
+        "wheat": "Wheat",
+        "sesame": "Sesame",
+        "safflower": "Safflower",
+        "cotton": "Cotton",
+        "tomato": "Tomato",
+        "onion": "Onion",
+        "potato": "Potato",
+        "brinjal": "Brinjal",
+        "mustard": "Mustard",
+        "moongDal": "Moong Dal",
+        "arharDal": "Arhar Dal",
+        "chilli": "Chilli",
+        "mango": "Mango",
+        "papaya": "Papaya",
+        "apple": "Apple",
+        "litchi": "Litchi"
       },
-      "login": {
-        "title": "Login",
-        "emailPlaceholder": "Enter your email",
-        "passwordPlaceholder": "Enter your password",
-        "loginButton": "Log In"
+      "flyingSpeed": {
+        "title": "DRONE FLYING SPEED",
+        "content": "During Spraying: (4.5-5.0)\nDuring Turning RTL etc: <5.5"
+      },
+      "height": {
+        "title": "HEIGHT ABOVE CROP CANOPY (m)",
+        "content": "During Spraying: (4.5-5.0)\nDuring Turning RTL etc: <5.5"
+      },
+      "waterVolume": {
+        "title": "WATER VOLUME (L/HA)",
+        "content": "Stage 1: Early stage\n20\nFull canopy stage:\n25"
+      },
+      "nozzle": {
+        "title": "NOZZLE",
+        "content": "Type of nozzle: Anti Drift fan\nDroplet size (μm) Insecticide: 250-350\nDroplet size (μm) Fungicide: 250-350\nNozzle discharge rate (l/min): 0.8-1.0\nMesh: 50-100\nSwath (m): 3-4\nNumber of Nozzles: 4-8\nPressure (bar): 2-3"
+      },
+      "sprayTime": {
+        "title": "SUITABLE TIME OF SPRAY",
+        "content": "Summer & rainy season: 6am-10am & 3pm-6pm\nWinter season: 8am-11am & 2pm-5pm\nStrictly avoid spraying during flowering season (8am - 5pm)"
+      },
+      "environmentalConditions": {
+        "title": "ENVIRONMENTAL CONDITIONS",
+        "content": "Temperature: <35°C\nHumidity: >60%\nWind Speed: <10km/h\nDuring Rain: Do not Spray\nDo not operate if visibility during mist/fog is not good"
+      },
+      "siteSpecific": {
+        "title": "SITE SPECIFIC",
+        "content": "Plain land: take care of obstacles present in field: Yes\nSloppy terrain: Use terrain following sensors: Yes\nDo not operate if visibility during mist/fog is not good"
+      },
+      "bufferZone": {
+        "title": "LENGTH OF BUFFER ZONE (M) TO AVOID",
+        "content": "Non-targeted Crops: 5\nWater bodies etc: 100"
+      },
+      "warnings": {
+        "nightSpray": "As the larvae of Army worm are active at night, spraying in the evening is more advantageous.",
+        "earlySpray": "Spraying chemical insecticides early in the crop cycle are most likely to kill off the natural enemies and may not be economical.",
+        "precautions": "Precautions for pesticide use: Not more than two chemical sprays are to be used in entire crop duration. Same chemical should not be chosen for second spray. Sprays should always be directed towards whorl and applied either in early hours of the day or in the evening time."
       }
     },
-    "hi": {
-      "languageSelection": {
-        "title": "कृपया अपनी पसंदीदा भाषा चुनें",
-        "subtitle": "आप किसी भी समय प्रोफ़ाइल > भाषा से अपनी ऐप भाषा बदल सकते हैं",
-        "selectLabel": "भाषा चुनें",
-        "continueButton": "जारी रखें"
-      },
+    "languageSelection": {
+      "title": "Please select your preferred language",
+      "subtitle": "You can change your app language at any time from Profile > Language",
+      "subtitle2": "Profile > Language",
+      "selectLabel": "Select language",
+      "continueButton": "Continue"
+    },
+    "login": {
+      "title": "Login",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "loginButton": "Log In"
+    }
+  },
+  "hi": {
+    "Privacy policy": "गोपनीयता नीति",
+    "COMMENTS": "टिप्पणियाँ",
+    "MEDIA": "मीडिया",
+    "CONTACT FORMS": "संपर्क फ़ॉर्म",
+    "EMBEDDED CONTENT FROM OTHER WEBSITES": "अन्य वेबसाइटों से एम्बेड की गई सामग्री",
+    "commentCollection": "जब आगंतुक साइट पर टिप्पणियाँ छोड़ते हैं, तो हम टिप्पणी फ़ॉर्म में दिखाई गई जानकारी के साथ-साथ आगंतुक का IP पता और ब्राउज़र यूज़र एजेंट स्ट्रिंग भी एकत्र करते हैं ताकि स्पैम का पता लगाने में मदद मिल सके।",
+    "gravatarInfo": "आपके ईमेल पते से बनाई गई एक अमान्य स्ट्रिंग (जिसे हैश भी कहा जाता है) को यह देखने के लिए ग्रैवेटर सेवा को प्रदान किया जा सकता है कि क्या आप इसका उपयोग कर रहे हैं। ग्रैवेटर सेवा की गोपनीयता नीति यहां उपलब्ध है: आपकी टिप्पणी की स्वीकृति के बाद, आपका प्रोफ़ाइल चित्र आपकी टिप्पणी के संदर्भ में सार्वजनिक रूप से दिखाई देता है।",
+    "mediaWarning": "यदि आप वेबसाइट पर छवियाँ अपलोड करते हैं, तो आपको एम्बेडेड स्थान डेटा (EXIF GPS) शामिल छवियाँ अपलोड करने से बचना चाहिए। वेबसाइट पर आने वाले आगंतुक छवियों से किसी भी स्थान डेटा को डाउनलोड और निकाल सकते हैं।",
+    "commentOptIn": "यदि आप हमारी साइट पर टिप्पणी छोड़ते हैं, तो आप कुकीज़ में अपना नाम, ईमेल पता और वेबसाइट सहेजने के लिए ऑप्ट-इन कर सकते हैं। ये आपके लिए सुविधाजनक हैं ताकि आपको जब आप दूसरी टिप्पणी छोड़ते हैं, तो अपनी जानकारी फिर से भरने की आवश्यकता न हो। ये कुकीज़ एक वर्ष तक बनी रहेंगी।",
+    "temporaryCookie": "यदि आपके पास एक खाता है और आप इस साइट पर लॉग इन करते हैं, तो हम यह निर्धारित करने के लिए एक अस्थायी कुकी सेट करेंगे कि आपका ब्राउज़र कुकीज़ को स्वीकार करता है। यह कुकी कोई व्यक्तिगत डेटा नहीं रखती है और जब आप अपने ब्राउज़र को बंद करते हैं तो इसे हटा दिया जाता है।",
+    "loginCookies": "जब आप लॉग इन करते हैं, तो हम आपकी लॉगिन जानकारी और आपकी स्क्रीन डिस्प्ले विकल्पों को सहेजने के लिए कई कुकीज़ भी सेट करेंगे। लॉगिन कुकीज़ दो दिनों तक रहती हैं, और स्क्रीन विकल्प कुकीज़ एक वर्ष तक रहती हैं। यदि आप 'मुझे याद रखें' चुनते हैं, तो आपका लॉगिन दो हफ्तों तक बना रहेगा। यदि आप अपने खाते से लॉग आउट करते हैं, तो लॉगिन कुकीज़ हटा दी जाएंगी।",
+    "editCookie": "यदि आप एक लेख संपादित या प्रकाशित करते हैं, तो एक अतिरिक्त कुकी आपके ब्राउज़र में सहेजी जाएगी। इस कुकी में कोई व्यक्तिगत डेटा नहीं होता है और यह बस उस लेख की पोस्ट आईडी को दर्शाती है जिसे आपने अभी संपादित किया है। यह 1 दिन बाद समाप्त हो जाती है।",
+    "embeddedContent": "इस साइट पर लेखों में एम्बेडेड सामग्री (जैसे वीडियो, छवियाँ, लेख, आदि) शामिल हो सकते हैं। अन्य वेबसाइटों से एम्बेडेड सामग्री उसी तरह कार्य करती है जैसे कि आगंतुक ने अन्य वेबसाइट पर यात्रा की है।",
+    "dataCollection": "इन वेबसाइटों के पास आपके बारे में डेटा एकत्र करने, कुकीज़ का उपयोग करने, अतिरिक्त तीसरे पक्ष की ट्रैकिंग एम्बेड करने और उस एम्बेडेड सामग्री के साथ आपके इंटरैक्शन की निगरानी करने की क्षमता हो सकती है, जिसमें यदि आपके पास एक खाता है और आप उस वेबसाइट में लॉग इन हैं तो एम्बेडेड सामग्री के साथ आपके इंटरैक्शन को ट्रेस करना शामिल है।",
+    "languageSelection": {
+      "title": "कृपया अपनी पसंदीदा भाषा चुनें",
+      "subtitle": "आप किसी भी समय प्रोफ़ाइल > भाषा से अपनी ऐप भाषा बदल सकते हैं",
+      "selectLabel": "भाषा चुनें",
+      "continueButton": "जारी रखें"
+    },
+    "termsAndConditions": {
+      "Terms and Conditions": "शर्तें और नियम",
+      "COMMENTS": "टिप्पणियाँ",
+      "commentCollection": "जब विज़िटर साइट पर टिप्पणियाँ छोड़ते हैं, तो हम टिप्पणियाँ फ़ॉर्म में दिखाए गए डेटा को एकत्र करते हैं, और साथ ही विज़िटर का आईपी पता और ब्राउज़र उपयोगकर्ता एजेंट स्ट्रिंग भी एकत्र करते हैं ताकि स्पैम का पता लगाने में मदद मिल सके।",
+      "gravatarInfo": "आपके ईमेल पते से बनाए गए एक एनोनिमाइज्ड स्ट्रिंग (जिसे हैश भी कहा जाता है) को यह देखने के लिए ग्रेवेटर सेवा को प्रदान किया जा सकता है कि क्या आप इसका उपयोग कर रहे हैं। ग्रेवेटर सेवा की गोपनीयता नीति यहाँ उपलब्ध है: आपकी टिप्पणी की स्वीकृति के बाद, आपकी प्रोफ़ाइल चित्र आपकी टिप्पणी के संदर्भ में जनता के लिए दिखाई देती है।",
+      "MEDIA": "मीडिया",
+      "mediaWarning": "यदि आप वेबसाइट पर छवियाँ अपलोड करते हैं, तो आपको शामिल स्थान डेटा (EXIF GPS) वाली छवियाँ अपलोड करने से बचना चाहिए। वेबसाइट पर विज़िटर छवियों से कोई भी स्थान डेटा डाउनलोड और निकाल सकते हैं।",
+      "CONTACT FORMS": "संपर्क फ़ॉर्म",
+      "commentOptIn": "यदि आप हमारी साइट पर एक टिप्पणी छोड़ते हैं, तो आप कुकीज़ में अपने नाम, ईमेल पते और वेबसाइट को सहेजने के लिए ऑप्ट-इन कर सकते हैं। ये आपकी सुविधा के लिए हैं ताकि आपको दूसरी टिप्पणी छोड़ते समय अपने विवरण को फिर से भरने की आवश्यकता न पड़े। ये कुकीज़ एक साल तक रहेंगी।",
+      "temporaryCookie": "यदि आपके पास एक खाता है और आप इस साइट में लॉग इन करते हैं, तो हम यह निर्धारित करने के लिए एक अस्थायी कुकी सेट करेंगे कि क्या आपका ब्राउज़र कुकीज़ स्वीकार करता है। इस कुकी में कोई व्यक्तिगत डेटा नहीं होता है और जब आप अपने ब्राउज़र को बंद करते हैं तो इसे नष्ट कर दिया जाता है।",
+      "loginCookies": "जब आप लॉग इन करते हैं, तो हम आपकी लॉगिन जानकारी और आपकी स्क्रीन डिस्प्ले विकल्पों को सहेजने के लिए कई कुकीज़ सेट करेंगे। लॉगिन कुकीज़ दो दिनों तक चलती हैं, और स्क्रीन विकल्प कुकीज़ एक साल तक चलती हैं। यदि आप 'मुझे याद रखें' का चयन करते हैं, तो आपकी लॉगिन दो सप्ताह तक बनी रहेगी। यदि आप अपने खाते से लॉग आउट करते हैं, तो लॉगिन कुकीज़ हटा दी जाएंगी।",
+      "editCookie": "यदि आप एक लेख संपादित या प्रकाशित करते हैं, तो एक अतिरिक्त कुकी आपके ब्राउज़र में सहेजी जाएगी। इस कुकी में कोई व्यक्तिगत डेटा शामिल नहीं होता है और बस यह इंगित करता है कि आपने अभी-अभी संपादित किए गए लेख की पोस्ट आईडी क्या है। यह 1 दिन के बाद समाप्त हो जाती है।",
+      "EMBEDDED CONTENT FROM OTHER WEBSITES": "अन्य वेबसाइटों से एंबेडेड सामग्री",
+      "embeddedContent": "इस साइट पर लेख में एंबेडेड सामग्री (जैसे वीडियो, छवियाँ, लेख आदि) शामिल हो सकते हैं। अन्य वेबसाइटों से एंबेडेड सामग्री का व्यवहार ठीक उसी तरह होता है जैसे यदि विज़िटर ने दूसरी वेबसाइट पर दौरा किया है।",
+      "dataCollection": "ये वेबसाइटें आपके बारे में डेटा एकत्र कर सकती हैं, कुकीज़ का उपयोग कर सकती हैं, अतिरिक्त तृतीय-पक्ष ट्रैकिंग एम्बेड कर सकती हैं, और उस एंबेडेड सामग्री के साथ आपकी बातचीत की निगरानी कर सकती हैं, जिसमें एंबेडेड सामग्री के साथ आपकी बातचीत को ट्रेस करना शामिल है यदि आपके पास एक खाता है और आप उस वेबसाइट में लॉग इन हैं।"
+    },
+    "contact": {
+      "title": "हमसे संपर्क करें",
+      "formTitle": "हमसे संपर्क करें",
+      "firstName": "पहला नाम",
+      "lastName": "अंतिम नाम",
+      "email": "ईमेल",
+      "phone": "फ़ोन",
+      "firstNamePlaceholder": "अपना पहला नाम दर्ज करें",
+      "lastNamePlaceholder": "अपना अंतिम नाम दर्ज करें",
+      "emailPlaceholder": "अपना ईमेल दर्ज करें",
+      "phonePlaceholder": "अपना फोन नंबर दर्ज करें",
+      "messagePlaceholder": "आपका संदेश",
+      "sendButton": "पूछताछ भेजें",
+      "sendingButton": "भेज रहा है...",
+      "nameError": "नाम 100 अक्षरों या उससे कम होना चाहिए",
+      "messageError": "संदेश 500 अक्षरों या उससे कम होना चाहिए",
+      "phoneError": "कृपया एक मान्य 10-अंकीय भारतीय मोबाइल नंबर दर्ज करें",
+      "successMessage": "फॉर्म सफलतापूर्वक जमा किया गया, हम जल्द ही आपसे संपर्क करेंगे!",
+      "errorMessage": "फॉर्म जमा करने में त्रुटि",
+      "phoneTitle": "फ़ोन",
+      "phoneNumber": "+1 23 456 7890",
+      "mailTitle": "मेल",
+      "mailAddress": "info@chiragconnect.com",
+      "addressTitle": "पता",
+      "addressText": "3474 डॉन जैक्सन लेन,<br />पोर्ट ह्यूरॉन, MI 48060"
+    },
+    "recommendations": {
+  "title": "स्प्रे गाइड",
+  "selectCrop": "कृपया फसल का चयन करें",
+  "nextButton": "अगला",
+  "recommendationFor": "अनुशंसा",
+  "readCarefully": "कृपया अनुशंसा को ध्यान से पढ़ें!",
+  "checkboxLabel": "मैंने सभी अनुशंसाओं को ध्यान से पढ़ लिया है।",
+  "doneButton": "पूर्ण",
+  "crops": {
+    "rice": "चावल",
+    "maize": "मक्का",
+    "groundnut": "मूंगफली",
+    "pigeonPea": "अरहर",
+    "soybean": "सोयाबीन",
+    "sugarcane": "गन्ना",
+    "wheat": "गेहूं",
+    "sesame": "तिल",
+    "safflower": "कुसुम",
+    "cotton": "कपास",
+    "tomato": "टमाटर",
+    "onion": "प्याज",
+    "potato": "आलू",
+    "brinjal": "बैंगन",
+    "mustard": "सरसों",
+    "moongDal": "मूंग दाल",
+    "arharDal": "अरहर दाल",
+    "chilli": "मिर्च",
+    "mango": "आम",
+    "papaya": "पपीता",
+    "apple": "सेब",
+    "litchi": "लीची"
+  },
+  "flyingSpeed": {
+    "title": "ड्रोन उड़ान की गति",
+    "content": "स्प्रे के दौरान: (4.5-5.0)\nमुड़ते समय RTL आदि: <5.5"
+  },
+  "height": {
+    "title": "फसल की ऊंचाई से ऊपर (मीटर)",
+    "content": "स्प्रे के दौरान: (4.5-5.0)\nमुड़ते समय RTL आदि: <5.5"
+  },
+  "waterVolume": {
+    "title": "पानी की मात्रा (लीटर/हेक्टेयर)",
+    "content": "चरण 1: प्रारंभिक अवस्था\n20\nपूर्ण कैनोपी अवस्था:\n25"
+  },
+  "nozzle": {
+    "title": "नोजल",
+    "content": "नोजल का प्रकार: एंटी ड्रिफ्ट फैन\nबूंद का आकार (μm) कीटनाशक: 250-350\nबूंद का आकार (μm) फफूंदनाशक: 250-350\nनोजल निर्वहन दर (लीटर/मिनट): 0.8-1.0\nमेश: 50-100\nस्वाथ (मीटर): 3-4\nनोजल की संख्या: 4-8\nदबाव (बार): 2-3"
+  },
+  "sprayTime": {
+    "title": "स्प्रे का उपयुक्त समय",
+    "content": "गर्मी और बरसात का मौसम: सुबह 6 बजे से 10 बजे तक और दोपहर 3 बजे से शाम 6 बजे तक\nसर्दी का मौसम: सुबह 8 बजे से 11 बजे तक और दोपहर 2 बजे से शाम 5 बजे तक\nफूल आने के मौसम में स्प्रे करने से सख्ती से बचें (सुबह 8 बजे से शाम 5 बजे तक)"
+  },
+  "environmentalConditions": {
+    "title": "पर्यावरणीय परिस्थितियां",
+    "content": "तापमान: <35°C\nआर्द्रता: >60%\nहवा की गति: <10 किमी/घंटा\nबारिश के दौरान: स्प्रे न करें\nयदि कोहरे/धुंध के दौरान दृश्यता अच्छी नहीं है तो संचालन न करें"
+  },
+  "siteSpecific": {
+    "title": "स्थल विशिष्ट",
+    "content": "समतल भूमि: खेत में मौजूद बाधाओं का ध्यान रखें: हां\nढलान वाली भूमि: इलाके का अनुसरण करने वाले सेंसर का उपयोग करें: हां\nयदि कोहरे/धुंध के दौरान दृश्यता अच्छी नहीं है तो संचालन न करें"
+  },
+  "bufferZone": {
+    "title": "बफर क्षेत्र की लंबाई (मीटर) जिससे बचना है",
+    "content": "गैर-लक्षित फसलें: 5\nजल निकाय आदि: 100"
+  },
+  "warnings": {
+    "nightSpray": "चूंकि आर्मी वर्म के लार्वा रात में सक्रिय होते हैं, इसलिए शाम को स्प्रे करना अधिक फायदेमंद होता है।",
+    "earlySpray": "फसल चक्र की शुरुआत में रासायनिक कीटनाशकों का छिड़काव प्राकृतिक शत्रुओं को मारने की संभावना अधिक होती है और यह आर्थिक रूप से लाभदायक नहीं हो सकता है।",
+    "precautions": "कीटनाशकों के उपयोग के लिए सावधानियां: पूरी फसल अवधि में दो से अधिक रासायनिक स्प्रे का उपयोग नहीं किया जाना चाहिए। दूसरे स्प्रे के लिए एक ही रसायन का चयन नहीं किया जाना चाहिए। स्प्रे हमेशा घुंडी की ओर निर्देशित होना चाहिए और या तो दिन के शुरुआती घंटों में या शाम के समय लागू किया जाना चाहिए।"
+  }
+},
       "login": {
         "title": "लॉग इन करें",
         "emailPlaceholder": "अपना ईमेल दर्ज करें",
