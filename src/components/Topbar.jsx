@@ -58,9 +58,21 @@ const Topbar = () => {
 
   useEffect(() => {
     fetchNotificationCount();
-    const socket = io("http://localhost:5000/");
+    const socket = io("http://localhost:5000", {
+      withCredentials: true,
+      transports: ['websocket']
+    });
     
+    socket.on('connect', () => {
+      console.log('Connected to socket server');
+    });
+
+    socket.on('connect_error', (error) => {
+      console.error('Socket connection error:', error);
+    });
+
     socket.on('newNotification', () => {
+      console.log('New notification received');
       fetchNotificationCount();
     });
 
@@ -68,7 +80,6 @@ const Topbar = () => {
       socket.disconnect();
     };
   }, []);
-
   const fetchNotificationCount = async () => {
     try {
       const response = await listNotifications({ page: 1, limit: 1, recipientRole: 'vendor' });

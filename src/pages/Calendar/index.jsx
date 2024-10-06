@@ -15,7 +15,7 @@ import Loader from '../../components/Loader';
 const CalendarContainer = styled.div`
   display: flex;
   font-family: 'Public Sans', sans-serif;
-  height: 100vh;
+  // height: 100vh;
 `;
 
 const CalendarColumn = styled.div`
@@ -204,7 +204,8 @@ const Calendar = () => {
     setLoading(true);
     try {
       const response = await getAllBookingsList();
-      const vendorBookings = response.data.filter(booking => booking.vendor === user?._id);
+      const vendorBookings = response.data.filter(booking => booking.vendor?._id === user?._id);
+      console.log(vendorBookings,'----------------vendor booking')
       setBookings(vendorBookings);
     } catch (error) {
       toast.error('Failed to fetch bookings');
@@ -222,12 +223,12 @@ const Calendar = () => {
 
   const filteredBookings = bookings.filter(booking => {
     const bookingDate = parseISO(booking.date);
-    return isSameDay(bookingDate, selectedDate) && booking.status === 'completed';
+    return isSameDay(bookingDate, selectedDate);
   });
 
   const upcomingBookings = bookings.filter(booking => {
     const bookingDate = parseISO(booking.date);
-    return isAfter(bookingDate, new Date()) && booking.status === 'confirmed';
+    return isAfter(bookingDate, new Date()) ;
   });
 
   const renderBookingCard = (booking) => (
@@ -250,7 +251,7 @@ const Calendar = () => {
         </TempHumidity>
         <Crop>Crop: {booking.cropName}</Crop>
       </TempHumidityCropRow>
-      <PriceSummary>Price Summary: ₹{booking.quotePrice}</PriceSummary>
+      <PriceSummary>{booking.quotePrice?'Price Summary: ₹ '+ booking.quotePrice: 'Price : Not Quoted yet'}</PriceSummary>
       {booking.runner && (
         <RunnerDetails>
           <strong>Assigned Runner:</strong>
@@ -297,7 +298,7 @@ const Calendar = () => {
         </CalendarGrid>
       </CalendarColumn>
       <BookingColumn>
-        <h3>Bookings for {format(selectedDate, 'MMMM d, yyyy')}</h3>
+        <h3 style={{marginBottom:"5px"}}>Bookings for {format(selectedDate, 'MMMM d, yyyy')}</h3>
         {filteredBookings.length > 0 ? (
           filteredBookings.map(renderBookingCard)
         ) : (
@@ -305,7 +306,7 @@ const Calendar = () => {
         )}
       </BookingColumn>
       <BookingColumn>
-        <h3>Upcoming Bookings</h3>
+        <h3 style={{marginBottom:"5px"}}>Upcoming Bookings</h3>
         {upcomingBookings.length > 0 ? (
           upcomingBookings.map(renderBookingCard)
         ) : (

@@ -26,7 +26,6 @@ import Wallet from './pages/Wallet';
 import Notifications from './pages/Notifications';
 import EditRunner from './pages/ManageRunner/edit-runner';
 import ConfirmedBookingDetails from './pages/ServiceHistory/ConfirmedBookingDetails';
-import ClosedBookingDetails from './pages/ServiceHistory/ClosedBookingDetails';
 import RunnerCanceledBookingDetail from './pages/Calendar/RunnerCanceledBookingDetail';
 import RunnerReachedBookingDetail from './pages/Calendar/RunnerReachedBookingDetail';
 import AssignRunnerDetails from './pages/Bookings/AssignRunnerDetails';
@@ -107,8 +106,8 @@ function App() {
                       <Route path="/notification" element={<Notifications />} />
                       <Route path="/wallet" element={<Wallet />} />
                       <Route path="/edit-runner/:id/:isView?" element={<EditRunner />} />
-                      <Route path="/closed-booking/:id" element={<ClosedBookingDetails />} />
                       <Route path="/confirm-booking/:id" element={<ConfirmedBookingDetails />} />
+                      <Route path="/booking-details/:id" element={<ConfirmedBookingDetails />} />
                       <Route path="/completed-booking/:id" element={<ConfirmedBookingDetails />} />
                       <Route path="/calendar-confirm-booking-details/:id" element={<RunnerReachedBookingDetail />} />
                       <Route path="/calendar-cancelled-booking-details/:id" element={<RunnerCanceledBookingDetail />} />
