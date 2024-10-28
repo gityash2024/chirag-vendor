@@ -238,6 +238,66 @@ const Home = () => {
   const [bookingRequests, setBookingRequests] = useState([]);
   const [runners, setRunners] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [dateFilter, setDateFilter] = useState('yearly');
+const [environmentalStats, setEnvironmentalStats] = useState({
+  waterSaved: 0,
+  pesticideReduction: 0,
+  carbonFootprint: 0
+});
+
+// Add this new useEffect after existing useEffects
+useEffect(() => {
+  if (bookingRequests.length > 0) {
+    calculateEnvironmentalStats();
+  }
+}, [bookingRequests, dateFilter]);
+
+// Add these new functions before the return statement
+const filterBookingsByDate = (bookings) => {
+  const now = new Date();
+  return bookings.filter(booking => {
+    const bookingDate = new Date(booking.date);
+    switch (dateFilter) {
+      case 'weekly':
+        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        return bookingDate >= weekAgo;
+      case 'monthly':
+        const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+        return bookingDate >= monthAgo;
+      case 'yearly':
+        const yearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+        return bookingDate >= yearAgo;
+      default:
+        return true;
+    }
+  });
+};
+
+const calculateEnvironmentalStats = () => {
+  const completedBookings = filterBookingsByDate(bookingRequests).filter(booking => 
+    booking.status === "completed" || booking.status === "closed"
+  );
+
+  if (completedBookings.length === 0) {
+    setEnvironmentalStats({
+      waterSaved: 0,
+      pesticideReduction: 0,
+      carbonFootprint: 0
+    });
+    return;
+  }
+
+  const totalWaterSaved = completedBookings.reduce((sum, booking) => sum + (booking.droneWaterUsage || 0), 0);
+  const totalPesticide = completedBookings.reduce((sum, booking) => sum + (booking.dronePesticideUsage || 0), 0);
+  const totalEmissions = completedBookings.reduce((sum, booking) => sum + (booking.emissionSavedPerHectare || 0), 0);
+
+  setEnvironmentalStats({
+    waterSaved: totalWaterSaved,
+    pesticideReduction: totalPesticide ? (totalPesticide / completedBookings.length) * 100 : 0,
+    carbonFootprint: totalEmissions ? (totalEmissions / completedBookings.length) * 100 : 0
+  });
+};
+
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -251,8 +311,15 @@ const Home = () => {
       const bookingsResponse = await getAllBookingsList();
       const runnersResponse = await getAllRunnersList();
       
-      const requestedBookings = bookingsResponse.data.filter(booking => (booking.status === 'requested' && booking?.vendor?._id === user?._id)).slice(0, 3);
-      setBookingRequests(requestedBookings);
+      // First filter all vendor's bookings
+      const vendorBookings = bookingsResponse.data.filter(booking => booking?.vendor?._id === user?._id);
+      
+      // Then get requested bookings for booking requests section
+      const requestedBookings = vendorBookings
+        .filter(booking => booking.status === 'requested')
+        .slice(0, 3);
+  
+      setBookingRequests(vendorBookings); // Store all vendor bookings for environmental stats
       setRunners(runnersResponse.data.slice(0, 6));
     } catch (error) {
       toast.error('Failed to fetch data');
@@ -260,7 +327,6 @@ const Home = () => {
       setLoading(false);
     }
   };
-
   const handleDecline = async (booking) => {
     try {
       const reason = prompt("Please enter a reason for rejection:");
@@ -361,32 +427,42 @@ const Home = () => {
       </Section>
 
       <Environmental_wraper className='Environmental_wraper'> 
-        <SectionHeader>
-          <SectionTitle>Environmental Report</SectionTitle>
-          <select className='weekly'>
-            <option>Weekly</option>
-            <option>Monthly</option>
-            <option>Yearly</option>
-          </select>
-        </SectionHeader>
-        <EnvironmentalReportContainer>
-          <ReportCard>
-            <ReportIcon src={waterIcon} alt="Water saved" />
-            <ReportValue color="#5CB1FF">400</ReportValue>
-            <ReportLabel>Water saved till now</ReportLabel>
-          </ReportCard>
-          <ReportCard>
-            <ReportIcon src={pesticideIcon} alt="Pesticide usage" />
-            <ReportValue color="#F1614B">40%</ReportValue>
-            <ReportLabel>Pesticide till now</ReportLabel>
-          </ReportCard>
-          <ReportCard>
-            <ReportIcon src={carbonFootprintIcon} alt="Carbon footprint" />
-            <ReportValue color="#41B079">40%</ReportValue>
-            <ReportLabel>Carbon footprint</ReportLabel>
-          </ReportCard>
-        </EnvironmentalReportContainer>
-      </Environmental_wraper>
+  <SectionHeader>
+    <SectionTitle>Environmental Report</SectionTitle>
+    <select 
+      className='weekly' 
+      value={dateFilter} 
+      onChange={(e) => setDateFilter(e.target.value)}
+    >
+      <option value="yearly">Yearly</option>
+      <option value="monthly">Monthly</option>
+      <option value="weekly">Weekly</option>
+    </select>
+  </SectionHeader>
+  <EnvironmentalReportContainer>
+    <ReportCard>
+      <ReportIcon src={waterIcon} alt="Water saved" />
+      <ReportValue color="#5CB1FF">
+        {environmentalStats.waterSaved.toFixed(2)}
+      </ReportValue>
+      <ReportLabel>Water saved till now</ReportLabel>
+    </ReportCard>
+    <ReportCard>
+      <ReportIcon src={pesticideIcon} alt="Pesticide usage" />
+      <ReportValue color="#F1614B">
+        {environmentalStats.pesticideReduction.toFixed(1)}%
+      </ReportValue>
+      <ReportLabel>Pesticide till now</ReportLabel>
+    </ReportCard>
+    <ReportCard>
+      <ReportIcon src={carbonFootprintIcon} alt="Carbon footprint" />
+      <ReportValue color="#41B079">
+        {environmentalStats.carbonFootprint.toFixed(1)}%
+      </ReportValue>
+      <ReportLabel>Carbon footprint</ReportLabel>
+    </ReportCard>
+  </EnvironmentalReportContainer>
+</Environmental_wraper>
     </HomeContainer>
   );
 };
