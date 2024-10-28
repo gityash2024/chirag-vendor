@@ -191,3 +191,131 @@ export const updateBooking = (payload) => {
   });
 };
 
+// Add these to your existing service file:
+
+export const addBankAccount = (payload) => {
+  const url = `${baseUrl}/wallet/bank-account`;
+  return instance.post(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const getBankAccounts = () => {
+  const url = `${baseUrl}/wallet/bank-accounts`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const makeDefaultBankAccount = (accountId) => {
+  const url = `${baseUrl}/wallet/bank-account/${accountId}/make-default`;
+  return instance.patch(url, {}, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const deleteBankAccount = (accountId) => {
+  const url = `${baseUrl}/wallet/bank-account/${accountId}`;
+  return instance.delete(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const verifyBankAccount = (accountId) => {
+  const url = `${baseUrl}/wallet/bank-account/${accountId}/verify`;
+  return instance.post(url, {}, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const getWithdrawalRequests = () => {
+  const url = `${baseUrl}/wallet/withdrawal-requests`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const cancelWithdrawalRequest = (requestId) => {
+  const url = `${baseUrl}/wallet/withdrawal-request/${requestId}`;
+  return instance.delete(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const getCommissionRates = () => {
+  const url = `${baseUrl}/commission/rates`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const getCommissionHistory = () => {
+  const url = `${baseUrl}/commission/history`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const getVendorCommissionSettings = () => {
+  const url = `${baseUrl}/vendors/commission-settings`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const updateVendorCommissionSettings = (payload) => {
+  const url = `${baseUrl}/vendors/commission-settings`;
+  return instance.put(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const addWalletMoney = (payload) => {
+  const url = `${baseUrl}/wallet/add-money`;
+  return instance.post(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const getWalletStats = () => {
+  const url = `${baseUrl}/wallet/stats`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const getPaymentMethods = () => {
+  const url = `${baseUrl}/wallet/payment-methods`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
