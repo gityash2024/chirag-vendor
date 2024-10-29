@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -11,6 +11,7 @@ import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
 import { useTranslation } from '../../TranslationContext';
+import { FiArrowLeft } from 'react-icons/fi';
 
 const Container = styled.div`
   padding: 20px;
@@ -26,7 +27,7 @@ const Title = styled.h2`
 `;
 
 const BookingId = styled.h3`
-  font-size: 32px;
+  font-size: 24px;
   color: #333;
   margin-bottom: 10px;
   font-weight: 600;
@@ -168,7 +169,24 @@ const RatingContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+const BackButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #E3E6E8;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #121212;
+  font-size: 16px;
+  float: right;
+`;
+
+const BackIcon = styled(FiArrowLeft)`
+  margin-right: 8px;
+`;
 const ConfirmBookingDetails = () => {
+  const navigate=useNavigate();
   const {translate}=useTranslation();
   const { id } = useParams();
   const [booking, setBooking] = useState(null);
@@ -210,6 +228,10 @@ const ConfirmBookingDetails = () => {
     return (
       <Container>
         <Title>{translate('bookingDetails.title')}</Title>
+        <BackButton onClick={() => navigate(-1)}>
+          <BackIcon />
+          Back
+        </BackButton>
         <BookingId>#{booking._id}</BookingId>
         <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
         <FlexContainer>
@@ -258,12 +280,14 @@ const ConfirmBookingDetails = () => {
               </DetailRow>
               <DetailRow>
                 <DetailLabel>{translate('bookingDetails.payment.taxesFee')}</DetailLabel>
-                <DetailValue>₹{Math.round(booking.quotePrice * 0.1)}</DetailValue>
+                <DetailValue>₹{0}</DetailValue>
+                {/* <DetailValue>₹{Math.round(booking.quotePrice * 0.1)}</DetailValue> */}
               </DetailRow>
               <HorizontalLine />
               <DetailRow>
                 <DetailLabel>{translate('bookingDetails.payment.total')}</DetailLabel>
-                <DetailValue>₹{Math.round(booking.quotePrice * 1.1)}</DetailValue>
+                <DetailValue>₹{Math.round(booking.quotePrice)}</DetailValue>
+                {/* <DetailValue>₹{Math.round(booking.quotePrice * 1.1)}</DetailValue> */}
               </DetailRow>
             </PaymentSummary>
           )}

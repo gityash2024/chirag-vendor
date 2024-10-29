@@ -27,7 +27,7 @@ const BookingsContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
   color: rgba(18, 18, 18, 1);
   margin-bottom: 20px;
@@ -64,13 +64,7 @@ const CardContainer = styled.div`
   gap: 20px;
 `;
 
-const Card = styled.div`
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
+
 
 const CardHeader = styled.div`
   display: flex;
@@ -79,40 +73,7 @@ const CardHeader = styled.div`
   margin-bottom: 10px;
 `;
 
-const BookingId = styled.h3`
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin: 0;
-`;
 
-const StatusBadge = styled.span`
-  display: inline-block;
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #000000;
-  background-color: ${(props) => {
-    if (props.status === "requested") return "#FDF0CC";
-    if (props.status === "quote_received") return "#CDCCFD";
-    if (props.status === "confirmed") return "#E8FFF3";
-    if (props.status === "completed") return "#E0E0E0";
-    return "#FFF0F1";
-  }};
-`;
-
-const BookingDetails = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  color: #666;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  svg {
-    margin-right: 5px;
-  }
-`;
 
 const DateTimeRow = styled.div`
   display: flex;
@@ -158,27 +119,6 @@ const PriceSummary = styled.p`
   margin-top: 15px;
 `;
 
-const ActionButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  margin: 4px;
-  background-color: ${(props) => (props.primary ? "#000000" : "#FFFFFF")};
-  color: ${(props) => (props.primary ? "#FFFFFF" : "#000000")};
-  border: ${(props) => (props.primary ? "none" : "1px solid #000000")};
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 15px;
-  font-family: "Public Sans";
-  font-weight: 500;
-  line-height: 17.6px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 
 const Pagination = styled.div`
   display: flex;
@@ -203,12 +143,6 @@ const RunnerDetails = styled.div`
 `;
 
 
-const RunnerName = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 5px;
-`;
 
 const RunnerInfo = styled.div`
   display: flex;
@@ -219,20 +153,7 @@ const AvatarIcon = styled(Avatar)`
   margin-right: 10px;
 `;
 
-const RunnerContactButton = styled.button`
-  display: flex;
-  align-items: center;
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #000000;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  svg {
-    margin-right: 5px;
-  }
-`;
+
 const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -324,6 +245,119 @@ const PriceLabel = styled.h3`
   color: rgba(141, 152, 164, 1);
 `;
 
+
+// Update these styled components in the vendor's code
+
+const Card = styled.div`
+  background: white;
+  cursor: pointer;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 300px;
+  padding-bottom: 70px;
+`;
+
+const BookingId = styled.h3`
+  font-size: 18px;
+  font-weight: 600;
+  color: #121212;
+  margin: 0;
+`;
+
+const StatusBadge = styled.span`
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #000000;
+  background-color: ${props => {
+    if (props.status === "requested") return "#FDF0CC";
+    if (props.status === "quote_received") return "#C6EEFF";
+    if (props.status === "confirmed") return "#E8FFF3";
+    if (props.status === "completed") return "#DAB4FF";
+    return "#E0E0E0";
+  }};
+`;
+
+const BookingDetails = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  color: #121212;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 5px;
+  }
+`;
+
+const RunnnerDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F8F9FA;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 15px;
+`;
+
+const RunnerName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+const RunnerContactButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #F8F9FA;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+const ActionButton = styled.button`
+  padding: 10px;
+  background-color: ${props => props.primary ? "#000000" : "#FFFFFF"};
+  color: ${props => props.primary ? "#FFFFFF" : "#000000"};
+  border: ${props => props.primary ? "none" : "1px solid #000000"};
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  width: ${props => props.fullWidth ? '100%' : '48%'}; // Add width based on fullWidth prop
+`;
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+`;
+
+
+
 const Bookings = () => {
   const { translate } = useTranslation();
   const navigate = useNavigate();
@@ -413,7 +447,9 @@ const Bookings = () => {
   const handleAssignRunner = (id) => {
     navigate(`/assign-runner/${id}`);
   };
-
+  const handleBookingClick = (booking) => {
+    navigate(`/booking-details/${booking._id}`);
+  };
   const renderBookings = () => {
     const currentBookings = bookings[activeTab] || [];
     const indexOfLastItem = currentPage * bookingsPerPage;
@@ -435,7 +471,7 @@ const Bookings = () => {
     }
 
     return currentItems.map((booking) => (
-      <Card key={booking._id}>
+      <Card  key={booking._id} onClick={() => handleBookingClick(booking)}>
         <CardHeader>
           <BookingId>#{booking._id}</BookingId>
           <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
@@ -473,35 +509,44 @@ const Bookings = () => {
             {translate('bookings.card.quotedPrice')}: ₹{booking.quotePrice}
           </PriceSummary>
         )}
-        {booking.runner && (
-          <RunnerDetails>
-            <strong>{translate('bookings.card.assignedRunner')}:</strong>
-            <RunnerName>
-              <RunnerInfo>
-                <AvatarIcon />
-                <span>{booking.runner.name}</span>
-              </RunnerInfo>
-              <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
-                <Phone /> {translate('bookings.card.callNow')}
-              </RunnerContactButton>
-            </RunnerName>
-          </RunnerDetails>
-        )}
-        {(activeTab === "Requests via Farmer" || activeTab === "Requests via admin") && (
-          <ButtonContainer>
-            <ActionButton onClick={() => handleDecline(booking)}>
-              {translate('bookings.card.decline')}
-            </ActionButton>
-            <ActionButton primary onClick={() => handleAccept(booking)}>
-              {translate('bookings.card.accept')}
-            </ActionButton>
-          </ButtonContainer>
-        )}
-        {activeTab === "Assign Runner" && (
-          <ActionButton primary onClick={() => handleAssignRunner(booking._id)}>
-            {translate('bookings.card.assignRunner')}
-          </ActionButton>
-        )}
+       {booking.runner && (
+  <RunnnerDetails>
+    <RunnerName>
+      <Avatar sx={{ width: 40, height: 40 }} />
+      <span>{booking.runner.name}</span>
+    </RunnerName>
+    <RunnerContactButton onClick={(e) => {
+      e.stopPropagation();
+      navigator.clipboard.writeText(booking.runner.mobileNumber);
+      toast.info(`Copied number: ${booking.runner.mobileNumber}`);
+    }}>
+      <Phone /> {translate('bookings.card.callNow')}
+    </RunnerContactButton>
+  </RunnnerDetails>
+)}
+      
+{(activeTab === "Requests via Farmer" || activeTab === "Requests via admin") && (
+  <ButtonContainer>
+    <ActionButton onClick={() => handleDecline(booking)}>
+      {translate('bookings.card.decline')}
+    </ActionButton>
+    <ActionButton primary onClick={() => handleAccept(booking)}>
+      {translate('bookings.card.accept')}
+    </ActionButton>
+  </ButtonContainer>
+)}
+
+{activeTab === "Assign Runner" && (
+  <ButtonContainer>
+    <ActionButton 
+      primary 
+      fullWidth 
+      onClick={() => handleAssignRunner(booking._id)}
+    >
+      {translate('bookings.card.assignRunner')}
+    </ActionButton>
+  </ButtonContainer>
+)}
       </Card>
     ));
   };

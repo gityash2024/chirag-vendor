@@ -31,7 +31,7 @@ const TitleContainer = styled.div`
 
 const BookingTitle = styled.h3`
   font-family: Public Sans;
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 37.6px;
   text-align: left;
@@ -353,12 +353,14 @@ const AssignRunnerDetails = () => {
           </PaymentRow>
           <PaymentRow>
             <DetailLabel>Taxes and fee</DetailLabel>
-            <DetailValue>₹{Math.round(booking.quotePrice * 0.1) || 0}</DetailValue>
+            <DetailValue>₹{0}</DetailValue>
+            {/* <DetailValue>₹{Math.round(booking.quotePrice * 0.1) || 0}</DetailValue> */}
           </PaymentRow>
           <HorizontalLine />
           <PaymentRow>
             <DetailLabel>Total</DetailLabel>
-            <DetailValue>₹{Math.round(booking.quotePrice * 1.1) || 0}</DetailValue>
+            <DetailValue>₹{Math.round(booking.quotePrice) || 0}</DetailValue>
+            {/* <DetailValue>₹{Math.round(booking.quotePrice * 1.1) || 0}</DetailValue> */}
           </PaymentRow>
         </PaymentSummary>
       </FlexContainer>

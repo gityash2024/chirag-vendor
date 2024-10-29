@@ -17,7 +17,7 @@ const ServiceHistoryContainer = styled.div`
 `;
 
 const Title = styled.h2`
-   font-size: 32px;
+   font-size: 24px;
    font-weight: 600;
    margin-bottom: 20px;
    color: rgba(18, 18, 18, 1);
@@ -64,21 +64,7 @@ const PriceSummary = styled.p`
   margin-top: 15px;
 `;
 
-const RunnerContactButton = styled.button`
-  display: flex;
-  align-items: center;
-  background: #ffffff;
-  color: #000000;
-  border: none;
-  border: 1px solid #000000;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  svg {
-    margin-right: 5px;
-  }
-`;
+
 
 const Pagination = styled.div`
   display: flex;
@@ -99,16 +85,6 @@ const PageButton = styled.button`
   }
 `;
 
-const Card = styled(Link)`
-  background: white;
-  border: 1px solid #E0E0E0;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-`;
 
 const CardHeader = styled.div`
   display: flex;
@@ -117,34 +93,6 @@ const CardHeader = styled.div`
   margin-bottom: 10px;
 `;
 
-const BookingId = styled.h3`
-  font-size: 20px;
-  color:rgba(18, 18, 18, 1);
-  margin: 0;
-  font-weight: 500;
-  font-family: 'Public Sans';
-  line-height: 23.5px;
-`;
-
-const StatusBadge = styled.span`
-  display: inline-block;
-  padding: 5px 22px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  color:#000000;
-  background-color: ${props => {
-    switch(props.status) {
-      case 'requested': return '#FDF0CC';
-      case 'quote_received': return '#CDCCFD';
-      case 'confirmed': return '#E8FFF3';
-      case 'completed': return '#B1FF8C';
-      case 'closed': return '#E0E0E0';
-      case 'cancelled': return '#FFF0F1';
-      default: return '#E0E0E0';
-    }
-  }};
-`;
 
 const TempHumidityCropRow = styled.div`
   display: flex;
@@ -180,21 +128,104 @@ const RunnerDetails = styled.div`
   margin-top: 15px;
 `;
 
+
+const AvatarIcon = styled(Avatar)`
+  margin-right: 10px;
+`;
+
+
+const Card = styled(Link)`
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  min-height: 300px;
+  padding-bottom: 70px;
+`;
+
+const BookingId = styled.h3`
+  font-size: 18px;
+  font-weight: 600;
+  color: #121212;
+  margin: 0;
+`;
+
+const StatusBadge = styled.span`
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #000000;
+  background-color: ${props => {
+    switch(props.status) {
+      case 'requested': return '#FDF0CC';
+      case 'quote_received': return '#CDCCFD';
+      case 'confirmed': return '#E8FFF3';
+      case 'completed': return '#B1FF8C';
+      case 'closed': return '#E0E0E0';
+      case 'cancelled': return '#FFF0F1';
+      default: return '#E0E0E0';
+    }
+  }};
+`;
+
+const RunnnerDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F8F9FA;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 15px;
+`;
+
 const RunnerName = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 5px;
+  gap: 12px;
 `;
 
 const RunnerInfo = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
+  
+  span {
+    font-weight: 500;
+    color: #121212;
+  }
 `;
 
-const AvatarIcon = styled(Avatar)`
-  margin-right: 10px;
+const RunnerContactButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #F8F9FA;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 `;
+
+
+
 
 const ServiceHistory = () => {
   const {translate} = useTranslation();
@@ -275,25 +306,22 @@ const ServiceHistory = () => {
                 {translate('serviceHistory.bookingDetails.priceSummary')}{booking.quotePrice}
               </PriceSummary>
             )}
-            {booking.runner && (
-              <RunnerDetails>
-                <strong>{translate('serviceHistory.bookingDetails.assignedRunner')}:</strong>
-                <RunnerName>
-                  <RunnerInfo>
-                    <AvatarIcon />
-                    <span>{booking.runner.name}</span>
-                  </RunnerInfo>
-                  <RunnerContactButton 
-                    onClick={(e) => { 
-                      e.preventDefault(); 
-                      toast.info(`Calling ${booking.runner.mobileNumber}`); 
-                    }}
-                  >
-                    <Phone /> {translate('serviceHistory.bookingDetails.callNow')}
-                  </RunnerContactButton>
-                </RunnerName>
-              </RunnerDetails>
-            )}
+{booking.runner && (
+  <RunnnerDetails>
+    <RunnerName>
+      <RunnerInfo>
+        <Avatar sx={{ width: 40, height: 40 }} />
+        <span>{booking?.runner?.name}</span>
+      </RunnerInfo>
+    </RunnerName>
+    <RunnerContactButton onClick={(e) => {
+      e.preventDefault();
+      toast.info(`Calling ${booking.runner.mobileNumber}`);
+    }}>
+      <Phone /> Call Now
+    </RunnerContactButton>
+  </RunnnerDetails>
+)}
           </Card>
         ))}
       </CardContainer>

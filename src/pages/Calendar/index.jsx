@@ -65,18 +65,6 @@ const BookingColumn = styled.div`
   max-height: 100vh;
 `;
 
-const Card = styled(Link)`
-  background: white;
-  border: 1px solid #E0E0E0;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  color: inherit;
-  display: block;
-`;
-
 const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -84,32 +72,7 @@ const CardHeader = styled.div`
   margin-bottom: 10px;
 `;
 
-const BookingId = styled.h3`
-  font-size: 18px;
-  color: #333;
-  margin: 0;
-`;
 
-const StatusBadge = styled.span`
-  display: inline-block;
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #000000;
-  background-color: ${props => props.status === 'completed' ? '#B1FF8C' : '#DAB4FF'};
-`;
-
-const BookingDetails = styled.p`
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  svg {
-    margin-right: 5px;
-  }
-`;
 
 const DateTimeRow = styled.div`
   display: flex;
@@ -158,12 +121,7 @@ const RunnerDetails = styled.div`
   margin-top: 15px;
 `;
 
-const RunnerName = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 5px;
-`;
+
 
 const RunnerInfo = styled.div`
   display: flex;
@@ -174,21 +132,94 @@ const AvatarIcon = styled(Avatar)`
   margin-right: 10px;
 `;
 
-const RunnerContactButton = styled.button`
+const Card = styled(Link)`
+  background: white;
+  cursor: pointer;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  min-height: 300px;
+`;
+
+const BookingId = styled.h3`
+  font-size: 18px;
+  font-weight: 600;
+  color: #121212;
+  margin: 0;
+`;
+
+const StatusBadge = styled.span`
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #000000;
+  background-color: ${props => {
+    if (props.status === "requested") return "#FDF0CC";
+    if (props.status === "quote_received") return "#C6EEFF";
+    if (props.status === "confirmed") return "#E8FFF3";
+    if (props.status === "completed") return "#DAB4FF";
+    return "#E0E0E0";
+  }};
+`;
+
+const BookingDetails = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  color: #121212;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #000000;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
   svg {
     margin-right: 5px;
   }
 `;
 
+const RunnnerDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F8F9FA;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 15px;
+`;
+
+const RunnerName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+const RunnerContactButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #F8F9FA;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
 const Calendar = () => {
   const { translate } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());

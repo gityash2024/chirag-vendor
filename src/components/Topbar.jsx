@@ -87,7 +87,7 @@ const Topbar = () => {
   };
   useEffect(() => {
     fetchNotificationCount();
-    const socket = io("http://localhost:5000", {
+    const socket = io("https://chirag.solminica.com", {
       withCredentials: true,
       transports: ['websocket']
     });

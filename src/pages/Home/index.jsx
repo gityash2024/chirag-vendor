@@ -34,7 +34,7 @@ const SectionHeader = styled.div`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
   color: rgba(18, 18, 18, 1);
   line-height: 37.6px;
