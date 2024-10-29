@@ -4,6 +4,7 @@ import noNotificationsImage from '../../assets/no-notifications.png';
 import { listNotifications } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
+import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`
   padding: 20px;
@@ -120,6 +121,7 @@ const NoNotificationsText = styled.p`
 `;
 
 const Notifications = () => {
+  const { translate } = useTranslation();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -153,11 +155,15 @@ const Notifications = () => {
   return (
     <Container>
       <Header>
-        <Title>Notifications</Title>
+        <Title>{translate('notifications.title')}</Title>
         <ActionContainer>
-          <ActionText onClick={markAllAsRead}>Mark all as read</ActionText>
+          <ActionText onClick={markAllAsRead}>
+            {translate('notifications.markAllAsRead')}
+          </ActionText>
           <Divider />
-          <ActionText onClick={clearAll}>Clear all</ActionText>
+          <ActionText onClick={clearAll}>
+            {translate('notifications.clearAll')}
+          </ActionText>
         </ActionContainer>
       </Header>
       {loading ? (
@@ -167,27 +173,52 @@ const Notifications = () => {
           <NotificationList>
             {notifications.map(notification => (
               <NotificationItem key={notification._id}>
-                <Avatar src={`https://ui-avatars.com/api/?name=${notification.type}&background=random`} alt="Notification type" />
+                <Avatar 
+                  src={`https://ui-avatars.com/api/?name=${notification.type}&background=random`} 
+                  alt="Notification type" 
+                />
                 <NotificationContent>
                   <NotificationText>{notification.description}</NotificationText>
-                  <NotificationTime>{new Date(notification.createdAt).toLocaleString()}</NotificationTime>
+                  <NotificationTime>
+                    {new Date(notification.createdAt).toLocaleString()}
+                  </NotificationTime>
                 </NotificationContent>
               </NotificationItem>
             ))}
           </NotificationList>
           <Pagination>
-            <PageInfo>{`${(currentPage - 1) * 10 + 1}-${Math.min(currentPage * 10, notifications.length)} of ${notifications.length}`}</PageInfo>
-            <PageButton onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>&lt;</PageButton>
+            <PageInfo>
+              {`${(currentPage - 1) * 10 + 1}-${Math.min(currentPage * 10, notifications.length)} ${translate('notifications.of')} ${notifications.length}`}
+            </PageInfo>
+            <PageButton 
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+              disabled={currentPage === 1}
+            >
+              &lt;
+            </PageButton>
             {[...Array(totalPages).keys()].map(page => (
-              <PageButton key={page} active={currentPage === page + 1} onClick={() => setCurrentPage(page + 1)}>{page + 1}</PageButton>
+              <PageButton 
+                key={page} 
+                active={currentPage === page + 1} 
+                onClick={() => setCurrentPage(page + 1)}
+              >
+                {page + 1}
+              </PageButton>
             ))}
-            <PageButton onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>&gt;</PageButton>
+            <PageButton 
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+              disabled={currentPage === totalPages}
+            >
+              &gt;
+            </PageButton>
           </Pagination>
         </>
       ) : (
         <NoNotifications>
           <NoNotificationsImage src={noNotificationsImage} alt="No notifications" />
-          <NoNotificationsText>No new notifications at the moment. Stay tuned for updates!</NoNotificationsText>
+          <NoNotificationsText>
+            {translate('notifications.noNotifications')}
+          </NoNotificationsText>
         </NoNotifications>
       )}
     </Container>

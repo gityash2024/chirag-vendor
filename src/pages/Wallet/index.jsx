@@ -11,6 +11,7 @@ import {
   requestWithdrawal,
   addBankAccount,
 } from "../../services/commonService";
+import { useTranslation } from "../../TranslationContext";
 
 const Container = styled.div`
   padding: 20px;
@@ -333,6 +334,8 @@ const LoadingSpinner = styled(CircularProgress)`
 `;
 
 const Wallet = () => {
+  const { translate } = useTranslation();
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("transactions");
   const [loading, setLoading] = useState(true);
@@ -464,64 +467,44 @@ const Wallet = () => {
 
   return (
     <Container>
-      <Header>My Wallet</Header>
-
+      <Header>{translate('wallet.title')}</Header>
       <EarningsOverview>
         <EarningItem>
           <EarningValue>₹ {walletData.balance.toFixed(2)}</EarningValue>
-          <EarningLabel>Available Balance</EarningLabel>
+          <EarningLabel>{translate('wallet.availableBalance')}</EarningLabel>
         </EarningItem>
-
         <EarningItem>
           <EarningValue>
-            ₹{" "}
-            {walletData.transactions
+            ₹ {walletData.transactions
               .filter((t) => t.type === "credit" && t.status === "completed")
               .reduce((sum, t) => sum + t.amount, 0)
               .toFixed(2)}
           </EarningValue>
-          <EarningLabel>Total Added</EarningLabel>
+          <EarningLabel>{translate('wallet.totalAdded')}</EarningLabel>
         </EarningItem>
-
         <EarningItem>
           <EarningValue>
-            ₹{" "}
-            {walletData.transactions
-              .filter(
-                (t) => t.type === "withdrawal" && t.status === "completed"
-              )
+            ₹ {walletData.transactions
+              .filter((t) => t.type === "withdrawal" && t.status === "completed")
               .reduce((sum, t) => sum + t.amount, 0)
               .toFixed(2)}
           </EarningValue>
-          <EarningLabel>Total Withdrawn</EarningLabel>
+          <EarningLabel>{translate('wallet.totalWithdrawn')}</EarningLabel>
         </EarningItem>
       </EarningsOverview>
-
       <ButtonGroup>
-        <Button primary onClick={handleAddMoney}>
-          Add Money
-        </Button>
-        <Button onClick={() => setShowWithdrawModal(true)}>Withdraw</Button>
-        <Button onClick={() => setShowAddBankModal(true)}>
-          Add Bank Account
-        </Button>
+        <Button primary onClick={handleAddMoney}>{translate('wallet.addMoney')}</Button>
+        <Button onClick={() => setShowWithdrawModal(true)}>{translate('wallet.withdraw')}</Button>
+        <Button onClick={() => setShowAddBankModal(true)}>{translate('wallet.addBankAccount')}</Button>
       </ButtonGroup>
-
       <Tabs>
-        <Tab
-          active={activeTab === "transactions"}
-          onClick={() => setActiveTab("transactions")}
-        >
-          Transactions
+        <Tab active={activeTab === "transactions"} onClick={() => setActiveTab("transactions")}>
+          {translate('wallet.transactions')}
         </Tab>
-        <Tab
-          active={activeTab === "bankAccounts"}
-          onClick={() => setActiveTab("bankAccounts")}
-        >
-          Bank Accounts
+        <Tab active={activeTab === "bankAccounts"} onClick={() => setActiveTab("bankAccounts")}>
+          {translate('wallet.bankAccounts')}
         </Tab>
       </Tabs>
-
       {activeTab === "transactions" ? (
         <TransactionList>
           {walletData.transactions.length > 0 ? (
@@ -530,40 +513,28 @@ const Wallet = () => {
                 <TransactionHeader>
                   <TransactionTitle>
                     {transaction.type === "credit"
-                      ? "Money Added"
+                      ? translate('wallet.moneyAdded')
                       : transaction.type === "withdrawal"
-                      ? "Withdrawal"
+                      ? translate('wallet.withdrawal')
                       : transaction.type === "commission"
-                      ? "Commission Deducted"
-                      : "Transaction"}
+                      ? translate('wallet.commissionDeducted')
+                      : translate('wallet.transaction')}
                   </TransactionTitle>
-                  <TransactionDate>
-                    {formatDate(transaction.date)}
-                  </TransactionDate>
+                  <TransactionDate>{formatDate(transaction.date)}</TransactionDate>
                 </TransactionHeader>
                 <TransactionDetails>
-                  <TransactionDescription>
-                    {transaction.description}
-                  </TransactionDescription>
-                  <TransactionAmount type={transaction.type}>
-                    ₹ {transaction.amount.toFixed(2)}
-                  </TransactionAmount>
+                  <TransactionDescription>{transaction.description}</TransactionDescription>
+                  <TransactionAmount type={transaction.type}>₹ {transaction.amount.toFixed(2)}</TransactionAmount>
                 </TransactionDetails>
                 {transaction.status !== "completed" && (
-                  <div
-                    style={{
-                      marginTop: "10px",
-                      color: "#FFA000",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Status: {transaction.status}
+                  <div style={{ marginTop: "10px", color: "#FFA000", fontSize: "14px" }}>
+                    {translate('wallet.status')}: {transaction.status}
                   </div>
                 )}
               </TransactionItem>
             ))
           ) : (
-            <NoDataMessage>No transactions found</NoDataMessage>
+            <NoDataMessage>{translate('wallet.noTransactions')}</NoDataMessage>
           )}
         </TransactionList>
       ) : (
@@ -574,157 +545,107 @@ const Wallet = () => {
                 <BankAccountDetails>
                   <div>
                     <BankName>{account.bankName}</BankName>
-                    <AccountNumber>
-                      {account.accountNumber.replace(/\d(?=\d{4})/g, "*")}
-                    </AccountNumber>
+                    <AccountNumber>{account.accountNumber.replace(/\d(?=\d{4})/g, "*")}</AccountNumber>
                   </div>
-                  {account.isDefault && <DefaultBadge>Default</DefaultBadge>}
+                  {account.isDefault && <DefaultBadge>{translate('wallet.defaultAccount')}</DefaultBadge>}
                 </BankAccountDetails>
               </BankAccount>
             ))
           ) : (
-            <NoDataMessage>No bank accounts found</NoDataMessage>
+            <NoDataMessage>{translate('wallet.noBankAccounts')}</NoDataMessage>
           )}
         </BankAccountList>
       )}
-
-      {/* Add Bank Account Modal */}
       {showAddBankModal && (
         <Modal>
           <ModalContent>
             <ModalHeader>
-              <ModalTitle>Add Bank Account</ModalTitle>
+              <ModalTitle>{translate('wallet.addBankAccountTitle')}</ModalTitle>
               <CloseButton onClick={() => setShowAddBankModal(false)}>
                 <CloseIcon />
               </CloseButton>
             </ModalHeader>
             <Form onSubmit={handleAddBankAccount}>
               <FormGroup>
-                <Label>Account Number</Label>
+                <Label>{translate('wallet.accountNumber')}</Label>
                 <Input
                   type="text"
                   value={newBankAccount.accountNumber}
-                  onChange={(e) =>
-                    setNewBankAccount({
-                      ...newBankAccount,
-                      accountNumber: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setNewBankAccount({ ...newBankAccount, accountNumber: e.target.value })}
                   required
                 />
               </FormGroup>
-
               <FormGroup>
-                <Label>Confirm Account Number</Label>
+                <Label>{translate('wallet.confirmAccountNumber')}</Label>
                 <Input
                   type="text"
                   value={newBankAccount.confirmAccountNumber}
-                  onChange={(e) =>
-                    setNewBankAccount({
-                      ...newBankAccount,
-                      confirmAccountNumber: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setNewBankAccount({ ...newBankAccount, confirmAccountNumber: e.target.value })}
                   required
                 />
               </FormGroup>
-
               <FormGroup>
-                <Label>IFSC Code</Label>
+                <Label>{translate('wallet.ifscCode')}</Label>
                 <Input
                   type="text"
                   value={newBankAccount.ifscCode}
-                  onChange={(e) =>
-                    setNewBankAccount({
-                      ...newBankAccount,
-                      ifscCode: e.target.value.toUpperCase(),
-                    })
-                  }
+                  onChange={(e) => setNewBankAccount({ ...newBankAccount, ifscCode: e.target.value.toUpperCase() })}
                   required
                 />
               </FormGroup>
-
               <FormGroup>
-                <Label>Account Holder Name</Label>
+                <Label>{translate('wallet.accountHolderName')}</Label>
                 <Input
                   type="text"
                   value={newBankAccount.accountHolderName}
-                  onChange={(e) =>
-                    setNewBankAccount({
-                      ...newBankAccount,
-                      accountHolderName: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setNewBankAccount({ ...newBankAccount, accountHolderName: e.target.value })}
                   required
                 />
               </FormGroup>
-
               <FormGroup>
-                <Label>Bank Name</Label>
+                <Label>{translate('wallet.bankName')}</Label>
                 <Input
                   type="text"
                   value={newBankAccount.bankName}
-                  onChange={(e) =>
-                    setNewBankAccount({
-                      ...newBankAccount,
-                      bankName: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setNewBankAccount({ ...newBankAccount, bankName: e.target.value })}
                   required
                 />
               </FormGroup>
-
               <FormGroup>
-                <Label
-                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
-                >
+                <Label style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                   <input
                     type="checkbox"
                     checked={newBankAccount.isDefault}
-                    onChange={(e) =>
-                      setNewBankAccount({
-                        ...newBankAccount,
-                        isDefault: e.target.checked,
-                      })
-                    }
+                    onChange={(e) => setNewBankAccount({ ...newBankAccount, isDefault: e.target.checked })}
                   />
-                  Set as default account
+                  {translate('wallet.setDefaultAccount')}
                 </Label>
               </FormGroup>
-
               {error && (
                 <ErrorMessage>
                   <WarningIcon fontSize="small" />
                   {error}
                 </ErrorMessage>
               )}
-
-              <Button
-                primary
-                type="submit"
-                disabled={loading}
-                style={{ marginTop: "20px" }}
-              >
-                {loading ? <LoadingSpinner size={20} /> : "Add Bank Account"}
+              <Button primary type="submit" disabled={loading} style={{ marginTop: "20px" }}>
+                {loading ? <LoadingSpinner size={20} /> : translate('wallet.addBankAccount')}
               </Button>
             </Form>
           </ModalContent>
         </Modal>
       )}
-
-      {/* Withdraw Money Modal */}
       {showWithdrawModal && (
         <Modal>
           <ModalContent>
             <ModalHeader>
-              <ModalTitle>Withdraw Money</ModalTitle>
+              <ModalTitle>{translate('wallet.withdrawMoneyTitle')}</ModalTitle>
               <CloseButton onClick={() => setShowWithdrawModal(false)}>
                 <CloseIcon />
               </CloseButton>
             </ModalHeader>
             <Form onSubmit={handleWithdrawal}>
               <FormGroup>
-                <Label>Amount</Label>
+                <Label>{translate('wallet.amount')}</Label>
                 <Input
                   type="number"
                   min="1"
@@ -733,25 +654,18 @@ const Wallet = () => {
                   onChange={(e) => setWithdrawalAmount(e.target.value)}
                   required
                 />
-                <div
-                  style={{
-                    fontSize: "12px",
-                    color: "#8D98A4",
-                    marginTop: "5px",
-                  }}
-                >
-                  Available balance: ₹{walletData.balance.toFixed(2)}
+                <div style={{ fontSize: "12px", color: "#8D98A4", marginTop: "5px" }}>
+                  {translate('wallet.availableBalanceLabel')}: ₹{walletData.balance.toFixed(2)}
                 </div>
               </FormGroup>
-
               <FormGroup>
-                <Label>Select Bank Account</Label>
+                <Label>{translate('wallet.selectBankAccount')}</Label>
                 <Select
                   value={selectedBankAccount}
                   onChange={(e) => setSelectedBankAccount(e.target.value)}
                   required
                 >
-                  <option value="">Select an account</option>
+                  <option value="">{translate('wallet.selectAccount')}</option>
                   {walletData.bankAccounts.map((account, index) => (
                     <option key={index} value={account._id}>
                       {account.bankName} - {account.accountNumber.slice(-4)}
@@ -759,28 +673,19 @@ const Wallet = () => {
                   ))}
                 </Select>
               </FormGroup>
-
               {error && (
                 <ErrorMessage>
                   <WarningIcon fontSize="small" />
                   {error}
                 </ErrorMessage>
               )}
-
-              <Button
-                primary
-                type="submit"
-                disabled={loading}
-                style={{ marginTop: "20px" }}
-              >
-                {loading ? <LoadingSpinner size={20} /> : "Request Withdrawal"}
+              <Button primary type="submit" disabled={loading} style={{ marginTop: "20px" }}>
+                {loading ? <LoadingSpinner size={20} /> : translate('wallet.requestWithdrawal')}
               </Button>
             </Form>
           </ModalContent>
         </Modal>
       )}
-
-      {/* Success Modal */}
       {showSuccessModal && (
         <Modal>
           <SuccessModal>
@@ -788,10 +693,9 @@ const Wallet = () => {
               <CloseIcon />
             </CloseButton>
             <SuccessIcon src={successIcon} alt="Success" />
-            <ModalTitle>Withdrawal Requested</ModalTitle>
+            <ModalTitle>{translate('wallet.withdrawalRequested')}</ModalTitle>
             <p style={{ color: "#8D98A4", marginTop: "10px" }}>
-              Your withdrawal request has been submitted successfully. We'll
-              process it within 24-48 hours.
+              {translate('wallet.withdrawalSuccess')}
             </p>
           </SuccessModal>
         </Modal>

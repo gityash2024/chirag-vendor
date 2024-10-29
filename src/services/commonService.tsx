@@ -62,7 +62,7 @@ export const submitAadhaarOtp=(payload)=>{
   });
 }
 export const updateVendorprofile=(payload)=>{
-  const url = `${baseUrl}/vendors`;
+  const url = `${baseUrl}/vendors/${payload?._id}`;
   return instance.put(url, payload, {
     headers: {
       'Content-Type': 'application/json'

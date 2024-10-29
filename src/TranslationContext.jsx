@@ -13,7 +13,7 @@ export const TranslationProvider = ({ children }) => {
     }
   }, []);
 
-  const setLanguagePreference = (lang) => {
+ const setLanguagePreference = (lang) => {
     setLanguage(lang);
     localStorage.setItem("language", lang);
   };

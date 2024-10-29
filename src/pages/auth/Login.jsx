@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import loginImage from '../../assets/login-image.png';
-import chiragLogo from '../../assets/chirag-logo-dark.png';
+import chiragLogo from '../../assets/logo-dark.svg';
 import { sendOtp, verifyOtp } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
 import OtpInput from 'react-otp-input';
+import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ const ImageSection = styled.div`
 
 const Image = styled.img`
   width: 50vw;
-  height: 80vh;
+  height: 100vh;
   object-fit: contain;
 `;
 
@@ -42,8 +43,9 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 250px;
+  width: 300px;
   margin-right: 70px;
+  margin-bottom: 70px;
 `;
 
 const Title = styled.h2`
@@ -100,20 +102,6 @@ const SelectLabel = styled.p`
   margin-bottom: 5px;
 `;
 
-const StyledOtpInput = styled(OtpInput)`
-  width: 94%;
-  margin-bottom: 10px;
-  
-  input {
-    width: 3rem !important;
-    height: 2rem !important;
-    margin: 0 5px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #DBDADE;
-  }
-`;
-
 const OtpContainer = styled.div`
   width: 94%;
   margin-bottom: 10px;
@@ -127,12 +115,26 @@ const OtpContainer = styled.div`
     border: 1px solid #DBDADE !important;
   }
 `;
+
+const ResendText = styled.p`
+  // text-align: center;
+  color: #121212;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 20px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const Login = () => {
   const [mobileNumber, setMobileNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
+  const { translate } = useTranslation();
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -185,41 +187,44 @@ const Login = () => {
         <LogoContainer>
           <Logo src={chiragLogo} alt="CHIRAG Logo" />
         </LogoContainer>
-        <Title>Please login with your registered <br/>mobile number</Title>
+        <Title>
+          {translate('login.title')} <br/>{translate('login.subtitle')}
+        </Title>
         {!otpSent ? (
           <>
-            <SelectLabel>Mobile number</SelectLabel>
+            <SelectLabel>{translate('login.mobileNumberLabel')}</SelectLabel>
             <form onSubmit={handleSendOtp}>
               <Input
                 type="tel"
-                placeholder="Mobile number"
+                placeholder={translate('login.mobileNumberPlaceholder')}
                 value={mobileNumber}
                 onChange={(e) => setMobileNumber(e.target.value)}
                 required
               />
-              <Button type="submit">Get OTP</Button>
+              <Button type="submit">{translate('login.getOtpButton')}</Button>
             </form>
           </>
         ) : (
           <>
-            <SelectLabel>Enter OTP</SelectLabel>
+            <SelectLabel>{translate('login.enterOtpTitle')}</SelectLabel>
             <form onSubmit={handleVerifyOtp}>
-            <OtpContainer>
-  <OtpInput
-    value={otp}
-    onChange={setOtp}
-    numInputs={4}
-    renderSeparator={<span></span>}
-    renderInput={(props) => <input {...props} className="otp-input" />}
-    containerStyle="display: flex; justify-content: space-between;"
-  />
-</OtpContainer>
-              <Button type="submit">Verify OTP</Button>
+              <OtpContainer>
+                <OtpInput
+                  value={otp}
+                  onChange={setOtp}
+                  numInputs={4}
+                  renderSeparator={<span></span>}
+                  renderInput={(props) => <input {...props} className="otp-input" />}
+                  containerStyle="display: flex; justify-content: space-between;"
+                />
+              </OtpContainer>
+              <ResendText onClick={() => {sendOtp({ mobileNumber });toast.success(translate('OTP re-sent successfully'))}}>{translate('login.resendOtp')}</ResendText>
+              <Button type="submit">{translate('login.verifyOtpButton')}</Button>
             </form>
           </>
         )}
         <RegisterLink onClick={handleRegisterClick}>
-          Don't have an account? Register
+          {translate('login.noAccount')}
         </RegisterLink>
       </FormSection>
     </Container>

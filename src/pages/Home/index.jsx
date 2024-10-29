@@ -10,6 +10,7 @@ import editIcon from '../../assets/edit-icon.png';
 import viewIcon from '../../assets/view-icon.png';
 import { getAllBookingsList, updateBooking, getAllRunnersList } from '../../services/commonService';
 import Loader from '../../components/Loader';
+import { useTranslation } from '../../TranslationContext';
 
 const HomeContainer = styled.div`
   padding: 20px;
@@ -29,6 +30,7 @@ const SectionHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  
 `;
 
 const SectionTitle = styled.h2`
@@ -41,7 +43,7 @@ const SectionTitle = styled.h2`
 
 const ViewAllLink = styled(Link)`
   text-decoration: none;
-  font-size: 28px;
+  font-size: 18px;
   font-family: 'Public Sans';
   line-height: 32.9px;
   font-weight: 400;
@@ -235,6 +237,8 @@ const EmptyStateMessage = styled.p`
 `;
 
 const Home = () => {
+  const { translate } = useTranslation();
+
   const [bookingRequests, setBookingRequests] = useState([]);
   const [runners, setRunners] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -312,14 +316,14 @@ const calculateEnvironmentalStats = () => {
       const runnersResponse = await getAllRunnersList();
       
       // First filter all vendor's bookings
-      const vendorBookings = bookingsResponse.data.filter(booking => booking?.vendor?._id === user?._id);
+      const vendorBookings = bookingsResponse.data.filter(booking => (booking?.vendor?._id === user?._id && booking?.status === 'requested'));
       
       // Then get requested bookings for booking requests section
       const requestedBookings = vendorBookings
         .filter(booking => booking.status === 'requested')
         .slice(0, 3);
   
-      setBookingRequests(vendorBookings); // Store all vendor bookings for environmental stats
+      setBookingRequests(vendorBookings?.slice(0, 3)); // Store all vendor bookings for environmental stats
       setRunners(runnersResponse.data.slice(0, 6));
     } catch (error) {
       toast.error('Failed to fetch data');
@@ -365,8 +369,8 @@ const calculateEnvironmentalStats = () => {
     <HomeContainer>
       <Section>
         <SectionHeader>
-          <SectionTitle>Booking Requests</SectionTitle>
-          <ViewAllLink to="/bookings">View all »</ViewAllLink>
+          <SectionTitle>{translate('home.bookingRequests')}</SectionTitle>
+          <ViewAllLink to="/bookings">{translate('home.viewAll')}</ViewAllLink>
         </SectionHeader>
         <BookingRequestsContainer>
           {bookingRequests.length > 0 ? (
@@ -374,32 +378,32 @@ const calculateEnvironmentalStats = () => {
               <BookingCard key={booking._id}>
                 <BookingId>#{booking._id}</BookingId>
                 <BookingDetails>{booking.farmLocation}</BookingDetails>
-                <BookingDetails>Booking Name: {booking.farmerName}</BookingDetails>
+                <BookingDetails>{translate('home.bookingName')}: {booking.farmerName}</BookingDetails>
                 <BookingDetails>{new Date(booking.date).toLocaleDateString()} | {booking.time}</BookingDetails>
                 <BookingActions>
-                  <DeclineButton onClick={() => handleDecline(booking)}>Decline</DeclineButton>
-                  <AcceptButton onClick={() => handleAccept(booking)}>Accept</AcceptButton>
+                  <DeclineButton onClick={() => handleDecline(booking)}>{translate('home.decline')}</DeclineButton>
+                  <AcceptButton onClick={() => handleAccept(booking)}>{translate('home.accept')}</AcceptButton>
                 </BookingActions>
               </BookingCard>
             ))
           ) : (
-            <EmptyStateMessage>No booking requests available.</EmptyStateMessage>
+            <EmptyStateMessage>{translate('home.noBookings')}</EmptyStateMessage>
           )}
         </BookingRequestsContainer>
       </Section>
 
       <Section>
         <SectionHeader>
-          <SectionTitle>My Runners</SectionTitle>
-          <ViewAllLink to="/manage-runner">View all »</ViewAllLink>
+          <SectionTitle>{translate('home.myRunners')}</SectionTitle>
+          <ViewAllLink to="/manage-runner">{translate('home.viewAll')}</ViewAllLink>
         </SectionHeader>
         <RunnersTable>
           <TableHead>
             <TableRow>
-              <TableHeader>Runner Name</TableHeader>
-              <TableHeader>Runner Contact</TableHeader>
-              <TableHeader>Status</TableHeader>
-              <TableHeader>View</TableHeader>
+              <TableHeader>{translate('home.runnerName')}</TableHeader>
+              <TableHeader>{translate('home.runnerContact')}</TableHeader>
+              <TableHeader>{translate('home.status')}</TableHeader>
+              <TableHeader>{translate('home.view')}</TableHeader>
             </TableRow>
           </TableHead>
           <tbody>
@@ -414,7 +418,7 @@ const calculateEnvironmentalStats = () => {
                   </RunnerCell>
                 </TableCell>
                 <TableCell>{runner.mobileNumber}</TableCell>
-                <TableCell>{runner.isBlocked ? 'Inactive' : 'Active'}</TableCell>
+                <TableCell>{runner.isBlocked ? translate('home.inactive') : translate('home.active')}</TableCell>
                 <TableCell>
                   <ActionIcon onClick={() => navigate(`/edit-runner/${runner._id}/${true}`)}><img src={viewIcon} alt="View" /></ActionIcon>
                   <ActionIcon onClick={() => navigate(`/edit-runner/${runner._id}`)}><img src={editIcon} alt="Edit" /></ActionIcon>
@@ -427,42 +431,43 @@ const calculateEnvironmentalStats = () => {
       </Section>
 
       <Environmental_wraper className='Environmental_wraper'> 
-  <SectionHeader>
-    <SectionTitle>Environmental Report</SectionTitle>
-    <select 
-      className='weekly' 
-      value={dateFilter} 
-      onChange={(e) => setDateFilter(e.target.value)}
-    >
-      <option value="yearly">Yearly</option>
-      <option value="monthly">Monthly</option>
-      <option value="weekly">Weekly</option>
-    </select>
-  </SectionHeader>
-  <EnvironmentalReportContainer>
-    <ReportCard>
-      <ReportIcon src={waterIcon} alt="Water saved" />
-      <ReportValue color="#5CB1FF">
-        {environmentalStats.waterSaved.toFixed(2)}
-      </ReportValue>
-      <ReportLabel>Water saved till now</ReportLabel>
-    </ReportCard>
-    <ReportCard>
-      <ReportIcon src={pesticideIcon} alt="Pesticide usage" />
-      <ReportValue color="#F1614B">
-        {environmentalStats.pesticideReduction.toFixed(1)}%
-      </ReportValue>
-      <ReportLabel>Pesticide till now</ReportLabel>
-    </ReportCard>
-    <ReportCard>
-      <ReportIcon src={carbonFootprintIcon} alt="Carbon footprint" />
-      <ReportValue color="#41B079">
-        {environmentalStats.carbonFootprint.toFixed(1)}%
-      </ReportValue>
-      <ReportLabel>Carbon footprint</ReportLabel>
-    </ReportCard>
-  </EnvironmentalReportContainer>
-</Environmental_wraper>
+        <SectionHeader>
+          <SectionTitle>{translate('home.environmentalReport')}</SectionTitle>
+          <select 
+            className='weekly' 
+            value={dateFilter} 
+            style={{float: 'right', marginRight: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #ccc'}}
+            onChange={(e) => setDateFilter(e.target.value)}
+          >
+            <option value="yearly">Yearly</option>
+            <option value="monthly">Monthly</option>
+            <option value="weekly">Weekly</option>
+          </select>
+        </SectionHeader>
+        <EnvironmentalReportContainer>
+          <ReportCard>
+            <ReportIcon src={waterIcon} alt="Water saved" />
+            <ReportValue color="#5CB1FF">
+              {environmentalStats.waterSaved.toFixed(2)}
+            </ReportValue>
+            <ReportLabel>{translate('home.waterSaved')}</ReportLabel>
+          </ReportCard>
+          <ReportCard>
+            <ReportIcon src={pesticideIcon} alt="Pesticide usage" />
+            <ReportValue color="#F1614B">
+              {environmentalStats.pesticideReduction.toFixed(1)}%
+            </ReportValue>
+            <ReportLabel>{translate('home.pesticideReduction')}</ReportLabel>
+          </ReportCard>
+          <ReportCard>
+            <ReportIcon src={carbonFootprintIcon} alt="Carbon footprint" />
+            <ReportValue color="#41B079">
+              {environmentalStats.carbonFootprint.toFixed(1)}%
+            </ReportValue>
+            <ReportLabel>{translate('home.carbonFootprint')}</ReportLabel>
+          </ReportCard>
+        </EnvironmentalReportContainer>
+      </Environmental_wraper>
     </HomeContainer>
   );
 };

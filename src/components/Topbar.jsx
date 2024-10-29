@@ -1,11 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import printIcon from '../assets/print-icon.png';
-import notificationIcon from '../assets/notification-icon.png';
+import printIcon from '../assets/wallet.svg';
+import notificationIcon from '../assets/bell.svg';
 import profileIcon from '../assets/profile-icon.png';
 import { useNavigate } from 'react-router-dom';
 import { listNotifications } from '../services/commonService';
 import io from 'socket.io-client';
+import { useTranslation } from '../TranslationContext';
+
+
+const LanguageToggle = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  background: #F5F5F5;
+  border-radius: 20px;
+  padding: 4px;
+  cursor: pointer;
+`;
+
+const LanguageOption = styled.span`
+  padding: 4px 12px;
+  font-size: 14px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  color: ${props => props.active ? '#FFFFFF' : '#000000'};
+  background-color: ${props => props.active ? '#000000' : 'transparent'};
+`;
 
 const TopbarContainer = styled.div`
   display: flex;
@@ -35,8 +56,9 @@ const TopbarIcon = styled.img`
 
 const NotificationCount = styled.div`
   position: absolute;
-  top: 2px;
+  bottom: 20px;
   right: 0px;
+  left: 32px;
   background-color: red;
   color: white;
   border-radius: 50%;
@@ -54,8 +76,15 @@ const IconContainer = styled.div`
 
 const Topbar = () => {
   const navigate = useNavigate();
-  const [notificationCount, setNotificationCount] = useState(0);
+  const { language, setLanguagePreference, translate } = useTranslation();
 
+  const [notificationCount, setNotificationCount] = useState(0);
+  const [currentLanguage, setCurrentLanguage] = useState(localStorage.getItem("language") || "en");
+  const handleLanguageToggle = () => {
+    const newLang = currentLanguage === "en" ? "hi" : "en";
+    setCurrentLanguage(newLang);
+    setLanguagePreference(newLang);
+  };
   useEffect(() => {
     fetchNotificationCount();
     const socket = io("http://localhost:5000", {
@@ -94,13 +123,17 @@ const Topbar = () => {
       <TopbarLeft>
       </TopbarLeft>
       <TopbarRight>
-        <TopbarIcon onClick={() => navigate('/wallet')} src={printIcon} alt="Print" />
-        <IconContainer>
-          <TopbarIcon onClick={() => navigate('/notification')} src={notificationIcon} alt="Notifications" />
-          {notificationCount > 0 && <NotificationCount>{notificationCount}</NotificationCount>}
-        </IconContainer>
-        <TopbarIcon onClick={() => navigate('/profile')} src={profileIcon} alt="Profile" />
-      </TopbarRight>
+  <LanguageToggle onClick={handleLanguageToggle}>
+    <LanguageOption active={currentLanguage === "hi"}>HI</LanguageOption>
+    <LanguageOption active={currentLanguage === "en"}>EN</LanguageOption>
+  </LanguageToggle>
+  <TopbarIcon onClick={() => navigate('/wallet')} src={printIcon} alt="Print" />
+  <IconContainer>
+    <TopbarIcon onClick={() => navigate('/notification')} src={notificationIcon} alt="Notifications" />
+    {notificationCount > 0 && <NotificationCount>{notificationCount}</NotificationCount>}
+  </IconContainer>
+  <TopbarIcon onClick={() => navigate('/profile')} src={profileIcon} alt="Profile" />
+</TopbarRight>
     </TopbarContainer>
   );
 };

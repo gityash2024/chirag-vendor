@@ -1,5 +1,82 @@
 {
   "en": {
+    "profile": {
+      "title": "My Profile",
+      "tabs": {
+        "basicDetails": "Basic Details",
+        "droneSpecs": "Drone Specs",
+        "serviceDetails": "Service Details",
+        "batterySpecs": "Battery Specs"
+      },
+      "basicDetails": {
+        "uploadPhoto": "Upload new photo",
+        "reset": "Reset",
+        "fullName": "Full Name *",
+        "fullNamePlaceholder": "Enter your full name",
+        "mobileNumber": "Mobile Number *",
+        "mobileNumberPlaceholder": "Enter your mobile number",
+        "email": "Email *",
+        "emailPlaceholder": "Enter your email",
+        "address1": "Address 1",
+        "address1Placeholder": "Enter your address",
+        "address2": "Address 2",
+        "address2Placeholder": "Enter additional address details",
+        "city": "City",
+        "cityPlaceholder": "Enter your city",
+        "state": "State",
+        "stateSelect": "Select your state",
+        "droneLicense": "Drone pilot license",
+        "droneLicensePlaceholder": "Enter your drone pilot license number",
+        "uinNumber": "UIN number",
+        "uinNumberPlaceholder": "Enter your UIN number"
+      },
+      "droneSpecs": {
+        "drone": "Drone",
+        "addMore": "Add More Drone",
+        "model": "Drone Model",
+        "modelPlaceholder": "Enter drone model",
+        "speed": "Speed of Drone",
+        "speedPlaceholder": "Enter speed in km/h",
+        "flowRate": "Flow Rate of the Drone",
+        "flowRatePlaceholder": "Enter flow rate",
+        "payload": "Payload Capacity (in kgs)",
+        "payloadPlaceholder": "Enter payload capacity",
+        "images": "Drone Images",
+        "manufacturer": "Drone Manufacturer",
+        "manufacturerPlaceholder": "Enter manufacturer name",
+        "purchaseYear": "Purchase Year",
+        "purchaseYearPlaceholder": "Enter purchase year"
+      },
+      "serviceDetails": {
+        "experience": "Experience of providing this service",
+        "experiencePlaceholder": "Enter years of experience",
+        "pricing": "Approx Pricing for 1 acre of land service for general crop",
+        "pricingPlaceholder": "Enter price in INR",
+        "serviceState": "Service State",
+        "serviceStatePlaceholder": "Enter service state",
+        "serviceCity": "Service City",
+        "serviceCityPlaceholder": "Enter service city",
+        "village": "Village",
+        "villagePlaceholder": "Enter village name"
+      },
+      "batterySpecs": {
+        "battery": "Battery",
+        "addMore": "Add New Battery",
+        "capacity": "Battery Capacity",
+        "capacityPlaceholder": "Enter battery capacity",
+        "lifeCycles": "Life Cycles",
+        "lifeCyclesPlaceholder": "Enter life cycles",
+        "voltage": "Voltage",
+        "voltagePlaceholder": "Enter voltage",
+        "ampere": "Ampere",
+        "amperePlaceholder": "Enter ampere",
+        "manufacturer": "Manufacturer",
+        "manufacturerPlaceholder": "Enter manufacturer name",
+        "purchaseYear": "Purchase Year",
+        "purchaseYearPlaceholder": "Enter purchase year"
+      },
+      "saveChanges": "Save Changes"
+    },
     "Privacy policy": "Privacy policy",
     "COMMENTS": "COMMENTS",
     "MEDIA": "MEDIA",
@@ -29,6 +106,20 @@
       "EMBEDDED CONTENT FROM OTHER WEBSITES": "EMBEDDED CONTENT FROM OTHER WEBSITES",
       "embeddedContent": "Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.",
       "dataCollection": "These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracing your interaction with the embedded content if you have an account and are logged in to that website."
+      
+    },
+    "login": {
+      "title": "Please login with your registered",
+      "subtitle": "mobile number",
+      "mobileNumberLabel": "Mobile number", 
+      "mobileNumberPlaceholder": "Mobile number",
+      "getOtpButton": "Get OTP",
+      "enterOtpTitle": "Enter authentication code", 
+      "otpDescription": "Enter the 4-digit that we have sent to your registered email id.",
+      "verifyOtpButton": "Verify OTP",
+      "resendOtp": "Didn't Received code yet? Resend",
+      "noAccount": "Don't have an account? Register",
+      "OTP re-sent successfully": "OTP re-sent successfully"
     },
     "contact": {
       "title": "Contact us",
@@ -132,15 +223,196 @@
       "subtitle2": "Profile > Language",
       "selectLabel": "Select language",
       "continueButton": "Continue"
+    },"home": {
+      "bookingRequests": "Booking Requests", 
+      "viewAll": "View all »",
+      "myRunners": "My Runners",
+      "environmentalReport": "Environmental Report",
+      "runnerName": "Runner Name",
+      "runnerContact": "Runner Contact",
+      "status": "Status",
+      "view": "View",
+      "active": "Active",
+      "inactive": "Inactive",
+      "bookingName": "Booking Name",
+      "farmArea": "Farm Area",
+      "cropLabel": "Crop",
+      "waterSaved": "Water saved till now",
+      "pesticideReduction": "Pesticide till now", 
+      "carbonFootprint": "Carbon footprint",
+      "decline": "Decline",
+      "accept": "Accept",
+      "noBookings": "No booking requests available.",
+      "enterRejectionReason": "Please enter a reason for rejection:",
+      "enterQuotePrice": "Please enter a price for this booking:"
+    },"wallet": {
+      "title": "My Wallet",
+      "availableBalance": "Available Balance",
+      "totalAdded": "Total Added",
+      "totalWithdrawn": "Total Withdrawn",
+      "addMoney": "Add Money",
+      "withdraw": "Withdraw",
+      "addBankAccount": "Add Bank Account",
+      "transactions": "Transactions",
+      "bankAccounts": "Bank Accounts",
+      "moneyAdded": "Money Added",
+      "withdrawal": "Withdrawal",
+      "commissionDeducted": "Commission Deducted",
+      "transaction": "Transaction",
+      "status": "Status",
+      "noTransactions": "No transactions found",
+      "noBankAccounts": "No bank accounts found",
+      "defaultAccount": "Default",
+      "addBankAccountTitle": "Add Bank Account",
+      "accountNumber": "Account Number",
+      "confirmAccountNumber": "Confirm Account Number",
+      "ifscCode": "IFSC Code",
+      "accountHolderName": "Account Holder Name", 
+      "bankName": "Bank Name",
+      "setDefaultAccount": "Set as default account",
+      "withdrawMoneyTitle": "Withdraw Money",
+      "amount": "Amount",
+      "selectBankAccount": "Select Bank Account",
+      "selectAccount": "Select an account",
+      "withdrawalRequested": "Withdrawal Requested",
+      "withdrawalSuccess": "Your withdrawal request has been submitted successfully. We'll process it within 24-48 hours.",
+      "requestWithdrawal": "Request Withdrawal",
+      "availableBalanceLabel": "Available balance",
+      "errors": {
+        "accountMismatch": "Account numbers do not match",
+        "selectBank": "Please select a bank account",
+        "insufficientBalance": "Insufficient balance"
+      }
     },
-    "login": {
-      "title": "Login",
-      "emailPlaceholder": "Enter your email",
-      "passwordPlaceholder": "Enter your password",
-      "loginButton": "Log In"
+    "notifications": {
+      "title": "Notifications",
+      "markAllAsRead": "Mark all as read",
+      "clearAll": "Clear all",
+      "of": "of",
+      "noNotifications": "No new notifications at the moment. Stay tuned for updates!"
+    }, "sidebar": {
+      "menu": {
+        "home": "Home",
+        "bookings": "Bookings",
+        "calendar": "Calendar",
+        "serviceHistory": "Service History",
+        "manageRunner": "Manage Runner",
+        "reports": "Reports",
+        "sprayAssist": "Spray Assist"
+      },
+      "bottomMenu": {
+        "contactUs": "Contact us",
+        "termsAndConditions": "Terms and Conditions",
+        "privacyPolicy": "Privacy policy",
+        "logout": "Logout"
+      },
+      "logoutModal": {
+        "confirmMessage": "Are you sure you want to Logout?",
+        "no": "No",
+        "yes": "Yes"
+      }
     }
   },
   "hi": {
+    "sidebar": {
+      "menu": {
+        "home": "होम",
+        "bookings": "बुकिंग",
+        "calendar": "कैलेंडर",
+        "serviceHistory": "सेवा इतिहास",
+        "manageRunner": "रनर प्रबंधन",
+        "reports": "रिपोर्ट",
+        "sprayAssist": "स्प्रे सहायक"
+      },
+      "bottomMenu": {
+        "contactUs": "संपर्क करें",
+        "termsAndConditions": "नियम और शर्तें",
+        "privacyPolicy": "गोपनीयता नीति",
+        "logout": "लॉग आउट"
+      },
+      "logoutModal": {
+        "confirmMessage": "क्या आप लॉग आउट करना चाहते हैं?",
+        "no": "नहीं",
+        "yes": "हाँ"
+      }
+    },
+    "profile": {
+      "title": "मेरी प्रोफ़ाइल",
+      "tabs": {
+        "basicDetails": "मूल विवरण",
+        "droneSpecs": "ड्रोन विशिष्टताएं",
+        "serviceDetails": "सेवा विवरण",
+        "batterySpecs": "बैटरी विशिष्टताएं"
+      },
+      "basicDetails": {
+        "uploadPhoto": "नई फोटो अपलोड करें",
+        "reset": "रीसेट",
+        "fullName": "पूरा नाम *",
+        "fullNamePlaceholder": "अपना पूरा नाम दर्ज करें",
+        "mobileNumber": "मोबाइल नंबर *",
+        "mobileNumberPlaceholder": "अपना मोबाइल नंबर दर्ज करें",
+        "email": "ईमेल *",
+        "emailPlaceholder": "अपना ईमेल दर्ज करें",
+        "address1": "पता 1",
+        "address1Placeholder": "अपना पता दर्ज करें",
+        "address2": "पता 2",
+        "address2Placeholder": "अतिरिक्त पता विवरण दर्ज करें",
+        "city": "शहर",
+        "cityPlaceholder": "अपना शहर दर्ज करें",
+        "state": "राज्य",
+        "stateSelect": "अपना राज्य चुनें",
+        "droneLicense": "ड्रोन पायलट लाइसेंस",
+        "droneLicensePlaceholder": "अपना ड्रोन पायलट लाइसेंस नंबर दर्ज करें",
+        "uinNumber": "UIN नंबर",
+        "uinNumberPlaceholder": "अपना UIN नंबर दर्ज करें"
+      },
+      "droneSpecs": {
+        "drone": "ड्रोन",
+        "addMore": "और ड्रोन जोड़ें",
+        "model": "ड्रोन मॉडल",
+        "modelPlaceholder": "ड्रोन मॉडल दर्ज करें",
+        "speed": "ड्रोन की गति",
+        "speedPlaceholder": "गति किमी/घंटा में दर्ज करें",
+        "flowRate": "ड्रोन का प्रवाह दर",
+        "flowRatePlaceholder": "प्रवाह दर दर्ज करें",
+        "payload": "पेलोड क्षमता (किग्रा में)",
+        "payloadPlaceholder": "पेलोड क्षमता दर्ज करें",
+        "images": "ड्रोन चित्र",
+        "manufacturer": "ड्रोन निर्माता",
+        "manufacturerPlaceholder": "निर्माता का नाम दर्ज करें",
+        "purchaseYear": "खरीद वर्ष",
+        "purchaseYearPlaceholder": "खरीद वर्ष दर्ज करें"
+      },
+      "serviceDetails": {
+        "experience": "इस सेवा को प्रदान करने का अनुभव",
+        "experiencePlaceholder": "अनुभव के वर्षों को दर्ज करें",
+        "pricing": "सामान्य फसल के लिए 1 एकड़ भूमि सेवा के लिए अनुमानित मूल्य",
+        "pricingPlaceholder": "INR में मूल्य दर्ज करें",
+        "serviceState": "सेवा राज्य",
+        "serviceStatePlaceholder": "सेवा राज्य दर्ज करें",
+        "serviceCity": "सेवा शहर",
+        "serviceCityPlaceholder": "सेवा शहर दर्ज करें",
+        "village": "गाँव",
+        "villagePlaceholder": "गाँव का नाम दर्ज करें"
+      },
+      "batterySpecs": {
+        "battery": "बैटरी",
+        "addMore": "नई बैटरी जोड़ें",
+        "capacity": "बैटरी क्षमता",
+        "capacityPlaceholder": "बैटरी क्षमता दर्ज करें",
+        "lifeCycles": "लाइफ साइकिल",
+        "lifeCyclesPlaceholder": "लाइफ साइकिल दर्ज करें",
+        "voltage": "वोल्टेज",
+        "voltagePlaceholder": "वोल्टेज दर्ज करें",
+        "ampere": "एम्पीयर",
+        "amperePlaceholder": "एम्पीयर दर्ज करें",
+        "manufacturer": "निर्माता",
+        "manufacturerPlaceholder": "निर्माता का नाम दर्ज करें",
+        "purchaseYear": "खरीद वर्ष",
+        "purchaseYearPlaceholder": "खरीद वर्ष दर्ज करें"
+      },
+      "saveChanges": "परिवर्तन सहेजें"
+    },
     "Privacy policy": "गोपनीयता नीति",
     "COMMENTS": "टिप्पणियाँ",
     "MEDIA": "मीडिया",
@@ -273,11 +545,85 @@
     "precautions": "कीटनाशकों के उपयोग के लिए सावधानियां: पूरी फसल अवधि में दो से अधिक रासायनिक स्प्रे का उपयोग नहीं किया जाना चाहिए। दूसरे स्प्रे के लिए एक ही रसायन का चयन नहीं किया जाना चाहिए। स्प्रे हमेशा घुंडी की ओर निर्देशित होना चाहिए और या तो दिन के शुरुआती घंटों में या शाम के समय लागू किया जाना चाहिए।"
   }
 },
-      "login": {
-        "title": "लॉग इन करें",
-        "emailPlaceholder": "अपना ईमेल दर्ज करें",
-        "passwordPlaceholder": "अपना पासवर्ड डालें",
-        "loginButton": "लॉग इन करें"
+"login": {
+  "title": "कृपया अपने पंजीकृत",
+  "subtitle": "मोबाइल नंबर से लॉगिन करें",
+  "mobileNumberLabel": "मोबाइल नंबर",
+  "mobileNumberPlaceholder": "मोबाइल नंबर",
+  "getOtpButton": "OTP प्राप्त करें",
+  "enterOtpTitle": "प्रमाणीकरण कोड दर्ज करें",
+  "otpDescription": "4 अंकों का कोड दर्ज करें जो हमने आपके पंजीकृत ईमेल पर भेजा है।",
+  "verifyOtpButton": "OTP सत्यापित करें",
+  "resendOtp": "अभी तक कोड नहीं मिला? पुनः भेजें",
+  "noAccount": "खाता नहीं है? रजिस्टर करें",
+  "OTP re-sent successfully": "OTP पुनः भेजा गया"
+}, "home": {
+  "bookingRequests": "बुकिंग अनुरोध",
+  "viewAll": "सभी देखें »", 
+  "myRunners": "मेरे रनर",
+  "environmentalReport": "पर्यावरण रिपोर्ट",
+  "runnerName": "रनर का नाम",
+  "runnerContact": "रनर का संपर्क",
+  "status": "स्थिति",
+  "view": "देखें",
+  "active": "सक्रिय",
+  "inactive": "निष्क्रिय",
+  "bookingName": "बुकिंग नाम",
+  "farmArea": "खेत का क्षेत्रफल",
+  "cropLabel": "फसल",
+  "waterSaved": "अब तक बचाया गया पानी",
+  "pesticideReduction": "अब तक कीटनाशक",
+  "carbonFootprint": "कार्बन फुटप्रिंट",
+  "decline": "अस्वीकार करें",
+  "accept": "स्वीकार करें",
+  "noBookings": "कोई बुकिंग अनुरोध उपलब्ध नहीं है।",
+  "enterRejectionReason": "कृपया अस्वीकार करने का कारण दर्ज करें:",
+  "enterQuotePrice": "कृपया इस बुकिंग के लिए एक मूल्य दर्ज करें:"
+},"wallet": {
+      "title": "मेरा वॉलेट",
+      "availableBalance": "उपलब्ध बैलेंस",
+      "totalAdded": "कुल जमा",
+      "totalWithdrawn": "कुल निकासी",
+      "addMoney": "पैसे जोड़ें",
+      "withdraw": "पैसे निकालें",
+      "addBankAccount": "बैंक खाता जोड़ें", 
+      "transactions": "लेन-देन",
+      "bankAccounts": "बैंक खाते",
+      "moneyAdded": "पैसे जमा किए गए",
+      "withdrawal": "पैसे निकाले गए",
+      "commissionDeducted": "कमीशन काटा गया",
+      "transaction": "लेन-देन",
+      "status": "स्थिति",
+      "noTransactions": "कोई लेन-देन नहीं मिला",
+      "noBankAccounts": "कोई बैंक खाता नहीं मिला",
+      "defaultAccount": "डिफ़ॉल्ट",
+      "addBankAccountTitle": "बैंक खाता जोड़ें",
+      "accountNumber": "खाता संख्या",
+      "confirmAccountNumber": "खाता संख्या की पुष्टि करें",
+      "ifscCode": "IFSC कोड",
+      "accountHolderName": "खाताधारक का नाम",
+      "bankName": "बैंक का नाम",
+      "setDefaultAccount": "डिफ़ॉल्ट खाता सेट करें",
+      "withdrawMoneyTitle": "पैसे निकालें",
+      "amount": "राशि",
+      "selectBankAccount": "बैंक खाता चुनें",
+      "selectAccount": "खाता चुनें",
+      "withdrawalRequested": "निकासी का अनुरोध किया गया",
+      "withdrawalSuccess": "आपका निकासी अनुरोध सफलतापूर्वक सबमिट कर दिया गया है। हम इसे 24-48 घंटों के भीतर प्रोसेस करेंगे।",
+      "requestWithdrawal": "निकासी का अनुरोध करें",
+      "availableBalanceLabel": "उपलब्ध बैलेंस",
+      "errors": {
+        "accountMismatch": "खाता संख्याएं मेल नहीं खातीं",
+        "selectBank": "कृपया एक बैंक खाता चुनें",
+        "insufficientBalance": "अपर्याप्त बैलेंस"
       }
+    },"notifications": {
+      "title": "सूचनाएं",
+      "markAllAsRead": "सभी को पढ़ा हुआ मार्क करें",
+      "clearAll": "सभी हटाएं",
+      "of": "में से",
+      "noNotifications": "इस समय कोई नई सूचना नहीं है। अपडेट के लिए बने रहें!"
+    }
+  
     }
   }

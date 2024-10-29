@@ -5,6 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
 import { getVendorByMobileNumber, updateVendorprofile, uploadTos3 } from '../../services/commonService';
+import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`
   padding: 20px;
@@ -160,6 +161,8 @@ const ButtonContainer = styled.div`
 `;
 
 const Profile = () => {
+  const { translate } = useTranslation();
+
   const [activeTab, setActiveTab] = useState('basicDetails');
   const [isLoading, setIsLoading] = useState(false);
   const [vendorData, setVendorData] = useState({
@@ -269,12 +272,20 @@ const Profile = () => {
   return (
     <Container>
       <Loader isLoading={isLoading} />
-      <Title>My Profile</Title>
+      <Title>{translate('profile.title')}</Title>
       <TabContainer>
-        <Tab active={activeTab === 'basicDetails'} onClick={() => setActiveTab('basicDetails')}>Basic Details</Tab>
-        <Tab active={activeTab === 'droneSpecs'} onClick={() => setActiveTab('droneSpecs')}>Drone Specs</Tab>
-        <Tab active={activeTab === 'serviceDetails'} onClick={() => setActiveTab('serviceDetails')}>Service Details</Tab>
-        <Tab active={activeTab === 'batterySpecs'} onClick={() => setActiveTab('batterySpecs')}>Battery Specs</Tab>
+        <Tab active={activeTab === 'basicDetails'} onClick={() => setActiveTab('basicDetails')}>
+          {translate('profile.tabs.basicDetails')}
+        </Tab>
+        <Tab active={activeTab === 'droneSpecs'} onClick={() => setActiveTab('droneSpecs')}>
+          {translate('profile.tabs.droneSpecs')}
+        </Tab>
+        <Tab active={activeTab === 'serviceDetails'} onClick={() => setActiveTab('serviceDetails')}>
+          {translate('profile.tabs.serviceDetails')}
+        </Tab>
+        <Tab active={activeTab === 'batterySpecs'} onClick={() => setActiveTab('batterySpecs')}>
+          {translate('profile.tabs.batterySpecs')}
+        </Tab>
       </TabContainer>
       <Content>
         <Form onSubmit={handleSubmit}>
@@ -296,81 +307,83 @@ const Profile = () => {
                   accept="image/*"
                 />
                 <UploadButton onClick={() => document.getElementById('profilePic').click()}>
-                  Upload new photo
+                  {translate('profile.basicDetails.uploadPhoto')}
                 </UploadButton>
-                <ResetButton onClick={() => setVendorData({ ...vendorData, profilePic: null })}>Reset</ResetButton>
+                <ResetButton onClick={() => setVendorData({ ...vendorData, profilePic: null })}>
+                  {translate('profile.basicDetails.reset')}
+                </ResetButton>
               </ImageUploadContainer>
               <InputGroup>
-                <Label>Full Name *</Label>
+                <Label>{translate('profile.basicDetails.fullName')}</Label>
                 <Input
                   type="text"
                   name="name"
                   value={vendorData.name}
                   onChange={handleInputChange}
-                  placeholder="Enter your full name"
+                  placeholder={translate('profile.basicDetails.fullNamePlaceholder')}
                   required
                 />
               </InputGroup>
               <InputGroup>
-                <Label>Mobile Number *</Label>
+                <Label>{translate('profile.basicDetails.mobileNumber')}</Label>
                 <Input
                   type="tel"
                   name="mobileNumber"
                   value={vendorData.mobileNumber}
                   onChange={handleInputChange}
-                  placeholder="Enter your mobile number"
+                  placeholder={translate('profile.basicDetails.mobileNumberPlaceholder')}
                   required
                 />
               </InputGroup>
               <InputGroup>
-                <Label>Email *</Label>
+                <Label>{translate('profile.basicDetails.email')}</Label>
                 <Input
                   type="email"
                   name="email"
                   value={vendorData.email}
                   onChange={handleInputChange}
-                  placeholder="Enter your email"
+                  placeholder={translate('profile.basicDetails.emailPlaceholder')}
                   required
                 />
               </InputGroup>
               <InputGroup>
-                <Label>Address 1</Label>
+                <Label>{translate('profile.basicDetails.address1')}</Label>
                 <Input
                   type="text"
                   name="address1"
                   value={vendorData.address1}
                   onChange={handleInputChange}
-                  placeholder="Enter your address"
+                  placeholder={translate('profile.basicDetails.address1Placeholder')}
                 />
               </InputGroup>
               <InputGroup>
-                <Label>Address 2</Label>
+                <Label>{translate('profile.basicDetails.address2')}</Label>
                 <Input
                   type="text"
                   name="address2"
                   value={vendorData.address2}
                   onChange={handleInputChange}
-                  placeholder="Enter additional address details"
+                  placeholder={translate('profile.basicDetails.address2Placeholder')}
                 />
               </InputGroup>
               <InputGroup>
-                <Label>City</Label>
+                <Label>{translate('profile.basicDetails.city')}</Label>
                 <Input
                   type="text"
                   name="city"
                   value={vendorData.city}
                   onChange={handleInputChange}
-                  placeholder="Enter your city"
+                  placeholder={translate('profile.basicDetails.cityPlaceholder')}
                 />
               </InputGroup>
               <InputGroup>
-                <Label>State</Label>
+                <Label>{translate('profile.basicDetails.state')}</Label>
                 <Select
                   name="state"
                   value={vendorData.state}
                   onChange={handleInputChange}
                 >
-                  <option value="">Select your state</option>
+                  <option value="">{translate('profile.basicDetails.stateSelect')}</option>
                   <option value="Gujarat">Gujarat</option>
                   <option value="Maharashtra">Maharashtra</option>
                   <option value="Rajasthan">Rajasthan</option>
@@ -378,23 +391,23 @@ const Profile = () => {
                 </Select>
               </InputGroup>
               <InputGroup>
-                <Label>Drone pilot license</Label>
+                <Label>{translate('profile.basicDetails.droneLicense')}</Label>
                 <Input
                   type="text"
                   name="droneLicense"
                   value={vendorData.droneLicense}
                   onChange={handleInputChange}
-                  placeholder="Enter your drone pilot license number"
+                  placeholder={translate('profile.basicDetails.droneLicensePlaceholder')}
                 />
               </InputGroup>
               <InputGroup>
-                <Label>UIN number</Label>
+                <Label>{translate('profile.basicDetails.uinNumber')}</Label>
                 <Input
                   type="text"
                   name="uinNumber"
                   value={vendorData.uinNumber}
                   onChange={handleInputChange}
-                  placeholder="Enter your UIN number"
+                  placeholder={translate('profile.basicDetails.uinNumberPlaceholder')}
                 />
               </InputGroup>
             </>
@@ -403,50 +416,50 @@ const Profile = () => {
             <>
               {vendorData.drones.map((drone, index) => (
                 <Accordion key={index}>
-                  <AccordionHeader>Drone {index + 1}</AccordionHeader>
+                  <AccordionHeader>{translate('profile.droneSpecs.drone')} {index + 1}</AccordionHeader>
                   <AccordionContent>
                     <InputGroup2>
-                      <Label>Drone Model</Label>
+                      <Label>{translate('profile.droneSpecs.model')}</Label>
                       <Input
                         type="text"
                         name="model"
                         value={drone.model}
                         onChange={(e) => handleInputChange(e, index, 'drones')}
-                        placeholder="Enter drone model"
+                        placeholder={translate('profile.droneSpecs.modelPlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Speed of Drone</Label>
+                      <Label>{translate('profile.droneSpecs.speed')}</Label>
                       <Input
                         type="number"
                         name="speed"
                         value={drone.speed}
                         onChange={(e) => handleInputChange(e, index, 'drones')}
-                        placeholder="Enter speed in km/h"
+                        placeholder={translate('profile.droneSpecs.speedPlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Flow Rate of the Drone</Label>
+                      <Label>{translate('profile.droneSpecs.flowRate')}</Label>
                       <Input
                         type="number"
                         name="flowRate"
                         value={drone.flowRate}
                         onChange={(e) => handleInputChange(e, index, 'drones')}
-                        placeholder="Enter flow rate"
+                        placeholder={translate('profile.droneSpecs.flowRatePlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Payload Capacity (in kgs)</Label>
+                      <Label>{translate('profile.droneSpecs.payload')}</Label>
                       <Input
                         type="number"
                         name="payload"
                         value={drone.payload}
                         onChange={(e) => handleInputChange(e, index, 'drones')}
-                        placeholder="Enter payload capacity"
+                        placeholder={translate('profile.droneSpecs.payloadPlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Drone Images</Label>
+                      <Label>{translate('profile.droneSpecs.images')}</Label>
                       <Input
                         type="file"
                         accept="image/*"
@@ -454,83 +467,85 @@ const Profile = () => {
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Drone Manufacturer</Label>
+                      <Label>{translate('profile.droneSpecs.manufacturer')}</Label>
                       <Input
                         type="text"
                         name="manufacturer"
                         value={drone.manufacturer}
                         onChange={(e) => handleInputChange(e, index, 'drones')}
-                        placeholder="Enter manufacturer name"
+                        placeholder={translate('profile.droneSpecs.manufacturerPlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Purchase Year</Label>
+                      <Label>{translate('profile.droneSpecs.purchaseYear')}</Label>
                       <Input
                         type="number"
                         name="purchaseYear"
                         value={drone.purchaseYear}
                         onChange={(e) => handleInputChange(e, index, 'drones')}
-                        placeholder="Enter purchase year"
+                        placeholder={translate('profile.droneSpecs.purchaseYearPlaceholder')}
                       />
                     </InputGroup2>
                   </AccordionContent>
                 </Accordion>
               ))}
               <ButtonContainer>
-                <AddMoreButton type="button" onClick={handleAddDrone}>Add More Drone</AddMoreButton>
+                <AddMoreButton type="button" onClick={handleAddDrone}>
+                  {translate('profile.droneSpecs.addMore')}
+                </AddMoreButton>
               </ButtonContainer>
             </>
           )}
           {activeTab === 'serviceDetails' && (
             <>
               <InputGroup>
-                <Label>Experience of providing this service</Label>
+                <Label>{translate('profile.serviceDetails.experience')}</Label>
                 <Input
                   type="number"
                   name="experience"
                   value={vendorData.experience}
                   onChange={handleInputChange}
-                  placeholder="Enter years of experience"
+                  placeholder={translate('profile.serviceDetails.experiencePlaceholder')}
                 />
               </InputGroup>
               <InputGroup>
-                <Label>Approx Pricing for 1 acre of land service for general crop</Label>
+                <Label>{translate('profile.serviceDetails.pricing')}</Label>
                 <Input
                   type="number"
                   name="pricing"
                   value={vendorData.pricing}
                   onChange={handleInputChange}
-                  placeholder="Enter price in INR"
+                  placeholder={translate('profile.serviceDetails.pricingPlaceholder')}
                 />
               </InputGroup>
               <InputGroup>
-                <Label>Service State</Label>
+                <Label>{translate('profile.serviceDetails.serviceState')}</Label>
                 <Input
                   type="text"
                   name="serviceState"
                   value={vendorData.serviceState}
                   onChange={handleInputChange}
-                  placeholder="Enter service state"
+                  placeholder={translate('profile.serviceDetails.serviceStatePlaceholder')}
                 />
               </InputGroup>
               <InputGroup>
-                <Label>Service City</Label>
+                <Label>{translate('profile.serviceDetails.serviceCity')}</Label>
                 <Input
                   type="text"
                   name="serviceCity"
                   value={vendorData.serviceCity}
                   onChange={handleInputChange}
-                  placeholder="Enter service city"
+                  placeholder={translate('profile.serviceDetails.serviceCityPlaceholder')}
                 />
               </InputGroup>
               <InputGroup>
-                <Label>Village</Label>
+                <Label>{translate('profile.serviceDetails.village')}</Label>
                 <Input
                   type="text"
                   name="village"
                   value={vendorData.village}
                   onChange={handleInputChange}
-                  placeholder="Enter village name"
+                  placeholder={translate('profile.serviceDetails.villagePlaceholder')}
                 />
               </InputGroup>
             </>
@@ -539,77 +554,79 @@ const Profile = () => {
             <>
               {vendorData.batteries.map((battery, index) => (
                 <Accordion key={index}>
-                  <AccordionHeader>Battery {index + 1}</AccordionHeader>
+                  <AccordionHeader>{translate('profile.batterySpecs.battery')} {index + 1}</AccordionHeader>
                   <AccordionContent>
                     <InputGroup2>
-                      <Label>Battery Capacity</Label>
+                      <Label>{translate('profile.batterySpecs.capacity')}</Label>
                       <Input
                         type="text"
                         name="capacity"
                         value={battery.capacity}
                         onChange={(e) => handleInputChange(e, index, 'batteries')}
-                        placeholder="Enter battery capacity"
+                        placeholder={translate('profile.batterySpecs.capacityPlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Life Cycles</Label>
+                      <Label>{translate('profile.batterySpecs.lifeCycles')}</Label>
                       <Input
                         type="number"
                         name="lifeCycles"
                         value={battery.lifeCycles}
                         onChange={(e) => handleInputChange(e, index, 'batteries')}
-                        placeholder="Enter life cycles"
+                        placeholder={translate('profile.batterySpecs.lifeCyclesPlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Voltage</Label>
+                      <Label>{translate('profile.batterySpecs.voltage')}</Label>
                       <Input
                         type="number"
                         name="voltage"
                         value={battery.voltage}
                         onChange={(e) => handleInputChange(e, index, 'batteries')}
-                        placeholder="Enter voltage"
+                        placeholder={translate('profile.batterySpecs.voltagePlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Ampere</Label>
+                      <Label>{translate('profile.batterySpecs.ampere')}</Label>
                       <Input
                         type="number"
                         name="ampere"
                         value={battery.ampere}
                         onChange={(e) => handleInputChange(e, index, 'batteries')}
-                        placeholder="Enter ampere"
+                        placeholder={translate('profile.batterySpecs.amperePlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Manufacturer</Label>
+                      <Label>{translate('profile.batterySpecs.manufacturer')}</Label>
                       <Input
                         type="text"
                         name="manufacturer"
                         value={battery.manufacturer}
                         onChange={(e) => handleInputChange(e, index, 'batteries')}
-                        placeholder="Enter manufacturer name"
+                        placeholder={translate('profile.batterySpecs.manufacturerPlaceholder')}
                       />
                     </InputGroup2>
                     <InputGroup2>
-                      <Label>Purchase Year</Label>
+                      <Label>{translate('profile.batterySpecs.purchaseYear')}</Label>
                       <Input
                         type="number"
                         name="purchaseYear"
                         value={battery.purchaseYear}
                         onChange={(e) => handleInputChange(e, index, 'batteries')}
-                        placeholder="Enter purchase year"
+                        placeholder={translate('profile.batterySpecs.purchaseYearPlaceholder')}
                       />
                     </InputGroup2>
                   </AccordionContent>
                 </Accordion>
               ))}
               <ButtonContainer>
-                <AddMoreButton type="button" onClick={handleAddBattery}>Add New Battery</AddMoreButton>
+                <AddMoreButton type="button" onClick={handleAddBattery}>
+                  {translate('profile.batterySpecs.addMore')}
+                </AddMoreButton>
               </ButtonContainer>
             </>
           )}
-          <SubmitButton type="submit">Save Changes</SubmitButton>
+          <SubmitButton type="submit">{translate('profile.saveChanges')}</SubmitButton>
         </Form>
       </Content>
     </Container>

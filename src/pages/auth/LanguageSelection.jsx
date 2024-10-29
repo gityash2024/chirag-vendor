@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useTranslation } from '../../TranslationContext.jsx';
 import languageSelectionImage from '../../assets/language-selection-image.png';
-import chiragLogo from '../../assets/chirag-logo-dark.png';
+import chiragLogo from '../../assets/logo-dark.svg';
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const ImageSection = styled.div`
 
 const Image = styled.img`
   width: 50vw;
-  height: 80vh;
+  height: 100vh;
   object-fit: contain;
 `;
 
@@ -39,8 +39,9 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 250px;
+  width: 300px;
   margin-right: 100px;
+  margin-bottom: 70px;
 `;
 
 const Title = styled.h2`

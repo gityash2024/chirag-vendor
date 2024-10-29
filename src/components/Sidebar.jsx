@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import chiragLogo from '../assets/chirag-logo.png';
+import chiragLogo from '../assets/logo-light.svg';
 import homeIcon from '../assets/home.png';
 import bookingsIcon from '../assets/bookings.png';
 import serviceHistoryIcon from '../assets/service-history.png';
@@ -13,22 +13,24 @@ import contactIcon from '../assets/contact.png';
 import termsIcon from '../assets/terms.png';
 import privacyIcon from '../assets/privacy.png';
 import logoutIcon from '../assets/logout.png';
+import { useTranslation } from '../TranslationContext';
+
 
 const SidebarContainer = styled.div`
-  background-color: #121212;
+  background-color: #383838;
   color: white;
-  width: 250px;
+  width: 280px;
   height: 100vh;
   display: flex;
   flex-direction: column;
 `;
 
 const Logo = styled.div`
-cursor: pointer;
+  cursor: pointer;
   padding: 20px;
   img {
     width: 100%;
-    max-width: 150px;
+    max-width: 300px;
   }
 `;
 
@@ -47,15 +49,15 @@ const Menu = styled.nav`
 const MenuItem = styled(Link)`
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 10px 20px;
   text-decoration: none;
   color: white;
   &.active {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #000000;
   }
   img {
     width: 30px;
-    height: 3 0px;
+    height: 30px;
     margin-right: 15px;
   }
 `;
@@ -63,7 +65,7 @@ const MenuItem = styled(Link)`
 const LogoutButton = styled.button`
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 10px 20px;
   background: none;
   border: none;
   color: white;
@@ -71,8 +73,8 @@ const LogoutButton = styled.button`
   width: 100%;
   text-align: left;
   img {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     margin-right: 15px;
   }
 `;
@@ -98,7 +100,7 @@ const ModalContent = styled.div`
 
 const ModalText = styled.p`
   margin-bottom: 20px;
-  color: #333;
+  color: #121212;
 `;
 
 const ModalButton = styled.button`
@@ -111,11 +113,11 @@ const ModalButton = styled.button`
 
 const CancelButton = styled(ModalButton)`
   background-color: #ccc;
-  color: #333;
+  color: #121212;
 `;
 
 const ConfirmButton = styled(ModalButton)`
-  background-color: #121212;
+  background-color: #383838;
   color: white;
 `;
 
@@ -123,6 +125,7 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const { translate } = useTranslation();
 
   const menuItems = [
     { icon: homeIcon, text: 'Home', path: '/home' },
@@ -156,7 +159,15 @@ const Sidebar = () => {
           <img src={chiragLogo} alt="C.H.I.R.A.G." />
         </Logo>
         <Menu>
-          {menuItems.map((item) => (
+          {[
+            { icon: homeIcon, text: translate('sidebar.menu.home'), path: '/home' },
+            { icon: bookingsIcon, text: translate('sidebar.menu.bookings'), path: '/bookings' },
+            { icon: calendarIcon, text: translate('sidebar.menu.calendar'), path: '/calendar' },
+            { icon: serviceHistoryIcon, text: translate('sidebar.menu.serviceHistory'), path: '/service-history' },
+            { icon: reportsIcon, text: translate('sidebar.menu.manageRunner'), path: '/manage-runner' },
+            { icon: manageRunnerIcon, text: translate('sidebar.menu.reports'), path: '/reports' },
+            { icon: recommendation, text: translate('sidebar.menu.sprayAssist'), path: '/recommendation' },
+          ].map((item) => (
             <MenuItem
               key={item.text}
               to={item.path}
@@ -168,7 +179,11 @@ const Sidebar = () => {
           ))}
         </Menu>
         <Menu bottom>
-          {bottomMenuItems.map((item) => (
+          {[
+            { icon: contactIcon, text: translate('sidebar.bottomMenu.contactUs'), path: '/contact-us' },
+            { icon: termsIcon, text: translate('sidebar.bottomMenu.termsAndConditions'), path: '/terms-and-conditions' },
+            { icon: privacyIcon, text: translate('sidebar.bottomMenu.privacyPolicy'), path: '/privacy-policy' },
+          ].map((item) => (
             <MenuItem
               key={item.text}
               to={item.path}
@@ -180,7 +195,9 @@ const Sidebar = () => {
           ))}
           <LogoutButton onClick={handleLogout}>
             <img style={{width: '35px', height: '35px'}} src={logoutIcon} alt="Logout" />
-            <span style={{ marginLeft: '10px', fontWeight: '500',fontSize: '16px' }}>Logout</span>
+            <span style={{ marginLeft: '10px', fontWeight: '500', fontSize: '16px' }}>
+              {translate('sidebar.bottomMenu.logout')}
+            </span>
           </LogoutButton>
         </Menu>
       </SidebarContainer>
@@ -188,9 +205,13 @@ const Sidebar = () => {
       {showLogoutModal && (
         <ModalOverlay>
           <ModalContent>
-            <ModalText>Are you sure you want to Logout?</ModalText>
-            <CancelButton onClick={() => setShowLogoutModal(false)}>No</CancelButton>
-            <ConfirmButton onClick={confirmLogout}>Yes</ConfirmButton>
+            <ModalText>{translate('sidebar.logoutModal.confirmMessage')}</ModalText>
+            <CancelButton onClick={() => setShowLogoutModal(false)}>
+              {translate('sidebar.logoutModal.no')}
+            </CancelButton>
+            <ConfirmButton onClick={confirmLogout}>
+              {translate('sidebar.logoutModal.yes')}
+            </ConfirmButton>
           </ModalContent>
         </ModalOverlay>
       )}
