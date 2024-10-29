@@ -311,9 +311,425 @@
         "no": "No",
         "yes": "Yes"
       }
-    }
+    },"bookings": {
+      "title": "Bookings",
+      "tabs": {
+        "requestsviafarmer": "Requests via Farmer",
+        "requestsviaadmin": "Requests via Admin",
+        "quotesent": "Quote Sent",
+        "assignrunner": "Assign Runner",
+        "confirmedbookings": "Confirmed Bookings"
+      },
+      "card": {
+        "booking": "Booking",
+        "bookingName": "Booking Name",
+        "farmArea": "Farm Area",
+        "acres": "Acres",
+        "crop": "Crop",
+        "quotedPrice": "Quoted Price",
+        "assignedRunner": "Assigned Runner",
+        "callNow": "Call Now",
+        "decline": "Decline",
+        "accept": "Accept",
+        "assignRunner": "Assign Runner"
+      },
+      "modal": {
+        "addPrice": "Add a Price for this booking",
+        "enterPrice": "Enter Price",
+        "enterPricePlaceholder": "Enter price",
+        "submit": "Submit",
+        "quoteSent": "Quote sent",
+        "updateSoon": "You will get an update soon"
+      },
+      "emptyState": {
+        "noBookings": "Currently, no bookings available for"
+      },
+      "loading": "Loading..."
+    },  "calendar": {
+      "months": {
+        "title": "MMMM yyyy"
+      },
+      "weekDays": {
+        "sun": "Sun",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat"
+      },
+      "bookings": {
+        "forDate": "Bookings for",
+        "upcoming": "Upcoming Bookings",
+        "noBookings": "No completed bookings available for this date.",
+        "noUpcoming": "No upcoming confirmed bookings available.",
+        "bookingName": "Booking Name",
+        "farmArea": "Farm Area",
+        "acres": "Acres",
+        "crop": "Crop",
+        "price": "Price",
+        "priceNotQuoted": "Price : Not Quoted yet",
+        "priceSummary": "Price Summary: ₹ ",
+        "assignedRunner": "Assigned Runner",
+        "callNow": "Call Now"
+      }
+    }, "serviceHistory": {
+      "title": "Service History",
+      "bookingDetails": {
+        "bookingName": "Booking Name",
+        "farmArea": "Farm Area",
+        "acres": "Acres",
+        "crop": "Crop",
+        "priceSummary": "Price Summary: ₹",
+        "assignedRunner": "Assigned Runner",
+        "callNow": "Call Now"
+      }
+    },"bookingDetails": {
+      "title": "Bookings",
+      "notFound": "Booking not found",
+      "details": {
+        "location": "Location",
+        "bookingName": "Booking Name",
+        "contactNumber": "Contact number",
+        "farmArea": "Farm Area",
+        "acres": "Acres",
+        "crop": "Crop"
+      },
+      "payment": {
+        "title": "Payment Summary",
+        "estimatedTotal": "Estimated Total",
+        "taxesFee": "Taxes and fee",
+        "total": "Total"
+      },
+      "runner": {
+        "title": "Runner Assigned",
+        "contactNumber": "Contact number",
+        "callNow": "Call Now"
+      },
+      "service": {
+        "started": {
+          "title": "Service started",
+          "battery": "Set of battery available",
+          "currentImage": "Current Image of the field"
+        },
+        "completed": {
+          "title": "Service completed",
+          "fieldImage": "Image of the field after the service completed"
+        }
+      },
+      "rating": {
+        "title": "Average Rating"
+      }
+    }, "manageRunner": {
+      "title": "Manage runners",
+      "search": "Search...",
+      "table": {
+        "headers": {
+          "runnerName": "Runner Name",
+          "runnerContact": "Runner Contact",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "status": {
+          "active": "Active",
+          "inactive": "Inactive"
+        }
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "modal": {
+        "block": {
+          "title": "Block Runner",
+          "message": "Are you sure you want to block this runner?"
+        },
+        "unblock": {
+          "title": "Unblock Runner",
+          "message": "Are you sure you want to unblock this runner?"
+        },
+        "buttons": {
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        }
+      }
+    },"runner": {
+    "management": "Runner Management",
+    "viewRunner": "View",
+    "editRunner": "Edit",
+    "name": "Name",
+    "mobile": "Mobile",
+    "email": "Email id",
+    "city": "City",
+    "state": "State",
+    "aadhaarAuth": "Aadhar authentication",
+    "verified": "Verified",
+    "notVerified": "Not Verified",
+    "vendor": "Vendor",
+    "droneImage": "Drone Image",
+    "uploadText": "Click or drag file to this area to upload",
+    "updating": "Updating...",
+    "update": "Update",
+    "saving": "Saving...",
+    "save": "Save",
+    "blockRunner": "Block Runner"
+  }, "reports": {
+    "title": "Reports",
+    "filters": {
+      "yearly": "Yearly",
+      "monthly": "Monthly",
+      "weekly": "Weekly",
+      "exportReport": "Export Complete Report"
+    },
+    "environmental": {
+      "title": "Environmental Report",
+      "waterSaved": {
+        "label": "Water saved till now",
+        "unit": "litres"
+      },
+      "pesticide": {
+        "label": "Pesticide till now",
+        "unit": "decrease"
+      },
+      "carbonFootprint": {
+        "label": "Carbon footprint",
+        "unit": "Less"
+      }
+    },
+    "economic": {
+      "title": "Economic Report",
+      "droneRoi": {
+        "label": "ROI for Drone spraying",
+        "unit": "%"
+      },
+      "batteryEfficiency": {
+        "label": "Battery efficiency",
+        "unit": "Hours"
+      },
+      "droneLongevity": {
+        "label": "Drone ROI/ Drone life",
+        "unit": "%"
+      },
+      "cropYield": {
+        "label": "Crop yield comparison",
+        "unit": "increased"
+      }
+    },
+    "noData": "No KPI data available for the selected period"
+  }
   },
   "hi": {
+    "reports": {
+      "title": "रिपोर्ट",
+      "filters": {
+        "yearly": "वार्षिक",
+        "monthly": "मासिक",
+        "weekly": "साप्ताहिक",
+        "exportReport": "पूरी रिपोर्ट निर्यात करें"
+      },
+      "environmental": {
+        "title": "पर्यावरण रिपोर्ट",
+        "waterSaved": {
+          "label": "अब तक बचाया गया पानी",
+          "unit": "लीटर"
+        },
+        "pesticide": {
+          "label": "अब तक कीटनाशक",
+          "unit": "कमी"
+        },
+        "carbonFootprint": {
+          "label": "कार्बन फुटप्रिंट",
+          "unit": "कम"
+        }
+      },
+      "economic": {
+        "title": "आर्थिक रिपोर्ट",
+        "droneRoi": {
+          "label": "ड्रोन स्प्रेइंग का आरओआई",
+          "unit": "%"
+        },
+        "batteryEfficiency": {
+          "label": "बैटरी दक्षता",
+          "unit": "घंटे"
+        },
+        "droneLongevity": {
+          "label": "ड्रोन आरओआई/ड्रोन जीवन",
+          "unit": "%"
+        },
+        "cropYield": {
+          "label": "फसल उपज तुलना",
+          "unit": "वृद्धि"
+        }
+      },
+      "noData": "चयनित अवधि के लिए कोई केपीआई डेटा उपलब्ध नहीं है"
+    },
+    "runner": {
+    "management": "रनर प्रबंधन",
+    "viewRunner": "देखें",
+    "editRunner": "संपादित करें",
+    "name": "नाम",
+    "mobile": "मोबाइल",
+    "email": "ईमेल आईडी",
+    "city": "शहर",
+    "state": "राज्य",
+    "aadhaarAuth": "आधार प्रमाणीकरण",
+    "verified": "सत्यापित",
+    "notVerified": "असत्यापित",
+    "vendor": "विक्रेता",
+    "droneImage": "ड्रोन छवि",
+    "uploadText": "अपलोड करने के लिए फ़ाइल को यहां क्लिक करें या खींचें",
+    "updating": "अपडेट हो रहा है...",
+    "update": "अपडेट करें",
+    "saving": "सहेजा जा रहा है...",
+    "save": "सहेजें",
+    "blockRunner": "रनर को ब्लॉक करें"
+  },
+    "manageRunner": {
+      "title": "रनर प्रबंधन",
+      "search": "खोजें...",
+      "table": {
+        "headers": {
+          "runnerName": "रनर का नाम",
+          "runnerContact": "रनर का संपर्क",
+          "status": "स्थिति",
+          "actions": "कार्य"
+        },
+        "status": {
+          "active": "सक्रिय",
+          "inactive": "निष्क्रिय"
+        }
+      },
+      "pagination": {
+        "previous": "पिछला",
+        "next": "अगला"
+      },
+      "modal": {
+        "block": {
+          "title": "रनर को ब्लॉक करें",
+          "message": "क्या आप वाकई इस रनर को ब्लॉक करना चाहते हैं?"
+        },
+        "unblock": {
+          "title": "रनर को अनब्लॉक करें",
+          "message": "क्या आप वाकई इस रनर को अनब्लॉक करना चाहते हैं?"
+        },
+        "buttons": {
+          "cancel": "रद्द करें",
+          "confirm": "पुष्टि करें"
+        }
+      }
+    },
+    "bookingDetails": {
+      "title": "बुकिंग",
+      "notFound": "बुकिंग नहीं मिली",
+      "details": {
+        "location": "स्थान",
+        "bookingName": "बुकिंग नाम",
+        "contactNumber": "संपर्क नंबर",
+        "farmArea": "खेत का क्षेत्र",
+        "acres": "एकड़",
+        "crop": "फसल"
+      },
+      "payment": {
+        "title": "भुगतान सारांश",
+        "estimatedTotal": "अनुमानित कुल",
+        "taxesFee": "कर और शुल्क",
+        "total": "कुल"
+      },
+      "runner": {
+        "title": "रनर असाइन किया गया",
+        "contactNumber": "संपर्क नंबर",
+        "callNow": "अभी कॉल करें"
+      },
+      "service": {
+        "started": {
+          "title": "सेवा शुरू हुई",
+          "battery": "उपलब्ध बैटरी सेट",
+          "currentImage": "खेत की वर्तमान छवि"
+        },
+        "completed": {
+          "title": "सेवा पूरी हुई",
+          "fieldImage": "सेवा पूरी होने के बाद खेत की छवि"
+        }
+      },
+      "rating": {
+        "title": "औसत रेटिंग"
+      }
+    }, "serviceHistory": {
+      "title": "सेवा इतिहास",
+      "bookingDetails": {
+        "bookingName": "बुकिंग नाम",
+        "farmArea": "खेत का क्षेत्र",
+        "acres": "एकड़",
+        "crop": "फसल",
+        "priceSummary": "मूल्य सारांश: ₹",
+        "assignedRunner": "असाइन किया गया रनर",
+        "callNow": "अभी कॉल करें"
+      }
+    },
+    "calendar": {
+      "months": {
+        "title": "MMMM yyyy"
+      },
+      "weekDays": {
+        "sun": "रवि",
+        "mon": "सोम",
+        "tue": "मंगल",
+        "wed": "बुध",
+        "thu": "गुरु",
+        "fri": "शुक्र",
+        "sat": "शनि"
+      },
+      "bookings": {
+        "forDate": "इस दिन की बुकिंग",
+        "upcoming": "आगामी बुकिंग",
+        "noBookings": "इस तारीख के लिए कोई पूर्ण बुकिंग उपलब्ध नहीं है।",
+        "noUpcoming": "कोई आगामी पुष्टि की गई बुकिंग उपलब्ध नहीं है।",
+        "bookingName": "बुकिंग नाम",
+        "farmArea": "खेत का क्षेत्र",
+        "acres": "एकड़",
+        "crop": "फसल",
+        "price": "मूल्य",
+        "priceNotQuoted": "मूल्य : अभी तक उद्धृत नहीं",
+        "priceSummary": "मूल्य सारांश: ₹ ",
+        "assignedRunner": "असाइन किया गया रनर",
+        "callNow": "अभी कॉल करें"
+      }
+    },
+    "bookings": {
+      "title": "बुकिंग",
+      "tabs": {
+        "requestsviafarmer": "किसान के माध्यम से अनुरोध",
+        "requestsviaadmin": "एडमिन के माध्यम से अनुरोध",
+        "quotesent": "कोट भेजा गया",
+        "assignrunner": "रनर असाइन करें",
+        "confirmedbookings": "पुष्टि की गई बुकिंग"
+      },
+      "card": {
+        "booking": "बुकिंग",
+        "bookingName": "बुकिंग नाम",
+        "farmArea": "खेत का क्षेत्र",
+        "acres": "एकड़",
+        "crop": "फसल",
+        "quotedPrice": "उद्धृत मूल्य",
+        "assignedRunner": "असाइन किया गया रनर",
+        "callNow": "अभी कॉल करें",
+        "decline": "अस्वीकार करें",
+        "accept": "स्वीकार करें",
+        "assignRunner": "रनर असाइन करें"
+      },
+      "modal": {
+        "addPrice": "इस बुकिंग के लिए मूल्य जोड़ें",
+        "enterPrice": "मूल्य दर्ज करें",
+        "enterPricePlaceholder": "मूल्य दर्ज करें",
+        "submit": "जमा करें",
+        "quoteSent": "कोट भेज दिया गया",
+        "updateSoon": "आपको जल्द ही अपडेट मिलेगा"
+      },
+      "emptyState": {
+        "noBookings": "वर्तमान में कोई बुकिंग उपलब्ध नहीं है"
+      },
+      "loading": "लोड हो रहा है..."
+    },
     "sidebar": {
       "menu": {
         "home": "होम",

@@ -7,6 +7,7 @@ import deleteIcon from '../../assets/delete-icon.png';
 import { getAllRunnersList, blockRunner } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
+import {useTranslation} from '../../TranslationContext';
 
 const Container = styled.div`
   padding: 20px;
@@ -176,6 +177,7 @@ const UnblockIcon = () => (
 );
 
 const ManageRunner = () => {
+  const {translate} = useTranslation();
   const [runners, setRunners] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -246,10 +248,10 @@ const ManageRunner = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  return (
+return (
     <Container>
       <Header>
-        <Title>Manage runners</Title>
+        <Title>{translate('manageRunner.title')}</Title>
       </Header>
       <TopControls>
         <EntriesDropdown onChange={handleEntriesChange} value={itemsPerPage}>
@@ -257,7 +259,11 @@ const ManageRunner = () => {
           <option value={14}>14</option>
           <option value={21}>21</option>
         </EntriesDropdown>
-        <SearchInput placeholder="Search..." value={searchTerm} onChange={handleSearch} />
+        <SearchInput 
+          placeholder={translate('manageRunner.search')} 
+          value={searchTerm} 
+          onChange={handleSearch} 
+        />
       </TopControls>
       {loading ? (
         <Loader />
@@ -266,10 +272,10 @@ const ManageRunner = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeader>Runner Name</TableHeader>
-                <TableHeader>Runner Contact</TableHeader>
-                <TableHeader>Status</TableHeader>
-                <TableHeader>Actions</TableHeader>
+                <TableHeader>{translate('manageRunner.table.headers.runnerName')}</TableHeader>
+                <TableHeader>{translate('manageRunner.table.headers.runnerContact')}</TableHeader>
+                <TableHeader>{translate('manageRunner.table.headers.status')}</TableHeader>
+                <TableHeader>{translate('manageRunner.table.headers.actions')}</TableHeader>
               </TableRow>
             </TableHead>
             <tbody>
@@ -283,7 +289,11 @@ const ManageRunner = () => {
                   </TableCell>
                   <TableCell>{runner.mobileNumber}</TableCell>
                   <TableCell>
-                    <StatusBadge active={!runner.isBlocked}>{runner.isBlocked ? 'Inactive' : 'Active'}</StatusBadge>
+                    <StatusBadge active={!runner.isBlocked}>
+                      {runner.isBlocked 
+                        ? translate('manageRunner.table.status.inactive')
+                        : translate('manageRunner.table.status.active')}
+                    </StatusBadge>
                   </TableCell>
                   <TableCell>
                     <Link to={`/edit-runner/${runner._id}/${true}`}>
@@ -293,11 +303,11 @@ const ManageRunner = () => {
                       <ActionIcon src={editIcon} alt="Edit" />
                     </Link>
                     {runner.isBlocked ? (
-                     <ActionIcon2 onClick={() => handleBlockRunner(runner)}>
-                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="currentColor"/>
-                     </svg>
-                   </ActionIcon2>
+                      <ActionIcon2 onClick={() => handleBlockRunner(runner)}>
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="currentColor"/>
+                        </svg>
+                      </ActionIcon2>
                     ) : (
                       <ActionIcon onClick={() => handleBlockRunner(runner)} src={deleteIcon} alt="Block" />
                     )}
@@ -307,22 +317,50 @@ const ManageRunner = () => {
             </tbody>
           </Table>
           <Pagination>
-            <PageButton onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>Previous</PageButton>
+            <PageButton 
+              onClick={() => paginate(currentPage - 1)} 
+              disabled={currentPage === 1}
+            >
+              {translate('manageRunner.pagination.previous')}
+            </PageButton>
             {Array.from({ length: Math.ceil(filteredRunners.length / itemsPerPage) }, (_, i) => (
-              <PageButton key={i} active={currentPage === i + 1} onClick={() => paginate(i + 1)}>{i + 1}</PageButton>
+              <PageButton 
+                key={i} 
+                active={currentPage === i + 1} 
+                onClick={() => paginate(i + 1)}
+              >
+                {i + 1}
+              </PageButton>
             ))}
-            <PageButton onClick={() => paginate(currentPage + 1)} disabled={currentPage === Math.ceil(filteredRunners.length / itemsPerPage)}>Next</PageButton>
+            <PageButton 
+              onClick={() => paginate(currentPage + 1)} 
+              disabled={currentPage === Math.ceil(filteredRunners.length / itemsPerPage)}
+            >
+              {translate('manageRunner.pagination.next')}
+            </PageButton>
           </Pagination>
         </>
       )}
       {showModal && (
         <ModalOverlay>
           <ModalContent>
-            <h2>{selectedRunner?.isBlocked ? 'Unblock' : 'Block'} Runner</h2>
-            <p>Are you sure you want to {selectedRunner?.isBlocked ? 'unblock' : 'block'} this runner?</p>
+            <h2>
+              {selectedRunner?.isBlocked 
+                ? translate('manageRunner.modal.unblock.title')
+                : translate('manageRunner.modal.block.title')}
+            </h2>
+            <p>
+              {selectedRunner?.isBlocked 
+                ? translate('manageRunner.modal.unblock.message')
+                : translate('manageRunner.modal.block.message')}
+            </p>
             <ModalButtons>
-              <ModalButton onClick={() => setShowModal(false)}>Cancel</ModalButton>
-              <ModalButton confirm onClick={confirmBlockRunner}>Confirm</ModalButton>
+              <ModalButton onClick={() => setShowModal(false)}>
+                {translate('manageRunner.modal.buttons.cancel')}
+              </ModalButton>
+              <ModalButton confirm onClick={confirmBlockRunner}>
+                {translate('manageRunner.modal.buttons.confirm')}
+              </ModalButton>
             </ModalButtons>
           </ModalContent>
         </ModalOverlay>

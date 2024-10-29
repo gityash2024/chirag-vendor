@@ -10,6 +10,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
+import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`
   padding: 20px;
@@ -168,6 +169,7 @@ const RatingContainer = styled.div`
 `;
 
 const ConfirmBookingDetails = () => {
+  const {translate}=useTranslation();
   const { id } = useParams();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -205,129 +207,129 @@ const ConfirmBookingDetails = () => {
     ? ((booking.farmerRating + booking.vendorRating) / 2).toFixed(1) 
     : null;
 
-  return (
-    <Container>
-      <Title>Bookings</Title>
-      <BookingId>#{booking._id}</BookingId>
-      <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
-      <FlexContainer>
-        <BookingDetails>
-          <DetailRow>
-            <DetailLabel><LocationOnIcon /> </DetailLabel>
-            <DetailValue>{booking.farmLocation}</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel><CalendarTodayIcon /> </DetailLabel>
-            <DetailValue>{new Date(booking.date).toLocaleDateString()}</DetailValue>
-            <DetailLabel><AccessTimeIcon /> </DetailLabel>
-            <DetailValue>{booking.time}</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel>Booking Name:</DetailLabel>
-            <DetailValue>{booking.farmerName}</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel>Contact number:</DetailLabel>
-            <DetailValue>{booking.contactNumber}</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel>Farm Area:</DetailLabel>
-            <DetailValue>{booking.farmArea} Acres</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel>Crop:</DetailLabel>
-            <DetailValue>{booking.cropName}</DetailValue>
-          </DetailRow>
-          <DetailRow>
-            <DetailLabel>{booking.weather}</DetailLabel>
-            <DetailLabel><OpacityIcon /> {booking.weather}</DetailLabel>
-          </DetailRow>
-        </BookingDetails>
-        {booking.status !== 'requested' && (
-          <PaymentSummary>
-            <h3>Payment Summary</h3>
+    return (
+      <Container>
+        <Title>{translate('bookingDetails.title')}</Title>
+        <BookingId>#{booking._id}</BookingId>
+        <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
+        <FlexContainer>
+          <BookingDetails>
             <DetailRow>
-              <DetailLabel>Estimated Total:</DetailLabel>
-              <DetailValue>₹{booking.quotePrice}</DetailValue>
+              <DetailLabel><LocationOnIcon /> </DetailLabel>
+              <DetailValue>{booking.farmLocation}</DetailValue>
             </DetailRow>
             <DetailRow>
-              <DetailLabel>Estimated Total</DetailLabel>
-              <DetailValue>₹{booking.quotePrice}</DetailValue>
+              <DetailLabel><CalendarTodayIcon /> </DetailLabel>
+              <DetailValue>{new Date(booking.date).toLocaleDateString()}</DetailValue>
+              <DetailLabel><AccessTimeIcon /> </DetailLabel>
+              <DetailValue>{booking.time}</DetailValue>
             </DetailRow>
             <DetailRow>
-              <DetailLabel>Taxes and fee</DetailLabel>
-              <DetailValue>₹{Math.round(booking.quotePrice * 0.1)}</DetailValue>
+              <DetailLabel>{translate('bookingDetails.details.bookingName')}:</DetailLabel>
+              <DetailValue>{booking.farmerName}</DetailValue>
             </DetailRow>
-            <HorizontalLine />
             <DetailRow>
-              <DetailLabel>Total</DetailLabel>
-              <DetailValue>₹{Math.round(booking.quotePrice * 1.1)}</DetailValue>
+              <DetailLabel>{translate('bookingDetails.details.contactNumber')}:</DetailLabel>
+              <DetailValue>{booking.contactNumber}</DetailValue>
             </DetailRow>
-          </PaymentSummary>
+            <DetailRow>
+              <DetailLabel>{translate('bookingDetails.details.farmArea')}:</DetailLabel>
+              <DetailValue>{booking.farmArea} {translate('bookingDetails.details.acres')}</DetailValue>
+            </DetailRow>
+            <DetailRow>
+              <DetailLabel>{translate('bookingDetails.details.crop')}:</DetailLabel>
+              <DetailValue>{booking.cropName}</DetailValue>
+            </DetailRow>
+            <DetailRow>
+              <DetailLabel>{booking.weather}</DetailLabel>
+              <DetailLabel><OpacityIcon /> {booking.weather}</DetailLabel>
+            </DetailRow>
+          </BookingDetails>
+          {booking.status !== 'requested' && (
+            <PaymentSummary>
+              <h3>{translate('bookingDetails.payment.title')}</h3>
+              <DetailRow>
+                <DetailLabel>{translate('bookingDetails.payment.estimatedTotal')}:</DetailLabel>
+                <DetailValue>₹{booking.quotePrice}</DetailValue>
+              </DetailRow>
+              <DetailRow>
+                <DetailLabel>{translate('bookingDetails.payment.estimatedTotal')}</DetailLabel>
+                <DetailValue>₹{booking.quotePrice}</DetailValue>
+              </DetailRow>
+              <DetailRow>
+                <DetailLabel>{translate('bookingDetails.payment.taxesFee')}</DetailLabel>
+                <DetailValue>₹{Math.round(booking.quotePrice * 0.1)}</DetailValue>
+              </DetailRow>
+              <HorizontalLine />
+              <DetailRow>
+                <DetailLabel>{translate('bookingDetails.payment.total')}</DetailLabel>
+                <DetailValue>₹{Math.round(booking.quotePrice * 1.1)}</DetailValue>
+              </DetailRow>
+            </PaymentSummary>
+          )}
+        </FlexContainer>
+        {booking.status !== 'requested' && booking.status !== 'quote_received' && booking.runner && (
+          <RunnerCard>
+            <h3>{translate('bookingDetails.runner.title')}</h3>
+            <RunnerInfo>
+              <RunnerAvatar />
+              <div>
+                <div>{booking.runner.name}</div>
+                <div>{translate('bookingDetails.runner.contactNumber')}: {booking.runner.mobileNumber}</div>
+              </div>
+            </RunnerInfo>
+            <CallButton onClick={() => toast.info(`Calling ${booking.runner.mobileNumber}`)}>
+              <PhoneIcon /> {translate('bookingDetails.runner.callNow')}
+            </CallButton>
+          </RunnerCard>
         )}
-      </FlexContainer>
-      {booking.status !== 'requested' && booking.status !== 'quote_received' && booking.runner && (
-        <RunnerCard>
-          <h3>Runner Assigned</h3>
-          <RunnerInfo>
-            <RunnerAvatar />
-            <div>
-              <div>{booking.runner.name}</div>
-              <div>Contact number: {booking.runner.mobileNumber}</div>
-            </div>
-          </RunnerInfo>
-          <CallButton onClick={() => toast.info(`Calling ${booking.runner.mobileNumber}`)}>
-            <PhoneIcon /> Call Now
-          </CallButton>
-        </RunnerCard>
-      )}
-      {(booking.status === 'completed' || booking.status === 'closed') && (
-        <>
-          {booking.startFieldImages && booking.startFieldImages.length > 0 && (
-            <ServiceCard>
-              <h3>Service started</h3>
-              <DetailRow>
-                <DetailLabel>Set of battery available:</DetailLabel>
-                <DetailValue>{booking.batterySetAvailable}</DetailValue>
-              </DetailRow>
-              <DetailRow>
-                <DetailLabel>Current Image of the field:</DetailLabel>
-              </DetailRow>
-              <ImageContainer>
-                {booking.startFieldImages.map((image, index) => (
-                  <FieldImage key={index} src={image} alt="Field" />
-                ))}
-              </ImageContainer>
-            </ServiceCard>
-          )}
-          {booking.endFieldImages && booking.endFieldImages.length > 0 && (
-            <ServiceCard>
-              <h3>Service completed</h3>
-              <DetailRow>
-                <DetailLabel>Image of the field after the service completed:</DetailLabel>
-              </DetailRow>
-              <ImageContainer>
-                {booking.endFieldImages.map((image, index) => (
-                  <FieldImage key={index} src={image} alt="Field" />
-                ))}
-              </ImageContainer>
-            </ServiceCard>
-          )}
-        </>
-      )}
-      {averageRating && (
-        <>
-          <h3>Average Rating</h3>
-          <RatingContainer>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <StarIcon key={star} color={star <= averageRating ? 'primary' : 'disabled'} />
-            ))}
-            <span>{averageRating}</span>
-          </RatingContainer>
-        </>
-      )}
-    </Container>
-  );
+        {(booking.status === 'completed' || booking.status === 'closed') && (
+          <>
+            {booking.startFieldImages && booking.startFieldImages.length > 0 && (
+              <ServiceCard>
+                <h3>{translate('bookingDetails.service.started.title')}</h3>
+                <DetailRow>
+                  <DetailLabel>{translate('bookingDetails.service.started.battery')}:</DetailLabel>
+                  <DetailValue>{booking.batterySetAvailable}</DetailValue>
+                </DetailRow>
+                <DetailRow>
+                  <DetailLabel>{translate('bookingDetails.service.started.currentImage')}:</DetailLabel>
+                </DetailRow>
+                <ImageContainer>
+                  {booking.startFieldImages.map((image, index) => (
+                    <FieldImage key={index} src={image} alt="Field" />
+                  ))}
+                </ImageContainer>
+              </ServiceCard>
+            )}
+            {booking.endFieldImages && booking.endFieldImages.length > 0 && (
+              <ServiceCard>
+                <h3>{translate('bookingDetails.service.completed.title')}</h3>
+                <DetailRow>
+                  <DetailLabel>{translate('bookingDetails.service.completed.fieldImage')}:</DetailLabel>
+                </DetailRow>
+                <ImageContainer>
+                  {booking.endFieldImages.map((image, index) => (
+                    <FieldImage key={index} src={image} alt="Field" />
+                  ))}
+                </ImageContainer>
+              </ServiceCard>
+            )}
+          </>
+        )}
+        {averageRating && (
+          <>
+            <h3>{translate('bookingDetails.rating.title')}</h3>
+            <RatingContainer>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <StarIcon key={star} color={star <= averageRating ? 'primary' : 'disabled'} />
+              ))}
+              <span>{averageRating}</span>
+            </RatingContainer>
+          </>
+        )}
+      </Container>
+    );
 };
 
 export default ConfirmBookingDetails;

@@ -6,6 +6,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { getAllRunnersList, updateRunner, uploadTos3 } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
+import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`
   padding: 20px;
@@ -119,6 +120,7 @@ const DroneImage = styled.img`
 `;
 
 const EditRunner = () => {
+  const {translate} = useTranslation();
   const { id, isView } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -204,20 +206,14 @@ const EditRunner = () => {
           <BackButton onClick={handleBackClick}>
             <ArrowBackIcon />
           </BackButton>
-          Runner Management / {isView ? 'View' : 'Edit'}
+          {translate('runner.management')} / {isView ? translate('runner.viewRunner') : translate('runner.editRunner')}
         </Title>
         {!isView ? (
           <Button edit onClick={handleSubmit} disabled={loading}>
             <Edit style={{ marginRight: '5px' }} />
-            {loading ? 'Updating...' : 'Update'}
+            {loading ? translate('runner.updating') : translate('runner.update')}
           </Button>
-        ) : (
-          null
-          // <Button edit>
-          //   <Block style={{ marginRight: '5px' }} />
-          //   Block Runner
-          // </Button>
-        )}
+        ) : null}
       </Header>
       {loading ? (
         <Loader />
@@ -225,7 +221,7 @@ const EditRunner = () => {
         <Form onSubmit={handleSubmit}>
           <FormRow>
             <FormGroup>
-              <Label>Name</Label>
+              <Label>{translate('runner.name')}</Label>
               <Input
                 type="text"
                 name="name"
@@ -235,7 +231,7 @@ const EditRunner = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label>Mobile</Label>
+              <Label>{translate('runner.mobile')}</Label>
               <Input
                 type="tel"
                 name="mobileNumber"
@@ -245,7 +241,7 @@ const EditRunner = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label>Email id</Label>
+              <Label>{translate('runner.email')}</Label>
               <Input
                 type="email"
                 name="email"
@@ -257,17 +253,17 @@ const EditRunner = () => {
           </FormRow>
           <FormRow>
             <FormGroup>
-              <Label>City</Label>
+              <Label>{translate('runner.city')}</Label>
               <Input
                 type="text"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
                 readOnly={isView}
-                />
+              />
             </FormGroup>
             <FormGroup>
-              <Label>State</Label>
+              <Label>{translate('runner.state')}</Label>
               <Select
                 name="state"
                 value={formData.state}
@@ -280,13 +276,15 @@ const EditRunner = () => {
               </Select>
             </FormGroup>
             <FormGroup>
-              <Label>Aadhar authentication</Label>
-              <StatusBadge active={formData.aadhaarVerified}>{formData.aadhaarVerified ? 'Verified' : 'Not Verified'}</StatusBadge>
+              <Label>{translate('runner.aadhaarAuth')}</Label>
+              <StatusBadge active={formData.aadhaarVerified}>
+                {formData.aadhaarVerified ? translate('runner.verified') : translate('runner.notVerified')}
+              </StatusBadge>
             </FormGroup>
           </FormRow>
           <FormRow>
             <FormGroup>
-              <Label>Vendor</Label>
+              <Label>{translate('runner.vendor')}</Label>
               <Input
                 type="text"
                 name="vendor"
@@ -298,10 +296,10 @@ const EditRunner = () => {
           </FormRow>
           {!isView && (
             <FormGroup>
-              <Label>Drone Image</Label>
+              <Label>{translate('runner.droneImage')}</Label>
               <ImageUpload>
                 <input type="file" onChange={handleImageUpload} accept="image/*" />
-                <p>Click or drag file to this area to upload</p>
+                <p>{translate('runner.uploadText')}</p>
               </ImageUpload>
             </FormGroup>
           )}
@@ -313,7 +311,7 @@ const EditRunner = () => {
           {!isView && (
             <ButtonContainer>
               <Button type="submit" disabled={loading}>
-                {loading ? 'Saving...' : 'Save'}
+                {loading ? translate('runner.saving') : translate('runner.save')}
               </Button>
             </ButtonContainer>
           )}
@@ -321,6 +319,7 @@ const EditRunner = () => {
       )}
     </Container>
   );
+
 };
 
 export default EditRunner;

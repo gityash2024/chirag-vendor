@@ -11,6 +11,7 @@ import { FaDownload } from "react-icons/fa";
 import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import * as XLSX from 'xlsx';
+import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`
   padding: 20px;
@@ -113,6 +114,7 @@ const ReportLabel = styled.span`
 `;
 
 const Reports = () => {
+  const {translate} = useTranslation();
   const [bookings, setBookings] = useState([]);
   const [dateFilter, setDateFilter] = useState('yearly');
   const [environmentalStats, setEnvironmentalStats] = useState({
@@ -244,10 +246,10 @@ const Reports = () => {
     const filteredBookings = filterBookingsByDate(bookings)
       .filter(booking => booking.status === "completed" || booking.status === "closed");
     
-    if (filteredBookings.length === 0) {
-      toast.info("No KPI data available for the selected period");
-      return;
-    }
+      if (filteredBookings.length === 0) {
+        toast.info(translate('reports.noData'));
+        return;
+      }
 
     const data = filteredBookings.map(booking => ({
       "Booking ID": booking._id || '',
@@ -303,87 +305,87 @@ const Reports = () => {
   return (
     <Container>
       <HeaderContainer>
-        <Title>Reports</Title>
+        <Title>{translate('reports.title')}</Title>
         <FilterGroup>
           <Select value={dateFilter} onChange={(e) => setDateFilter(e.target.value)}>
-            <option value="yearly">Yearly</option>
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
+            <option value="yearly">{translate('reports.filters.yearly')}</option>
+            <option value="monthly">{translate('reports.filters.monthly')}</option>
+            <option value="weekly">{translate('reports.filters.weekly')}</option>
           </Select>
           <DownloadButton onClick={exportToExcel}>
-            Export Complete Report <FaDownload />
+            {translate('reports.filters.exportReport')} <FaDownload />
           </DownloadButton>
         </FilterGroup>
       </HeaderContainer>
       
       <ReportSection>
         <ReportHeader>
-          <ReportTitle>Environmental Report</ReportTitle>
+          <ReportTitle>{translate('reports.environmental.title')}</ReportTitle>
         </ReportHeader>
         <ReportGrid columns={3}>
           <ReportCard>
-            <ReportLabel>Water saved till now</ReportLabel>
+            <ReportLabel>{translate('reports.environmental.waterSaved.label')}</ReportLabel>
             <ReportIcon src={waterIcon} alt="Water saved" />
             <ReportValue color="#5CBEFF">
               {environmentalStats.waterSaved.toFixed(2)}
             </ReportValue>
-            <ReportLabel>litres</ReportLabel>
+            <ReportLabel>{translate('reports.environmental.waterSaved.unit')}</ReportLabel>
           </ReportCard>
           <ReportCard>
-            <ReportLabel>Pesticide till now</ReportLabel>
+            <ReportLabel>{translate('reports.environmental.pesticide.label')}</ReportLabel>
             <ReportIcon src={pesticideIcon} alt="Pesticide saved" />
             <ReportValue color="#FF826E">
               {environmentalStats.pesticideReduction.toFixed(1)}%
             </ReportValue>
-            <ReportLabel>decrease</ReportLabel>
+            <ReportLabel>{translate('reports.environmental.pesticide.unit')}</ReportLabel>
           </ReportCard>
           <ReportCard>
-            <ReportLabel>Carbon footprint</ReportLabel>
+            <ReportLabel>{translate('reports.environmental.carbonFootprint.label')}</ReportLabel>
             <ReportIcon src={carbonFootprintIcon} alt="Carbon footprint" />
             <ReportValue color="#6AD34D">
               {environmentalStats.carbonFootprint.toFixed(1)}%
             </ReportValue>
-            <ReportLabel>Less</ReportLabel>
+            <ReportLabel>{translate('reports.environmental.carbonFootprint.unit')}</ReportLabel>
           </ReportCard>
         </ReportGrid>
       </ReportSection>
 
       <ReportSection>
         <ReportHeader>
-          <ReportTitle>Economic Report</ReportTitle>
+          <ReportTitle>{translate('reports.economic.title')}</ReportTitle>
         </ReportHeader>
         <ReportGrid columns={4}>
           <ReportCard>
-            <ReportLabel>ROI for Drone spraying</ReportLabel>
+            <ReportLabel>{translate('reports.economic.droneRoi.label')}</ReportLabel>
             <ReportIcon src={droneSprayingIcon} alt="ROI for Drone spraying" />
             <ReportValue color="#5CBEFF">
               {economicStats.roiDroneSpraying.toFixed(1)}%
             </ReportValue>
           </ReportCard>
           <ReportCard>
-            <ReportLabel>Battery efficiency</ReportLabel>
+            <ReportLabel>{translate('reports.economic.batteryEfficiency.label')}</ReportLabel>
             <ReportIcon src={batteryEfficiencyIcon} alt="Battery efficiency" />
             <ReportValue color="#FF826E">
               {economicStats.batteryEfficiency.toFixed(1)}
             </ReportValue>
-            <ReportLabel>Hours</ReportLabel>
+            <ReportLabel>{translate('reports.economic.batteryEfficiency.unit')}</ReportLabel>
           </ReportCard>
           <ReportCard>
-            <ReportLabel>Drone ROI/ Drone life</ReportLabel>
+            <ReportLabel>{translate('reports.economic.droneLongevity.label')}</ReportLabel>
             <ReportIcon src={droneRoiIcon} alt="Drone ROI/Drone life" />
             <ReportValue color="#6AD34D">
               {economicStats.droneRoi.toFixed(1)}%
             </ReportValue>
           </ReportCard>
           <ReportCard>
-            <ReportLabel>Crop yield comparison</ReportLabel>
+            <ReportLabel>{translate('reports.economic.cropYield.label')}</ReportLabel>
             <ReportIcon src={cropYieldIcon} alt="Crop yield comparison" />
             <ReportValue color="#FFC107">
               {economicStats.yieldImprovement.toFixed(1)}%
             </ReportValue>
-            <ReportLabel>increased</ReportLabel>
+            <ReportLabel>{translate('reports.economic.cropYield.unit')}</ReportLabel>
           </ReportCard>
-          </ReportGrid>
+        </ReportGrid>
       </ReportSection>
     </Container>
   );

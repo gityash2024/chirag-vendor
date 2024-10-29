@@ -11,7 +11,7 @@ import Phone from '@mui/icons-material/Phone';
 import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
-
+import {useTranslation} from '../../TranslationContext';
 const CalendarContainer = styled.div`
   display: flex;
   font-family: 'Public Sans', sans-serif;
@@ -190,6 +190,7 @@ const RunnerContactButton = styled.button`
 `;
 
 const Calendar = () => {
+  const { translate } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
@@ -237,31 +238,55 @@ const Calendar = () => {
         <BookingId>#{booking._id}</BookingId>
         <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
       </CardHeader>
-      <BookingDetails><LocationOn /> {booking.farmLocation}</BookingDetails>
+      <BookingDetails>
+        <LocationOn /> {booking.farmLocation}
+      </BookingDetails>
       <DateTimeRow>
-        <BookingDetails><CalendarToday /> {format(parseISO(booking.date), 'yyyy-MM-dd')}</BookingDetails>
-        <BookingDetails><AccessTime /> {booking.time}</BookingDetails>
+        <BookingDetails>
+          <CalendarToday /> {format(parseISO(booking.date), 'yyyy-MM-dd')}
+        </BookingDetails>
+        <BookingDetails>
+          <AccessTime /> {booking.time}
+        </BookingDetails>
       </DateTimeRow>
-      <BookingDetails>Booking Name: {booking.farmerName}</BookingDetails>
-      <BookingDetails>Farm Area: {booking.farmArea} Acres</BookingDetails>
+      <BookingDetails>
+        {translate('calendar.bookings.bookingName')}: {booking.farmerName}
+      </BookingDetails>
+      <BookingDetails>
+        {translate('calendar.bookings.farmArea')}: {booking.farmArea} {translate('calendar.bookings.acres')}
+      </BookingDetails>
       <TempHumidityCropRow>
         <TempHumidity>
           <Temperature>{booking.weather}</Temperature>
-          <Humidity><Opacity /> {booking.weather}</Humidity>
+          <Humidity>
+            <Opacity /> {booking.weather}
+          </Humidity>
         </TempHumidity>
-        <Crop>Crop: {booking.cropName}</Crop>
+        <Crop>
+          {translate('calendar.bookings.crop')}: {booking.cropName}
+        </Crop>
       </TempHumidityCropRow>
-      <PriceSummary>{booking.quotePrice?'Price Summary: ₹ '+ booking.quotePrice: 'Price : Not Quoted yet'}</PriceSummary>
+      <PriceSummary>
+        {booking.quotePrice 
+          ? `${translate('calendar.bookings.priceSummary')}${booking.quotePrice}`
+          : translate('calendar.bookings.priceNotQuoted')
+        }
+      </PriceSummary>
       {booking.runner && (
         <RunnerDetails>
-          <strong>Assigned Runner:</strong>
+          <strong>{translate('calendar.bookings.assignedRunner')}:</strong>
           <RunnerName>
             <RunnerInfo>
               <AvatarIcon />
               <span>{booking.runner.name}</span>
             </RunnerInfo>
-            <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
-              <Phone /> Call Now
+            <RunnerContactButton 
+              onClick={(e) => { 
+                e.preventDefault(); 
+                toast.info(`Calling ${booking.runner.mobileNumber}`); 
+              }}
+            >
+              <Phone /> {translate('calendar.bookings.callNow')}
             </RunnerContactButton>
           </RunnerName>
         </RunnerDetails>
@@ -278,11 +303,19 @@ const Calendar = () => {
       <CalendarColumn>
         <CalendarHeader>
           <CalendarNavButton onClick={prevMonth}>&lt;</CalendarNavButton>
-          <CalendarTitle>{format(currentDate, 'MMMM yyyy')}</CalendarTitle>
+          <CalendarTitle>{format(currentDate, translate('calendar.months.title'))}</CalendarTitle>
           <CalendarNavButton onClick={nextMonth}>&gt;</CalendarNavButton>
         </CalendarHeader>
         <CalendarGrid>
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+          {[
+            translate('calendar.weekDays.sun'),
+            translate('calendar.weekDays.mon'),
+            translate('calendar.weekDays.tue'),
+            translate('calendar.weekDays.wed'),
+            translate('calendar.weekDays.thu'),
+            translate('calendar.weekDays.fri'),
+            translate('calendar.weekDays.sat')
+          ].map(day => (
             <DayCell key={day}>{day}</DayCell>
           ))}
           {monthDays.map(day => (
@@ -298,19 +331,66 @@ const Calendar = () => {
         </CalendarGrid>
       </CalendarColumn>
       <BookingColumn>
-        <h3 style={{marginBottom:"5px"}}>Bookings for {format(selectedDate, 'MMMM d, yyyy')}</h3>
+        <h3 style={{marginBottom:"5px"}}>
+          {translate('calendar.bookings.forDate')} {format(selectedDate, 'MMMM d, yyyy')}
+        </h3>
         {filteredBookings.length > 0 ? (
-          filteredBookings.map(renderBookingCard)
+          filteredBookings.map(booking => (
+            <Card to={`/booking-details/${booking._id}`} key={booking._id}>
+              <CardHeader>
+                <BookingId>#{booking._id}</BookingId>
+                <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
+              </CardHeader>
+              <BookingDetails><LocationOn /> {booking.farmLocation}</BookingDetails>
+              <DateTimeRow>
+                <BookingDetails><CalendarToday /> {format(parseISO(booking.date), 'yyyy-MM-dd')}</BookingDetails>
+                <BookingDetails><AccessTime /> {booking.time}</BookingDetails>
+              </DateTimeRow>
+              <BookingDetails>
+                {translate('calendar.bookings.bookingName')}: {booking.farmerName}
+              </BookingDetails>
+              <BookingDetails>
+                {translate('calendar.bookings.farmArea')}: {booking.farmArea} {translate('calendar.bookings.acres')}
+              </BookingDetails>
+              <TempHumidityCropRow>
+                <TempHumidity>
+                  <Temperature>{booking.weather}</Temperature>
+                  <Humidity><Opacity /> {booking.weather}</Humidity>
+                </TempHumidity>
+                <Crop>{translate('calendar.bookings.crop')}: {booking.cropName}</Crop>
+              </TempHumidityCropRow>
+              <PriceSummary>
+                {booking.quotePrice 
+                  ? `${translate('calendar.bookings.priceSummary')}${booking.quotePrice}`
+                  : translate('calendar.bookings.priceNotQuoted')
+                }
+              </PriceSummary>
+              {booking.runner && (
+                <RunnerDetails>
+                  <strong>{translate('calendar.bookings.assignedRunner')}:</strong>
+                  <RunnerName>
+                    <RunnerInfo>
+                      <AvatarIcon />
+                      <span>{booking.runner.name}</span>
+                    </RunnerInfo>
+                    <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
+                      <Phone /> {translate('calendar.bookings.callNow')}
+                    </RunnerContactButton>
+                  </RunnerName>
+                </RunnerDetails>
+              )}
+            </Card>
+          ))
         ) : (
-          <Card as="div">No completed bookings available for this date.</Card>
+          <Card as="div">{translate('calendar.bookings.noBookings')}</Card>
         )}
       </BookingColumn>
       <BookingColumn>
-        <h3 style={{marginBottom:"5px"}}>Upcoming Bookings</h3>
+        <h3 style={{marginBottom:"5px"}}>{translate('calendar.bookings.upcoming')}</h3>
         {upcomingBookings.length > 0 ? (
           upcomingBookings.map(renderBookingCard)
         ) : (
-          <Card as="div">No upcoming confirmed bookings available.</Card>
+          <Card as="div">{translate('calendar.bookings.noUpcoming')}</Card>
         )}
       </BookingColumn>
     </CalendarContainer>

@@ -10,7 +10,7 @@ import Phone from '@mui/icons-material/Phone';
 import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
-
+import {useTranslation} from '../../TranslationContext';
 const ServiceHistoryContainer = styled.div`
   padding: 20px;
   font-family: 'Public Sans', sans-serif;
@@ -197,6 +197,7 @@ const AvatarIcon = styled(Avatar)`
 `;
 
 const ServiceHistory = () => {
+  const {translate} = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -232,7 +233,7 @@ const ServiceHistory = () => {
 
   return (
     <ServiceHistoryContainer>
-      <Title>Service History</Title>
+      <Title>{translate('serviceHistory.title')}</Title>
       <CardContainer>
         {currentBookings.map((booking) => (
           <Card to={`/booking-details/${booking._id}`} key={booking._id}>
@@ -240,32 +241,55 @@ const ServiceHistory = () => {
               <BookingId>#{booking._id}</BookingId>
               <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
             </CardHeader>
-            <BookingDetails><LocationOn /> {booking.farmLocation}</BookingDetails>
+            <BookingDetails>
+              <LocationOn /> {booking.farmLocation}
+            </BookingDetails>
             <DateTimeRow>
-              <BookingDetails><CalendarToday /> {new Date(booking.date).toLocaleDateString()}</BookingDetails>
-              <BookingDetails><AccessTime /> {booking.time}</BookingDetails>
+              <BookingDetails>
+                <CalendarToday /> {new Date(booking.date).toLocaleDateString()}
+              </BookingDetails>
+              <BookingDetails>
+                <AccessTime /> {booking.time}
+              </BookingDetails>
             </DateTimeRow>
-            <BookingDetails>Booking Name: {booking.farmerName}</BookingDetails>
-            <BookingDetails>Farm Area: {booking.farmArea} Acres</BookingDetails>
+            <BookingDetails>
+              {translate('serviceHistory.bookingDetails.bookingName')}: {booking.farmerName}
+            </BookingDetails>
+            <BookingDetails>
+              {translate('serviceHistory.bookingDetails.farmArea')}: {booking.farmArea} {translate('serviceHistory.bookingDetails.acres')}
+            </BookingDetails>
             <TempHumidityCropRow>
               <TempHumidity>
                 <Temperature>{booking.weather}</Temperature>
-                <Humidity><Opacity /> {booking.weather}</Humidity>
+                <Humidity>
+                  <Opacity /> {booking.weather}
+                </Humidity>
               </TempHumidity>
-              <Crop>Crop: {booking.cropName}</Crop>
+              <Crop>
+                {translate('serviceHistory.bookingDetails.crop')}: {booking.cropName}
+              </Crop>
             </TempHumidityCropRow>
             <BookingDetails>{booking.farmLocation}</BookingDetails>
-            {booking.quotePrice && <PriceSummary>Price Summary: ₹{booking.quotePrice}</PriceSummary>}
+            {booking.quotePrice && (
+              <PriceSummary>
+                {translate('serviceHistory.bookingDetails.priceSummary')}{booking.quotePrice}
+              </PriceSummary>
+            )}
             {booking.runner && (
               <RunnerDetails>
-                <strong>Assigned Runner:</strong>
+                <strong>{translate('serviceHistory.bookingDetails.assignedRunner')}:</strong>
                 <RunnerName>
                   <RunnerInfo>
                     <AvatarIcon />
                     <span>{booking.runner.name}</span>
                   </RunnerInfo>
-                  <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
-                    <Phone /> Call Now
+                  <RunnerContactButton 
+                    onClick={(e) => { 
+                      e.preventDefault(); 
+                      toast.info(`Calling ${booking.runner.mobileNumber}`); 
+                    }}
+                  >
+                    <Phone /> {translate('serviceHistory.bookingDetails.callNow')}
                   </RunnerContactButton>
                 </RunnerName>
               </RunnerDetails>

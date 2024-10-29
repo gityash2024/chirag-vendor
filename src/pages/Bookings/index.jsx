@@ -19,6 +19,7 @@ import {
   assignBookingToRunner,
 } from "../../services/commonService";
 import { toast } from "react-toastify";
+import { useTranslation } from '../../TranslationContext';
 
 const BookingsContainer = styled.div`
   padding: 20px;
@@ -324,6 +325,7 @@ const PriceLabel = styled.h3`
 `;
 
 const Bookings = () => {
+  const { translate } = useTranslation();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Requests via Farmer");
   const [currentPage, setCurrentPage] = useState(1);
@@ -416,10 +418,7 @@ const Bookings = () => {
     const currentBookings = bookings[activeTab] || [];
     const indexOfLastItem = currentPage * bookingsPerPage;
     const indexOfFirstItem = indexOfLastItem - bookingsPerPage;
-    const currentItems = currentBookings.slice(
-      indexOfFirstItem,
-      indexOfLastItem
-    );
+    const currentItems = currentBookings.slice(indexOfFirstItem, indexOfLastItem);
 
     if (currentItems.length === 0) {
       return (
@@ -427,7 +426,9 @@ const Bookings = () => {
         <EmptyStateContainer></EmptyStateContainer>
         <EmptyStateContainer>
           <EmptyStateImage src={noBookingsImage} alt="No bookings" />
-          <EmptyStateText>Currently, no bookings available for {activeTab}.</EmptyStateText>
+          <EmptyStateText>
+            {translate('bookings.emptyState.noBookings')} {activeTab}.
+          </EmptyStateText>
         </EmptyStateContainer>
         </>
       );
@@ -450,8 +451,12 @@ const Bookings = () => {
             <AccessTime /> {booking.time}
           </BookingDetails>
         </DateTimeRow>
-        <BookingDetails>Booking Name: {booking.farmerName}</BookingDetails>
-        <BookingDetails>Farm Area: {booking.farmArea} Acres</BookingDetails>
+        <BookingDetails>
+          {translate('bookings.card.bookingName')}: {booking.farmerName}
+        </BookingDetails>
+        <BookingDetails>
+          {translate('bookings.card.farmArea')}: {booking.farmArea} {translate('bookings.card.acres')}
+        </BookingDetails>
         <TempHumidityCropRow>
           <TempHumidity>
             <Temperature>{booking.weather}</Temperature>
@@ -459,39 +464,42 @@ const Bookings = () => {
               <Opacity /> {booking.weather}
             </Humidity>
           </TempHumidity>
-          <Crop>Crop: {booking.cropName}</Crop>
+          <Crop>
+            {translate('bookings.card.crop')}: {booking.cropName}
+          </Crop>
         </TempHumidityCropRow>
         {booking.quotePrice && (
-          <PriceSummary>Quoted Price: ₹{booking.quotePrice}</PriceSummary>
+          <PriceSummary>
+            {translate('bookings.card.quotedPrice')}: ₹{booking.quotePrice}
+          </PriceSummary>
         )}
-          {booking.runner && (
-        <RunnerDetails>
-          <strong>Assigned Runner:</strong>
-          <RunnerName>
-            <RunnerInfo>
-              <AvatarIcon />
-              <span>{booking.runner.name}</span>
-            </RunnerInfo>
-            <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
-              <Phone /> Call Now
-            </RunnerContactButton>
-          </RunnerName>
-        </RunnerDetails>
-      )}
-        {(activeTab === "Requests via Farmer" ||
-          activeTab === "Requests via admin") && (
+        {booking.runner && (
+          <RunnerDetails>
+            <strong>{translate('bookings.card.assignedRunner')}:</strong>
+            <RunnerName>
+              <RunnerInfo>
+                <AvatarIcon />
+                <span>{booking.runner.name}</span>
+              </RunnerInfo>
+              <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
+                <Phone /> {translate('bookings.card.callNow')}
+              </RunnerContactButton>
+            </RunnerName>
+          </RunnerDetails>
+        )}
+        {(activeTab === "Requests via Farmer" || activeTab === "Requests via admin") && (
           <ButtonContainer>
             <ActionButton onClick={() => handleDecline(booking)}>
-              Decline
+              {translate('bookings.card.decline')}
             </ActionButton>
             <ActionButton primary onClick={() => handleAccept(booking)}>
-              Accept
+              {translate('bookings.card.accept')}
             </ActionButton>
           </ButtonContainer>
         )}
         {activeTab === "Assign Runner" && (
           <ActionButton primary onClick={() => handleAssignRunner(booking._id)}>
-            Assign Runner
+            {translate('bookings.card.assignRunner')}
           </ActionButton>
         )}
       </Card>
@@ -500,20 +508,34 @@ const Bookings = () => {
 
   return (
     <BookingsContainer>
-      <Title>Bookings</Title>
+      <Title>{translate('bookings.title')}</Title>
       <TabContainer>
-        {Object.keys(bookings).map((tab) => (
-          <Tab
-            key={tab}
-            active={activeTab === tab}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </Tab>
-        ))}
-      </TabContainer>
+  {Object.keys(bookings).map((tab) => {
+    // Create a mapping for tab keys to translation keys
+    const getTranslationKey = (tabName) => {
+      const mapping = {
+        "Requests via Farmer": "requestsviafarmer",
+        "Requests via admin": "requestsviaadmin",
+        "Quote sent": "quotesent",
+        "Assign Runner": "assignrunner",
+        "Confirmed Bookings": "confirmedbookings"
+      };
+      return mapping[tabName] || tabName.toLowerCase();
+    };
+
+    return (
+      <Tab
+        key={tab}
+        active={activeTab === tab}
+        onClick={() => setActiveTab(tab)}
+      >
+        {translate(`bookings.tabs.${getTranslationKey(tab)}`)}
+      </Tab>
+    );
+  })}
+</TabContainer>
       {loading ? (
-        <p>Loading...</p>
+        <p>{translate('bookings.loading')}</p>
       ) : (
         <>
           <CardContainer>{renderBookings()}</CardContainer>
@@ -543,15 +565,17 @@ const Bookings = () => {
             <CloseButton onClick={() => setShowPriceModal(false)}>
               <CloseIcon />
             </CloseButton>
-            <ModalTitle>Add a Price for this booking</ModalTitle>
-            <PriceLabel>Enter Price</PriceLabel>
+            <ModalTitle>{translate('bookings.modal.addPrice')}</ModalTitle>
+            <PriceLabel>{translate('bookings.modal.enterPrice')}</PriceLabel>
             <PriceInput
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              placeholder="Enter price"
+              placeholder={translate('bookings.modal.enterPricePlaceholder')}
             />
-            <SubmitButton onClick={handlePriceSubmit}>Submit</SubmitButton>
+            <SubmitButton onClick={handlePriceSubmit}>
+              {translate('bookings.modal.submit')}
+            </SubmitButton>
           </ModalContent>
         </Modal>
       )}
@@ -562,12 +586,13 @@ const Bookings = () => {
               <CloseIcon />
             </CloseButton>
             <SuccessIcon src={successWithdrawalCheck} alt="Success" />
-            <ModalTitle>Quote sent</ModalTitle>
-            <p>You will get an update soon</p>
+            <ModalTitle>{translate('bookings.modal.quoteSent')}</ModalTitle>
+            <p>{translate('bookings.modal.updateSoon')}</p>
           </SuccessModal>
         </Modal>
       )}
     </BookingsContainer>
   );
+
 };
 export default Bookings;
