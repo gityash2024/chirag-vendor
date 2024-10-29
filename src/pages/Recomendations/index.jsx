@@ -212,7 +212,7 @@ const Recommendations = () => {
   const renderInitialScreen = () => (
     <>
       <Title>{translate("recommendations.title")}</Title>
-      <p>{translate("recommendations.selectCrop")}</p>
+      <p style={{ marginBottom: "20px" }}>{translate("recommendations.selectCrop")}</p>
       <CropGrid>
         {cropList.map((crop, index) => (
         <CropCard
