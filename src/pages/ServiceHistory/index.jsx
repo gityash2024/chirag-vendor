@@ -10,6 +10,8 @@ import Phone from '@mui/icons-material/Phone';
 import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
+import noBookingsImage from "../../assets/no-booking.png";
+
 import {useTranslation} from '../../TranslationContext';
 const ServiceHistoryContainer = styled.div`
   padding: 20px;
@@ -226,6 +228,35 @@ const RunnerContactButton = styled.button`
 
 
 
+const EmptyStateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+`;
+
+const EmptyStateImage = styled.img`
+  width: 200px;
+  height: 400px;
+  margin-bottom: 20px;
+`;
+
+const EmptyStateText = styled.p`
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+`;
+
+const PriceLabel = styled.h3`
+  font-size: 12px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  line-height: 13.92px;
+  font-family: "Public Sans";
+  color: rgba(141, 152, 164, 1);
+`;
+
 
 const ServiceHistory = () => {
   const {translate} = useTranslation();
@@ -252,6 +283,21 @@ const ServiceHistory = () => {
     }
   };
 
+
+  if (bookings.length === 0) {
+    return (
+      <>
+            <Title>{translate('serviceHistory.title')}</Title>
+
+      <EmptyStateContainer>
+        <EmptyStateImage src={noBookingsImage} alt="No bookings" />
+        <EmptyStateText>
+          {translate('bookings.emptyState.noBookings2')}.
+        </EmptyStateText>
+      </EmptyStateContainer>
+      </>
+    );
+  }
   const indexOfLastBooking = currentPage * bookingsPerPage;
   const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
   const currentBookings = bookings.slice(indexOfFirstBooking, indexOfLastBooking);

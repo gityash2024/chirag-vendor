@@ -230,6 +230,7 @@ const ReportLabel = styled.p`
 `;
 
 const EmptyStateMessage = styled.p`
+
   text-align: center;
   font-size: 18px;
   color: #666;
@@ -426,6 +427,7 @@ const calculateEnvironmentalStats = () => {
                 </TableCell>
               </TableRow>
             ))}
+            {!runners.length && <TableRow><TableCell style={{ textAlign: 'center' }} colSpan={4}>{translate('home.noData')}</TableCell></TableRow>}
           </tbody>
         </RunnersTable>
       </Section>

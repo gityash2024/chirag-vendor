@@ -236,6 +236,7 @@
       "inactive": "Inactive",
       "bookingName": "Booking Name",
       "farmArea": "Farm Area",
+      "noData": "No Runner Found available",
       "cropLabel": "Crop",
       "waterSaved": "Water saved till now",
       "pesticideReduction": "Pesticide till now", 
@@ -342,7 +343,8 @@
         "updateSoon": "You will get an update soon"
       },
       "emptyState": {
-        "noBookings": "Currently, no bookings available for"
+        "noBookings": "Currently, no bookings available for",
+        "noBookings2": "Currently, no Service History available."
       },
       "loading": "Loading..."
     },  "calendar": {
@@ -424,6 +426,7 @@
       "title": "Manage runners",
       "search": "Search...",
       "table": {
+        "noRunners": "No runners found",
         "headers": {
           "runnerName": "Runner Name",
           "runnerContact": "Runner Contact",
@@ -974,6 +977,7 @@
   "noAccount": "खाता नहीं है? रजिस्टर करें",
   "OTP re-sent successfully": "OTP पुनः भेजा गया"
 }, "home": {
+  "noData": "कोई रनर उपलब्ध नहीं है",
   "bookingRequests": "बुकिंग अनुरोध",
   "viewAll": "सभी देखें »", 
   "myRunners": "मेरे रनर",

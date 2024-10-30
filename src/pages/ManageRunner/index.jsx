@@ -314,6 +314,11 @@ return (
                   </TableCell>
                 </TableRow>
               ))}
+              {!currentItems.length && (
+                <TableRow>
+                  <TableCell style={{ textAlign: 'center' }} colSpan={4}>{translate('manageRunner.table.noRunners')}</TableCell>
+                </TableRow>
+              )}
             </tbody>
           </Table>
           <Pagination>
