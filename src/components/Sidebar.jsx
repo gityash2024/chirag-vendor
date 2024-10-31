@@ -15,7 +15,6 @@ import privacyIcon from '../assets/privacy.png';
 import logoutIcon from '../assets/logout.png';
 import { useTranslation } from '../TranslationContext';
 
-
 const SidebarContainer = styled.div`
   background-color: #383838;
   color: white;
@@ -62,6 +61,21 @@ const MenuItem = styled(Link)`
   }
 `;
 
+const DisabledMenuItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  opacity: 0.6;
+  img {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+  }
+`;
+
 const LogoutButton = styled.button`
   display: flex;
   align-items: center;
@@ -73,8 +87,8 @@ const LogoutButton = styled.button`
   width: 100%;
   text-align: left;
   img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     margin-right: 15px;
   }
 `;
@@ -126,21 +140,23 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const { translate } = useTranslation();
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isVerified = user?.vendorDroneVerified;
 
   const menuItems = [
-    { icon: homeIcon, text: 'Home', path: '/home' },
-    { icon: bookingsIcon, text: 'Bookings', path: '/bookings' },
-    { icon: calendarIcon, text: 'Calendar', path: '/calendar' },
-    { icon: serviceHistoryIcon, text: 'Service History', path: '/service-history' },
-    { icon: reportsIcon, text: 'Manage Runner', path: '/manage-runner' },
-    { icon: manageRunnerIcon, text: 'Reports', path: '/reports' },
-    { icon: recommendation, text: 'Spray Assist', path: '/recommendation' },
+    { icon: homeIcon, text: translate('sidebar.menu.home'), path: '/home' },
+    { icon: bookingsIcon, text: translate('sidebar.menu.bookings'), path: '/bookings' },
+    { icon: calendarIcon, text: translate('sidebar.menu.calendar'), path: '/calendar' },
+    { icon: serviceHistoryIcon, text: translate('sidebar.menu.serviceHistory'), path: '/service-history' },
+    { icon: reportsIcon, text: translate('sidebar.menu.manageRunner'), path: '/manage-runner' },
+    { icon: manageRunnerIcon, text: translate('sidebar.menu.reports'), path: '/reports' },
+    { icon: recommendation, text: translate('sidebar.menu.sprayAssist'), path: '/recommendation' },
   ];
 
   const bottomMenuItems = [
-    { icon: contactIcon, text: 'Contact us', path: '/contact-us' },
-    { icon: termsIcon, text: 'Terms and Conditions', path: '/terms-and-conditions' },
-    { icon: privacyIcon, text: 'Privacy policy', path: '/privacy-policy' },
+    { icon: contactIcon, text: translate('sidebar.bottomMenu.contactUs'), path: '/contact-us' },
+    { icon: termsIcon, text: translate('sidebar.bottomMenu.termsAndConditions'), path: '/terms-and-conditions' },
+    { icon: privacyIcon, text: translate('sidebar.bottomMenu.privacyPolicy'), path: '/privacy-policy' },
   ];
 
   const handleLogout = () => {
@@ -148,8 +164,30 @@ const Sidebar = () => {
   };
 
   const confirmLogout = () => {
+    localStorage.clear();
     setShowLogoutModal(false);
     navigate('/');
+  };
+
+  const renderMenuItem = (item) => {
+    if (!isVerified && item.path !== '/contact-us' && item.path !== '/terms-and-conditions' && item.path !== '/privacy-policy') {
+      return (
+        <DisabledMenuItem key={item.text}>
+          <img src={item.icon} alt={item.text} />
+          <span>{item.text}</span>
+        </DisabledMenuItem>
+      );
+    }
+    return (
+      <MenuItem
+        key={item.text}
+        to={item.path}
+        className={location.pathname === item.path ? 'active' : ''}
+      >
+        <img src={item.icon} alt={item.text} />
+        <span>{item.text}</span>
+      </MenuItem>
+    );
   };
 
   return (
@@ -159,42 +197,12 @@ const Sidebar = () => {
           <img src={chiragLogo} alt="C.H.I.R.A.G." />
         </Logo>
         <Menu>
-          {[
-            { icon: homeIcon, text: translate('sidebar.menu.home'), path: '/home' },
-            { icon: bookingsIcon, text: translate('sidebar.menu.bookings'), path: '/bookings' },
-            { icon: calendarIcon, text: translate('sidebar.menu.calendar'), path: '/calendar' },
-            { icon: serviceHistoryIcon, text: translate('sidebar.menu.serviceHistory'), path: '/service-history' },
-            { icon: reportsIcon, text: translate('sidebar.menu.manageRunner'), path: '/manage-runner' },
-            { icon: manageRunnerIcon, text: translate('sidebar.menu.reports'), path: '/reports' },
-            { icon: recommendation, text: translate('sidebar.menu.sprayAssist'), path: '/recommendation' },
-          ].map((item) => (
-            <MenuItem
-              key={item.text}
-              to={item.path}
-              className={location.pathname === item.path ? 'active' : ''}
-            >
-              <img src={item.icon} alt={item.text} />
-              <span>{item.text}</span>
-            </MenuItem>
-          ))}
+          {menuItems.map(renderMenuItem)}
         </Menu>
         <Menu bottom>
-          {[
-            { icon: contactIcon, text: translate('sidebar.bottomMenu.contactUs'), path: '/contact-us' },
-            { icon: termsIcon, text: translate('sidebar.bottomMenu.termsAndConditions'), path: '/terms-and-conditions' },
-            { icon: privacyIcon, text: translate('sidebar.bottomMenu.privacyPolicy'), path: '/privacy-policy' },
-          ].map((item) => (
-            <MenuItem
-              key={item.text}
-              to={item.path}
-              className={location.pathname === item.path ? 'active' : ''}
-            >
-              <img src={item.icon} alt={item.text} />
-              <span>{item.text}</span>
-            </MenuItem>
-          ))}
+          {bottomMenuItems.map(renderMenuItem)}
           <LogoutButton onClick={handleLogout}>
-            <img style={{width: '35px', height: '35px'}} src={logoutIcon} alt="Logout" />
+            <img src={logoutIcon} alt="Logout" />
             <span style={{ marginLeft: '10px', fontWeight: '500', fontSize: '16px' }}>
               {translate('sidebar.bottomMenu.logout')}
             </span>

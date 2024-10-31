@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import Loader from './components/Loader';
 import NotFound from './components/404';
+import VerificationPending from './components/VerificationPending';
 
 import LanguageSelection from './pages/auth/LanguageSelection';
 import Login from './pages/auth/Login';
@@ -72,6 +73,18 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+const VerificationCheck = ({ children }) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isContactPage = window.location.pathname === '/contact-us';
+  const isTermsPage = window.location.pathname === '/terms-and-conditions';
+  const isPrivacyPage = window.location.pathname === '/privacy-policy';
+
+  if (!user?.vendorDroneVerified && !isContactPage && !isTermsPage && !isPrivacyPage) {
+    return <VerificationPending />;
+  }
+  return children;
+};
+
 function App() {
   return (
     <Router>
@@ -91,27 +104,27 @@ function App() {
                   <Topbar />
                   <PageContent>
                     <Routes>
-                      <Route path="/home" element={<Home />} />
-                      <Route path="/assign-runner/:id" element={<AssignRunnerDetails />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/bookings" element={<Bookings />} />
-                      <Route path="/recommendation" element={<Recommedations />} />
-                      <Route path="/service-history" element={<ServiceHistory />} />
-                      <Route path="/calendar" element={<Calendar />} />
-                      <Route path="/manage-runner" element={<ManageRunner />} />
-                      <Route path="/reports" element={<Reports />} />
+                      <Route path="/home" element={<VerificationCheck><Home /></VerificationCheck>} />
+                      <Route path="/assign-runner/:id" element={<VerificationCheck><AssignRunnerDetails /></VerificationCheck>} />
+                      <Route path="/profile" element={<VerificationCheck><Profile /></VerificationCheck>} />
+                      <Route path="/bookings" element={<VerificationCheck><Bookings /></VerificationCheck>} />
+                      <Route path="/recommendation" element={<VerificationCheck><Recommedations /></VerificationCheck>} />
+                      <Route path="/service-history" element={<VerificationCheck><ServiceHistory /></VerificationCheck>} />
+                      <Route path="/calendar" element={<VerificationCheck><Calendar /></VerificationCheck>} />
+                      <Route path="/manage-runner" element={<VerificationCheck><ManageRunner /></VerificationCheck>} />
+                      <Route path="/reports" element={<VerificationCheck><Reports /></VerificationCheck>} />
                       <Route path="/contact-us" element={<ContactUs />} />
                       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                      <Route path="/notification" element={<Notifications />} />
-                      <Route path="/wallet" element={<Wallet />} />
-                      <Route path="/edit-runner/:id/:isView?" element={<EditRunner />} />
-                      <Route path="/confirm-booking/:id" element={<ConfirmedBookingDetails />} />
-                      <Route path="/booking-details/:id" element={<ConfirmedBookingDetails />} />
-                      <Route path="/completed-booking/:id" element={<ConfirmedBookingDetails />} />
-                      <Route path="/calendar-confirm-booking-details/:id" element={<RunnerReachedBookingDetail />} />
-                      <Route path="/calendar-cancelled-booking-details/:id" element={<RunnerCanceledBookingDetail />} />
-                      <Route path="/add-money" element={<AddMoney />} />
+                      <Route path="/notification" element={<VerificationCheck><Notifications /></VerificationCheck>} />
+                      <Route path="/wallet" element={<VerificationCheck><Wallet /></VerificationCheck>} />
+                      <Route path="/edit-runner/:id/:isView?" element={<VerificationCheck><EditRunner /></VerificationCheck>} />
+                      <Route path="/confirm-booking/:id" element={<VerificationCheck><ConfirmedBookingDetails /></VerificationCheck>} />
+                      <Route path="/booking-details/:id" element={<VerificationCheck><ConfirmedBookingDetails /></VerificationCheck>} />
+                      <Route path="/completed-booking/:id" element={<VerificationCheck><ConfirmedBookingDetails /></VerificationCheck>} />
+                      <Route path="/calendar-confirm-booking-details/:id" element={<VerificationCheck><RunnerReachedBookingDetail /></VerificationCheck>} />
+                      <Route path="/calendar-cancelled-booking-details/:id" element={<VerificationCheck><RunnerCanceledBookingDetail /></VerificationCheck>} />
+                      <Route path="/add-money" element={<VerificationCheck><AddMoney /></VerificationCheck>} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </PageContent>
