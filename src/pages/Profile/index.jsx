@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 import { toast } from 'react-toastify';
-import Loader from '../../components/Loader';
+import Loader from '../../components/loader/index';
 import { getVendorByMobileNumber, updateVendorprofile, uploadTos3 } from '../../services/commonService';
 import { useTranslation } from '../../TranslationContext';
 
@@ -271,7 +271,7 @@ const Profile = () => {
 
   return (
     <Container>
-      <Loader isLoading={isLoading} />
+     {isLoading && <Loader  />}
       <Title>{translate('profile.title')}</Title>
       <TabContainer>
         <Tab active={activeTab === 'basicDetails'} onClick={() => setActiveTab('basicDetails')}>

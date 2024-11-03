@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import noNotificationsImage from '../../assets/no-notifications.png';
 import { listNotifications } from '../../services/commonService';
 import { toast } from 'react-toastify';
-import Loader from '../../components/Loader';
+import Loader from '../../components/loader/index';
 import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`

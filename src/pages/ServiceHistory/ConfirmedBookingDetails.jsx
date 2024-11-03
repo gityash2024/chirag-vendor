@@ -9,7 +9,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import StarIcon from '@mui/icons-material/Star';
 import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
-import Loader from '../../components/Loader';
+import Loader from '../../components/loader/index';
 import { useTranslation } from '../../TranslationContext';
 import { FiArrowLeft } from 'react-icons/fi';
 

@@ -5,7 +5,7 @@ import { Block, Edit } from '@material-ui/icons';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { getAllRunnersList, updateRunner, uploadTos3 } from '../../services/commonService';
 import { toast } from 'react-toastify';
-import Loader from '../../components/Loader';
+import Loader from '../../components/loader/index';
 import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`

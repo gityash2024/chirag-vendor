@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import registerImage from "../../assets/register-image.png";
 import chiragLogo from "../../assets/chirag-logo-dark.png";
-import Loader from "../../components/Loader";
+import Loader from "../../components/loader/index";
 import { toast } from "react-toastify";
 import {
   registerVendor,
@@ -608,7 +608,7 @@ const Register = () => {
 
   return (
     <>
-      <Loader isLoading={isLoading} />
+     {isLoading && <Loader  />}
       <Container>
         <ImageSection>
           <Image src={registerImage} alt="Register" />

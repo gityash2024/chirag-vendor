@@ -6,7 +6,7 @@ import editIcon from '../../assets/edit-icon.png';
 import deleteIcon from '../../assets/delete-icon.png';
 import { getAllRunnersList, blockRunner } from '../../services/commonService';
 import { toast } from 'react-toastify';
-import Loader from '../../components/Loader';
+import Loader from '../../components/loader/index';
 import {useTranslation} from '../../TranslationContext';
 
 const Container = styled.div`
@@ -194,7 +194,11 @@ const ManageRunner = () => {
     setLoading(true);
     try {
       const response = await getAllRunnersList();
-      setRunners(response.data);
+      const user = JSON.parse(localStorage.getItem('user'));
+      const filteredRunners = response.data.filter(runner => 
+        runner?.vendor?._id === user?._id
+      );
+      setRunners(filteredRunners);
     } catch (error) {
       toast.error('Failed to fetch runners');
     } finally {
@@ -238,7 +242,7 @@ const ManageRunner = () => {
   };
 
   const filteredRunners = runners.filter(runner =>
-    runner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    runner.nam?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
     runner.mobileNumber.includes(searchTerm)
   );
 
@@ -280,29 +284,29 @@ return (
             </TableHead>
             <tbody>
               {currentItems.map(runner => (
-                <TableRow key={runner._id}>
+                <TableRow key={runner?._id}>
                   <TableCell>
                     <RunnerCell>
-                      <RunnerAvatar>{runner.name[0]}</RunnerAvatar>
-                      {runner.name}
+                      <RunnerAvatar>{runner?.name?.[0]}</RunnerAvatar>
+                      {runner?.name}
                     </RunnerCell>
                   </TableCell>
-                  <TableCell>{runner.mobileNumber}</TableCell>
+                  <TableCell>{runner?.mobileNumber}</TableCell>
                   <TableCell>
-                    <StatusBadge active={!runner.isBlocked}>
-                      {runner.isBlocked 
+                    <StatusBadge active={!runner?.isBlocked}>
+                      {runner?.isBlocked 
                         ? translate('manageRunner.table.status.inactive')
                         : translate('manageRunner.table.status.active')}
                     </StatusBadge>
                   </TableCell>
                   <TableCell>
-                    <Link to={`/edit-runner/${runner._id}/${true}`}>
+                    <Link to={`/edit-runner/${runner?._id}/${true}`}>
                       <ActionIcon src={viewIcon} alt="View" />
                     </Link>
-                    <Link to={`/edit-runner/${runner._id}`}>
+                    <Link to={`/edit-runner/${runner?._id}`}>
                       <ActionIcon src={editIcon} alt="Edit" />
                     </Link>
-                    {runner.isBlocked ? (
+                    {runner?.isBlocked ? (
                       <ActionIcon2 onClick={() => handleBlockRunner(runner)}>
                         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="currentColor"/>

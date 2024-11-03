@@ -9,9 +9,9 @@ import deleteIcon from '../../assets/delete-icon.png';
 import editIcon from '../../assets/edit-icon.png';
 import viewIcon from '../../assets/view-icon.png';
 import { getAllBookingsList, updateBooking, getAllRunnersList } from '../../services/commonService';
-import Loader from '../../components/Loader';
 import { useTranslation } from '../../TranslationContext';
-
+import noBookingsImage from "../../assets/no-booking.png";
+import Loader from '../../components/loader/index';
 const HomeContainer = styled.div`
   padding: 20px;
   font-family: 'Public Sans', sans-serif;
@@ -30,7 +30,6 @@ const SectionHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-  
 `;
 
 const SectionTitle = styled.h2`
@@ -229,79 +228,41 @@ const ReportLabel = styled.p`
   color: #666;
 `;
 
-const EmptyStateMessage = styled.p`
+const EmptyStateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+`;
 
+const EmptyStateMessage = styled.p`
   text-align: center;
   font-size: 18px;
   color: #666;
   margin-top: 20px;
 `;
 
+const EmptyStateImage = styled.img`
+  width: 100px;
+  height: 200px;
+  margin-bottom: 20px;
+`;
+
+
+
 const Home = () => {
   const { translate } = useTranslation();
-
   const [bookingRequests, setBookingRequests] = useState([]);
   const [runners, setRunners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dateFilter, setDateFilter] = useState('yearly');
-const [environmentalStats, setEnvironmentalStats] = useState({
-  waterSaved: 0,
-  pesticideReduction: 0,
-  carbonFootprint: 0
-});
-
-// Add this new useEffect after existing useEffects
-useEffect(() => {
-  if (bookingRequests.length > 0) {
-    calculateEnvironmentalStats();
-  }
-}, [bookingRequests, dateFilter]);
-
-// Add these new functions before the return statement
-const filterBookingsByDate = (bookings) => {
-  const now = new Date();
-  return bookings.filter(booking => {
-    const bookingDate = new Date(booking.date);
-    switch (dateFilter) {
-      case 'weekly':
-        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        return bookingDate >= weekAgo;
-      case 'monthly':
-        const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-        return bookingDate >= monthAgo;
-      case 'yearly':
-        const yearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-        return bookingDate >= yearAgo;
-      default:
-        return true;
-    }
+  const [environmentalStats, setEnvironmentalStats] = useState({
+    waterSaved: 0,
+    pesticideReduction: 0,
+    carbonFootprint: 0
   });
-};
-
-const calculateEnvironmentalStats = () => {
-  const completedBookings = filterBookingsByDate(bookingRequests).filter(booking => 
-    booking.status === "completed" || booking.status === "closed"
-  );
-
-  if (completedBookings.length === 0) {
-    setEnvironmentalStats({
-      waterSaved: 0,
-      pesticideReduction: 0,
-      carbonFootprint: 0
-    });
-    return;
-  }
-
-  const totalWaterSaved = completedBookings.reduce((sum, booking) => sum + (booking.droneWaterUsage || 0), 0);
-  const totalPesticide = completedBookings.reduce((sum, booking) => sum + (booking.dronePesticideUsage || 0), 0);
-  const totalEmissions = completedBookings.reduce((sum, booking) => sum + (booking.emissionSavedPerHectare || 0), 0);
-
-  setEnvironmentalStats({
-    waterSaved: totalWaterSaved,
-    pesticideReduction: totalPesticide ? (totalPesticide / completedBookings.length) * 100 : 0,
-    carbonFootprint: totalEmissions ? (totalEmissions / completedBookings.length) * 100 : 0
-  });
-};
 
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
@@ -310,42 +271,98 @@ const calculateEnvironmentalStats = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (bookingRequests.length > 0) {
+      calculateEnvironmentalStats();
+    }
+  }, [bookingRequests, dateFilter]);
+
+  const filterBookingsByDate = (bookings) => {
+    const now = new Date();
+    return bookings.filter(booking => {
+      const bookingDate = new Date(booking.date);
+      switch (dateFilter) {
+        case 'weekly':
+          const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          return bookingDate >= weekAgo;
+        case 'monthly':
+          const monthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+          return bookingDate >= monthAgo;
+        case 'yearly':
+          const yearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+          return bookingDate >= yearAgo;
+        default:
+          return true;
+      }
+    });
+  };
+
+  const calculateEnvironmentalStats = () => {
+    const completedBookings = filterBookingsByDate(bookingRequests).filter(booking => 
+      booking.status === "completed" || booking.status === "closed"
+    );
+
+    if (completedBookings.length === 0) {
+      setEnvironmentalStats({
+        waterSaved: 0,
+        pesticideReduction: 0,
+        carbonFootprint: 0
+      });
+      return;
+    }
+
+    const totalWaterSaved = completedBookings.reduce((sum, booking) => sum + (booking.droneWaterUsage || 0), 0);
+    const totalPesticide = completedBookings.reduce((sum, booking) => sum + (booking.dronePesticideUsage || 0), 0);
+    const totalEmissions = completedBookings.reduce((sum, booking) => sum + (booking.emissionSavedPerHectare || 0), 0);
+
+    setEnvironmentalStats({
+      waterSaved: totalWaterSaved,
+      pesticideReduction: totalPesticide ? (totalPesticide / completedBookings.length) * 100 : 0,
+      carbonFootprint: totalEmissions ? (totalEmissions / completedBookings.length) * 100 : 0
+    });
+  };
+
   const fetchData = async () => {
     setLoading(true);
     try {
       const bookingsResponse = await getAllBookingsList();
       const runnersResponse = await getAllRunnersList();
       
-      // First filter all vendor's bookings
-      const vendorBookings = bookingsResponse.data.filter(booking => (booking?.vendor?._id === user?._id && booking?.status === 'requested'));
+      const vendorBookings = bookingsResponse.data.filter(booking => 
+        booking?.vendor?._id === user?._id && booking?.status === 'requested'
+      );
       
-      // Then get requested bookings for booking requests section
-      const requestedBookings = vendorBookings
-        .filter(booking => booking.status === 'requested')
-        .slice(0, 3);
-  
-      setBookingRequests(vendorBookings?.slice(0, 3)); // Store all vendor bookings for environmental stats
-      setRunners(runnersResponse.data.slice(0, 6));
+      const vendorRunners = runnersResponse.data.filter(runner => 
+        runner?.vendor?._id === user?._id
+      );
+
+      setBookingRequests(vendorBookings.slice(0, 3));
+      setRunners(vendorRunners.slice(0, 6));
     } catch (error) {
       toast.error('Failed to fetch data');
     } finally {
       setLoading(false);
     }
   };
+
   const handleDecline = async (booking) => {
+    setLoading(true);
     try {
       const reason = prompt("Please enter a reason for rejection:");
       if (reason) {
         await updateBooking({ id: booking._id, status: "cancelled", reason });
         toast.success("Booking rejected successfully");
-        fetchData();
+        await fetchData();
       }
     } catch (error) {
       toast.error("Failed to reject booking");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleAccept = async (booking) => {
+    setLoading(true);
     try {
       const price = prompt("Please enter a price for this booking:");
       if (price) {
@@ -355,15 +372,19 @@ const calculateEnvironmentalStats = () => {
           quotePrice: price,
         });
         toast.success("Quote sent successfully");
-        fetchData();
+        await fetchData();
       }
     } catch (error) {
       toast.error("Failed to accept booking");
+    } finally {
+      setLoading(false);
     }
   };
 
   if (loading) {
-    return <Loader />;
+    return (
+        <Loader />
+    );
   }
 
   return (
@@ -388,7 +409,10 @@ const calculateEnvironmentalStats = () => {
               </BookingCard>
             ))
           ) : (
-            <EmptyStateMessage>{translate('home.noBookings')}</EmptyStateMessage>
+            <EmptyStateContainer>
+              <EmptyStateImage src={noBookingsImage} alt="No bookings" />
+              <EmptyStateMessage>{translate('home.noBookings')}</EmptyStateMessage>
+            </EmptyStateContainer>
           )}
         </BookingRequestsContainer>
       </Section>
@@ -404,7 +428,7 @@ const calculateEnvironmentalStats = () => {
               <TableHeader>{translate('home.runnerName')}</TableHeader>
               <TableHeader>{translate('home.runnerContact')}</TableHeader>
               <TableHeader>{translate('home.status')}</TableHeader>
-              <TableHeader>{translate('home.view')}</TableHeader>
+              <TableHeader>{translate('home.action')}</TableHeader>
             </TableRow>
           </TableHead>
           <tbody>

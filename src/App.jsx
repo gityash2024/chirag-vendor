@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
-import Loader from './components/Loader';
 import NotFound from './components/404';
 import VerificationPending from './components/VerificationPending';
 
@@ -144,7 +143,6 @@ function App() {
           draggable
           pauseOnHover
         />
-        <Loader />
       </AppContainer>
     </Router>
   );

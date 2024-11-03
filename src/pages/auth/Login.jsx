@@ -5,7 +5,7 @@ import loginImage from '../../assets/login-image.png';
 import chiragLogo from '../../assets/logo-dark.svg';
 import { sendOtp, verifyOtp } from '../../services/commonService';
 import { toast } from 'react-toastify';
-import Loader from '../../components/Loader';
+import Loader from '../../components/loader/index';
 import OtpInput from 'react-otp-input';
 import { useTranslation } from '../../TranslationContext';
 
@@ -179,7 +179,7 @@ const Login = () => {
 
   return (
     <Container>
-      <Loader isLoading={isLoading} />
+     {isLoading && <Loader/>}
       <ImageSection>
         <Image src={loginImage} alt="Login" />
       </ImageSection>

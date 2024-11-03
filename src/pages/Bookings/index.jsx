@@ -20,6 +20,7 @@ import {
 } from "../../services/commonService";
 import { toast } from "react-toastify";
 import { useTranslation } from '../../TranslationContext';
+import Loader from "../../components/loader";
 
 const BookingsContainer = styled.div`
   padding: 20px;
@@ -565,7 +566,7 @@ const Bookings = () => {
         "Assign Runner": "assignrunner",
         "Confirmed Bookings": "confirmedbookings"
       };
-      return mapping[tabName] || tabName.toLowerCase();
+      return mapping[tabName] || tabName?.toLowerCase();
     };
 
     return (
@@ -580,7 +581,7 @@ const Bookings = () => {
   })}
 </TabContainer>
       {loading ? (
-        <p>{translate('bookings.loading')}</p>
+        <Loader/>
       ) : (
         <>
           <CardContainer>{renderBookings()}</CardContainer>

@@ -171,11 +171,14 @@ const CropName = styled.p`
 
 const Recommendations = () => {
   const { translate } = useTranslation();
-  const [selectedCrop, setSelectedCrop] = useState("Maize");
+  const [selectedCrop, setSelectedCrop] = useState("");
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
   const handleViewRecommendations = () => {
+    if(!selectedCrop) {
+      return;
+    }
     setShowRecommendations(true);
   };
 
@@ -228,7 +231,7 @@ const Recommendations = () => {
         </CropCard>
         ))}
       </CropGrid>
-      <Button onClick={handleViewRecommendations}>{translate("recommendations.nextButton")}</Button>
+      <Button style={{disabled: !selectedCrop,cursor: !selectedCrop ? "not-allowed" : "pointer"}} onClick={handleViewRecommendations}>{translate("recommendations.nextButton")}</Button>
     </>
   );
 

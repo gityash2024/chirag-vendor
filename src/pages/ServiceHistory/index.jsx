@@ -9,7 +9,7 @@ import Opacity from '@mui/icons-material/Opacity';
 import Phone from '@mui/icons-material/Phone';
 import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
-import Loader from '../../components/Loader';
+import Loader from '../../components/loader/index';
 import noBookingsImage from "../../assets/no-booking.png";
 
 import {useTranslation} from '../../TranslationContext';
