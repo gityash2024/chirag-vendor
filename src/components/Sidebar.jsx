@@ -103,6 +103,7 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 `;
 
 const ModalContent = styled.div`
@@ -110,8 +111,9 @@ const ModalContent = styled.div`
   padding: 20px;
   border-radius: 5px;
   text-align: center;
+  position: relative;
+  z-index: 10000;
 `;
-
 const ModalText = styled.p`
   margin-bottom: 20px;
   color: #121212;

@@ -31,12 +31,11 @@ import mangoImage from "../../assets/mango.png";
 import papayaImage from "../../assets/papaya.png";
 import appleImage from "../../assets/apple.png";
 import litchiImage from "../../assets/litchi.png";
-import { useTranslation } from '../../TranslationContext.jsx';
-
-
 const Container = styled.div`
   padding: 20px;
   font-family: "Public Sans", sans-serif;
+  position: relative;
+  z-index: 1;
 `;
 const CropCard = styled.div`
   border: 1px solid #EEEEEE;
@@ -170,15 +169,11 @@ const CropName = styled.p`
 `;
 
 const Recommendations = () => {
-  const { translate } = useTranslation();
   const [selectedCrop, setSelectedCrop] = useState("");
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
   const handleViewRecommendations = () => {
-    if(!selectedCrop) {
-      return;
-    }
     setShowRecommendations(true);
   };
 
@@ -188,80 +183,81 @@ const Recommendations = () => {
   };
 
   const cropList = [
-    { name: translate("recommendations.crops.rice"), image: riceImage },
-    { name: translate("recommendations.crops.maize"), image: maizeImage },
-    { name: translate("recommendations.crops.groundnut"), image: groundnutImage },
-    { name: translate("recommendations.crops.pigeonPea"), image: pigeonPeasImage },
-    { name: translate("recommendations.crops.soybean"), image: soybeanImage },
-    { name: translate("recommendations.crops.sugarcane"), image: sugarcaneImage },
-    { name: translate("recommendations.crops.wheat"), image: wheatImage },
-    { name: translate("recommendations.crops.sesame"), image: sesameImage },
-    { name: translate("recommendations.crops.safflower"), image: safflowerImage },
-    { name: translate("recommendations.crops.cotton"), image: cottonImage },
-    { name: translate("recommendations.crops.tomato"), image: tomatoImage },
-    { name: translate("recommendations.crops.onion"), image: onionImage },
-    { name: translate("recommendations.crops.potato"), image: potatoImage },
-    { name: translate("recommendations.crops.brinjal"), image: brinjalImage },
-    { name: translate("recommendations.crops.mustard"), image: mustardImage },
-    { name: translate("recommendations.crops.moongDal"), image: moongDalImage },
-    { name: translate("recommendations.crops.arharDal"), image: arharDalImage },
-    { name: translate("recommendations.crops.chilli"), image: chilliImage },
-    { name: translate("recommendations.crops.mango"), image: mangoImage },
-    { name: translate("recommendations.crops.papaya"), image: papayaImage },
-    { name: translate("recommendations.crops.apple"), image: appleImage },
-    { name: translate("recommendations.crops.litchi"), image: litchiImage }
+    { name: "Rice", image: riceImage },
+    { name: "Maize", image: maizeImage },
+    { name: "Groundnut", image: groundnutImage },
+    { name: "Pigeon pea", image: pigeonPeasImage },
+    { name: "Soybean", image: soybeanImage },
+    { name: "Sugarcane", image: sugarcaneImage },
+    { name: "Wheat", image: wheatImage },
+    { name: "Sesame", image: sesameImage },
+    { name: "Safflower", image: safflowerImage },
+    { name: "Cotton", image: cottonImage },
+    { name: "Tomato", image: tomatoImage },
+    { name: "Onion", image: onionImage },
+    { name: "Potato", image: potatoImage },
+    { name: "Brinjal", image: brinjalImage },
+    { name: "Mustard", image: mustardImage },
+    { name: "Moong Dal", image: moongDalImage },
+    { name: "Arhar Dal", image: arharDalImage },
+    { name: "Chilli", image: chilliImage },
+    { name: "Mango", image: mangoImage },
+    { name: "Papaya", image: papayaImage },
+    { name: "Apple", image: appleImage },
+    { name: "Litchi", image: litchiImage }
   ];
+  
 
   const renderInitialScreen = () => (
     <>
-      <Title>{translate("recommendations.title")}</Title>
-      <p style={{ marginBottom: "20px" }}>{translate("recommendations.selectCrop")}</p>
+      <Title>Spray Guide</Title>
+      <p style={{ marginBottom: "20px" }}>Please select the crop</p>
       <CropGrid>
         {cropList.map((crop, index) => (
         <CropCard
-          key={index}
-          selected={selectedCrop === crop.name}
-          onClick={() => setSelectedCrop(crop.name)}
-        >
-          <CheckIcon visible={selectedCrop === crop.name}>
-            <FaCheck />
-          </CheckIcon>
-          <CropImage src={crop.image} alt={crop.name} />
-          <CropName>{crop.name}</CropName>
-        </CropCard>
+        key={index}
+        selected={selectedCrop === crop.name}
+        onClick={() => setSelectedCrop(crop.name)}
+      >
+        <CheckIcon visible={selectedCrop === crop.name}>
+          <FaCheck />
+        </CheckIcon>
+        <CropImage src={crop.image} alt={crop.name} />
+        <CropName>{crop.name}</CropName>
+      </CropCard>
         ))}
       </CropGrid>
-      <Button style={{disabled: !selectedCrop,cursor: !selectedCrop ? "not-allowed" : "pointer"}} onClick={handleViewRecommendations}>{translate("recommendations.nextButton")}</Button>
+      <Button style={{disabled: !selectedCrop,cursor: !selectedCrop ? "not-allowed" : "pointer"}} onClick={handleViewRecommendations}>Next</Button>
     </>
   );
 
   const renderRecommendations = () => (
     <>
-      <Title>{translate("recommendations.recommendationFor", { crop: selectedCrop })}</Title>
-      <p>{translate("recommendations.readCarefully")}</p>
+      <Title>Recommendation for "{selectedCrop}"</Title>
+      <p>Please read the Recommendation carefully!</p>
       <CardContainer>
         {recommendationData.map((item, index) => (
           <Card key={index}>
             <CardImageContainer>
-              <CardImage src={item.image} alt={translate(item.titleKey)} />
+              <CardImage src={item.image} alt={item.title} />
             </CardImageContainer>
             <CardContent>
-              <CardTitle>{translate(item.titleKey)}</CardTitle>
-              <CardText>{translate(item.contentKey)}</CardText>
+              <CardTitle>{item.title}</CardTitle>
+              <CardText>{item.content}</CardText>
             </CardContent>
           </Card>
         ))}
       </CardContainer>
       <WarningContainer>
-        <p>{translate("recommendations.warnings.nightSpray")}</p>
-        <p>{translate("recommendations.warnings.earlySpray")}</p>
-        <p>{translate("recommendations.warnings.precautions")}</p>
+        <p>As the larvae of Army worm are active at night, spraying in the evening is more advantageous.</p>
+        <p>Spraying chemical insecticides early in the crop cycle are most likely to kill off the natural enemies and may not be economical.</p>
+        <p>Precautions for pesticide use: Not more than two chemical sprays are to be used in entire crop duration. Same chemical should not be chosen for second spray. Sprays should always be directed towards whorl and applied either in early hours of the day or in the evening time.</p>
       </WarningContainer>
       <CheckboxContainer>
         <Checkbox type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
-        <label>{translate("recommendations.checkboxLabel")}</label>
+        <label>I have read all the recommendations carefully.</label>
       </CheckboxContainer>
-      <DoneButton onClick={handleDone} disabled={!isChecked}>{translate("recommendations.doneButton")}</DoneButton>
+      <DoneButton onClick={handleDone} disabled={!isChecked}>Done</DoneButton>
     </>
   );
 
@@ -274,43 +270,43 @@ const Recommendations = () => {
 
 const recommendationData = [
   {
-    titleKey: "recommendations.flyingSpeed.title",
-    contentKey: "recommendations.flyingSpeed.content",
+    title: "DRONE FLYING SPEED",
+    content: "During Spraying: (4.5-5.0)\nDuring Turning RTL etc: <5.5",
     image: image1,
   },
   {
-    titleKey: "recommendations.height.title",
-    contentKey: "recommendations.height.content",
+    title: "HEIGHT ABOVE CROP CANOPY (m)",
+    content: "During Spraying: (4.5-5.0)\nDuring Turning RTL etc: <5.5",
     image: image2,
   },
   {
-    titleKey: "recommendations.waterVolume.title",
-    contentKey: "recommendations.waterVolume.content",
+    title: "WATER VOLUME (L/HA)",
+    content: "Stage 1: Early stage\n20\nFull canopy stage:\n25",
     image: image3,
   },
   {
-    titleKey: "recommendations.nozzle.title",
-    contentKey: "recommendations.nozzle.content",
+    title: "NOZZLE",
+    content: "Type of nozzle: Anti Drift fan\nDroplet size (μm) Insecticide: 250-350\nDroplet size (μm) Fungicide: 250-350\nNozzle discharge rate (l/min): 0.8-1.0\nMesh: 50-100\nSwath (m): 3-4\nNumber of Nozzles: 4-8\nPressure (bar): 2-3",
     image: image4,
   },
   {
-    titleKey: "recommendations.sprayTime.title",
-    contentKey: "recommendations.sprayTime.content",
+    title: "SUITABLE TIME OF SPRAY",
+    content: "Summer & rainy season: 6am-10am & 3pm-6pm\nWinter season: 8am-11am & 2pm-5pm\nStrictly avoid spraying during flowering season (8am - 5pm)",
     image: image5,
   },
   {
-    titleKey: "recommendations.environmentalConditions.title",
-    contentKey: "recommendations.environmentalConditions.content",
+    title: "ENVIRONMENTAL CONDITIONS",
+    content: "Temperature: <35°C\nHumidity: >60%\nWind Speed: <10km/h\nDuring Rain: Do not Spray\nDo not operate if visibility during mist/fog is not good",
     image: image6,
   },
   {
-    titleKey: "recommendations.siteSpecific.title",
-    contentKey: "recommendations.siteSpecific.content",
+    title: "SITE SPECIFIC",
+    content: "Plain land: take care of obstacles present in field: Yes\nSloppy terrain: Use terrain following sensors: Yes\nDo not operate if visibility during mist/fog is not good",
     image: image7,
   },
   {
-    titleKey: "recommendations.bufferZone.title",
-    contentKey: "recommendations.bufferZone.content",
+    title: "LENGTH OF BUFFER ZONE (M) TO AVOID",
+    content: "Non-targeted Crops: 5\nWater bodies etc: 100",
     image: image8,
   },
 ];
