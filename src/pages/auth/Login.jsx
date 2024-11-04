@@ -164,7 +164,7 @@ const Login = () => {
     try {
       const response = await verifyOtp({ mobileNumber, otp });
       localStorage.setItem('user', JSON.stringify(response.data));
-      toast.success('Login successful');
+      toast.success('Welcome to CHIRAG Vendor Portal');
       navigate('/home');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to verify OTP');
