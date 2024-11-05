@@ -196,7 +196,7 @@ const ManageRunner = () => {
       const response = await getAllRunnersList();
       const user = JSON.parse(localStorage.getItem('user'));
       const filteredRunners = response.data.filter(runner => 
-        runner?.vendor?._id === user?._id
+        runner?.vendor === user?._id
       );
       setRunners(filteredRunners);
     } catch (error) {
@@ -242,7 +242,7 @@ const ManageRunner = () => {
   };
 
   const filteredRunners = runners.filter(runner =>
-    runner.nam?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+    runner.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
     runner.mobileNumber.includes(searchTerm)
   );
 

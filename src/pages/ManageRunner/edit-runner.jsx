@@ -99,7 +99,20 @@ const Button = styled.button`
   display: flex;
   align-items: center;
 `;
-
+// Update the InputField component to show required indicator
+const InputField = styled.input`
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #F1F1F1;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #121212;
+  &::after {
+    content: '*';
+    color: red;
+    margin-left: 4px;
+  }
+`;
 const ImageUpload = styled.div`
   border: 2px dashed #E0E0E0;
   padding: 20px;
@@ -283,7 +296,7 @@ const EditRunner = () => {
             </FormGroup>
           </FormRow>
           <FormRow>
-            <FormGroup>
+            {/* <FormGroup>
               <Label>{translate('runner.vendor')}</Label>
               <Input
                 type="text"
@@ -292,7 +305,41 @@ const EditRunner = () => {
                 onChange={handleChange}
                 readOnly={isView}
               />
-            </FormGroup>
+            </FormGroup> */}
+              <FormGroup>
+        
+            <>
+            <Label>Aadhar Number</Label>
+            <InputField
+              name="aadhaarNumber"
+              value={formData.aadhaarNumber || ''}
+              // onChange={handleInputChange}
+              placeholder="Enter Aadhar Number"
+              disabled
+              style={{ borderColor:  '#F1F1F1' }}
+            />
+            </>
+          
+
+        </FormGroup>
+          <FormGroup>
+       
+            <>
+            <Label>Aadhar Front</Label>
+             <img style={{ width: '200px', height: '200px' }} src={formData?.aadhaarFront} alt="Aadhar Front" />
+            </>
+          
+
+        </FormGroup>
+          <FormGroup>
+          
+            <>
+            <Label>Aadhar Back</Label>
+             <img style={{ width: '200px', height: '200px' }} src={formData?.aadhaarBack} alt="Aadhar Front" />
+            </>
+          
+
+        </FormGroup>
           </FormRow>
           {!isView && (
             <FormGroup>
