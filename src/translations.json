@@ -320,7 +320,8 @@
         "requestsviaadmin": "Requests via Admin",
         "quotesent": "Quote Sent",
         "assignrunner": "Assign Runner",
-        "confirmedbookings": "Confirmed Bookings"
+        "confirmedbookings": "Confirmed Bookings",
+        "closedbookings": "Closed Bookings"
       },
       "card": {
         "booking": "Booking",
@@ -706,7 +707,8 @@
         "requestsviaadmin": "एडमिन के माध्यम से अनुरोध",
         "quotesent": "कोट भेजा गया",
         "assignrunner": "रनर असाइन करें",
-        "confirmedbookings": "पुष्टि की गई बुकिंग"
+        "confirmedbookings": "पुष्टि की गई बुकिंग",
+        "closedbookings": "बुकिंग समाप्त"
       },
       "card": {
         "booking": "बुकिंग",

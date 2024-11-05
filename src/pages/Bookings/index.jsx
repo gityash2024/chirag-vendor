@@ -386,10 +386,10 @@ const Bookings = () => {
       );
       const categorizedBookings = {
         "Requests via Farmer": filteredBookings.filter(
-          (b) => b.status === "requested" && b.requestToVendorVia === "farmer"
+          (b) =>  b.requestViaFarmer
         ),
         "Requests via admin": filteredBookings.filter(
-          (b) => b.status === "requested" && b.requestToVendorVia === "admin"
+          (b) =>b.requestViaAdmin
         ),
         "Quote sent": filteredBookings.filter(
           (b) => b.status === "quote_received"
@@ -398,7 +398,10 @@ const Bookings = () => {
           (b) => b.status === "confirmed" && !b.runner
         ),
         "Confirmed Bookings": filteredBookings.filter((b) =>
-          ["confirmed", "completed", "closed"].includes(b.status)
+          ["confirmed", "completed"].includes(b.status)
+        ),
+        "Closed Bookings": filteredBookings.filter((b) =>
+          [ "closed"].includes(b.status)
         ),
       };
       setBookings(categorizedBookings);
@@ -422,7 +425,8 @@ const Bookings = () => {
     }
   };
 
-  const handleAccept = (booking) => {
+  const handleAccept = (e,booking) => {
+    e.stopPropagation();
     setSelectedBooking(booking);
     setShowPriceModal(true);
   };
@@ -531,7 +535,7 @@ const Bookings = () => {
     <ActionButton onClick={() => handleDecline(booking)}>
       {translate('bookings.card.decline')}
     </ActionButton>
-    <ActionButton primary onClick={() => handleAccept(booking)}>
+    <ActionButton primary onClick={(e) => handleAccept(e,booking)}>
       {translate('bookings.card.accept')}
     </ActionButton>
   </ButtonContainer>
@@ -564,7 +568,8 @@ const Bookings = () => {
         "Requests via admin": "requestsviaadmin",
         "Quote sent": "quotesent",
         "Assign Runner": "assignrunner",
-        "Confirmed Bookings": "confirmedbookings"
+        "Confirmed Bookings": "confirmedbookings",
+        "Closed Bookings": "closedbookings"
       };
       return mapping[tabName] || tabName?.toLowerCase();
     };
