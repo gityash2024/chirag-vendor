@@ -124,8 +124,8 @@ const Topbar = () => {
       </TopbarLeft>
       <TopbarRight>
   <LanguageToggle onClick={handleLanguageToggle}>
-    <LanguageOption active={currentLanguage === "hi"}>HI</LanguageOption>
-    <LanguageOption active={currentLanguage === "en"}>EN</LanguageOption>
+    <LanguageOption active={currentLanguage === "hi"}>Hindi</LanguageOption>
+    <LanguageOption active={currentLanguage === "en"}>English</LanguageOption>
   </LanguageToggle>
   <TopbarIcon onClick={() => navigate('/wallet')} src={printIcon} alt="Print" />
   <IconContainer>
