@@ -530,7 +530,8 @@ const Bookings = () => {
   </RunnnerDetails>
 )}
       
-{(activeTab === "Requests via Farmer" || activeTab === "Requests via admin") && (
+      {(activeTab === "Requests via Farmer" || activeTab === "Requests via admin") && 
+ booking.status === "requested" && (
   <ButtonContainer>
     <ActionButton onClick={() => handleDecline(booking)}>
       {translate('bookings.card.decline')}
@@ -540,13 +541,15 @@ const Bookings = () => {
     </ActionButton>
   </ButtonContainer>
 )}
-
 {activeTab === "Assign Runner" && (
   <ButtonContainer>
     <ActionButton 
       primary 
       fullWidth 
-      onClick={() => handleAssignRunner(booking._id)}
+      onClick={(e) => {
+        e.stopPropagation(); // Stop event bubbling
+        handleAssignRunner(booking._id);
+      }}
     >
       {translate('bookings.card.assignRunner')}
     </ActionButton>
