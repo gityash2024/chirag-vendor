@@ -228,7 +228,7 @@ const Profile = () => {
         const response = await uploadTos3(formData);
         setVendorData({ ...vendorData, [field]: response.data.fileUrl });
       } catch (error) {
-        toast.error('Failed to upload image');
+        toast.error('Server error while upload image, please try again.');
       } finally {
         setIsLoading(false);
       }

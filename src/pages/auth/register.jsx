@@ -456,7 +456,7 @@
                 drones: newDrones
               }));
             } catch (error) {
-              toast.error("Failed to upload file");
+              toast.error("Server error while upload image, please try again.");
             }
           } else {
             setPreviewImages({ ...previewImages, [e.target.name]: reader.result });
@@ -470,7 +470,7 @@
                 [e.target.name]: response.data.fileUrl
               }));
             } catch (error) {
-              toast.error("Failed to upload file");
+              toast.error("Server error while upload image, please try again.");
             }
           }
         };

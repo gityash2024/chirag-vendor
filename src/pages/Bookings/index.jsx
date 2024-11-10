@@ -8,6 +8,9 @@ import Opacity from "@mui/icons-material/Opacity";
 import CloseIcon from "@mui/icons-material/Close";
 import successWithdrawalCheck from "../../assets/check-wallet.svg";
 import Avatar from '@mui/icons-material/AccountCircle';
+import locationIcon from '../../assets/location-icon.svg';
+import calendarIcon from '../../assets/calendar.svg';
+import timeIcon from '../../assets/clock.svg';
 
 import Phone from '@mui/icons-material/Phone';
 
@@ -74,11 +77,22 @@ const CardHeader = styled.div`
   margin-bottom: 10px;
 `;
 
-
+const FilterContainer = styled.div`
+  position: absolute;
+  top: 120px;
+  right: 50px;
+`;
+const StatusFilter = styled.select`
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+  font-family: "Public Sans", sans-serif;
+  cursor: pointer;
+`;
 
 const DateTimeRow = styled.div`
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
 `;
 
 const TempHumidityCropRow = styled.div`
@@ -97,15 +111,19 @@ const Temperature = styled.span`
   font-size: 20px;
   font-weight: 600;
   margin-right: 10px;
+  &:after {
+    content: '°';
+  }
 `;
 
 const Humidity = styled.span`
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   color: #666;
 `;
+
 
 const Crop = styled.span`
   font-size: 14px;
@@ -170,9 +188,10 @@ const Modal = styled.div`
 const ModalContent = styled.div`
   background-color: white;
   padding: 38px;
-  border-radius: 8px;
+  border-radius: 16px;
   width: 478px;
   position: relative;
+  font-family: Montserrat;
 `;
 
 const CloseButton = styled.button`
@@ -195,22 +214,24 @@ const ModalTitle = styled.h3`
 
 const PriceInput = styled.input`
   width: 100%;
-  padding: 8px;
+  padding: 16px;
   margin-bottom: 15px;
+  border:1px solid #EEF0F3;
 `;
 
 const SubmitButton = styled.button`
   width: 40%;
-  padding: 10px;
+  padding: 15px;
   background-color: rgba(56, 56, 56, 1);
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16.24px;
   font-weight: 600;
   font-family: Montserrat;
+  border-radius:8px
 `;
 
 const SuccessModal = styled(ModalContent)`
@@ -257,10 +278,9 @@ const Card = styled.div`
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
-  min-height: 300px;
-  padding-bottom: 70px;
+  height: ${props => props.hasRunner || props.hasButtons ? '300px' : '250px'};
+  padding-bottom: ${props => props.hasButtons ? '70px' : '20px'};
 `;
-
 const BookingId = styled.h3`
   font-size: 18px;
   font-weight: 600;
@@ -287,8 +307,9 @@ const StatusBadge = styled.span`
 const BookingDetails = styled.p`
   font-size: 14px;
   font-weight: 400;
-  color: #121212;
+  color: #121212CC;
   margin-bottom: 5px;
+  line-height: 20px;
   display: flex;
   align-items: center;
   svg {
@@ -300,10 +321,10 @@ const RunnnerDetails = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #F8F9FA;
+  // background: #F8F9FA;
   padding: 12px 16px;
   border-radius: 8px;
-  margin-top: 15px;
+  margin-top: 10px;
 `;
 
 const RunnerName = styled.div`
@@ -316,8 +337,8 @@ const RunnerContactButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #FFFFFF;
-  color: #000000;
+  background: #000000;
+  color: #ffffff;
   border: 1px solid #000000;
   padding: 8px 16px;
   border-radius: 4px;
@@ -360,6 +381,8 @@ const ButtonContainer = styled.div`
 
 
 const Bookings = () => {
+  const [statusFilter, setStatusFilter] = useState('all');
+
   const { translate } = useTranslation();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Requests via Farmer");
@@ -412,6 +435,11 @@ const Bookings = () => {
     }
   };
 
+  const filterBookingsByStatus = (bookings) => {
+    if (statusFilter === 'all') return bookings;
+    return bookings.filter(booking => booking.status === statusFilter);
+  };
+
   const handleDecline = async (booking) => {
     try {
       const reason = prompt("Please enter a reason for rejection:");
@@ -432,6 +460,10 @@ const Bookings = () => {
   };
 
   const handlePriceSubmit = async () => {
+    if(!price){
+      toast.error("Please enter a price");
+      return;
+    }
     try {
       await updateBooking({
         id: selectedBooking._id,
@@ -457,15 +489,17 @@ const Bookings = () => {
   };
   const renderBookings = () => {
     const currentBookings = bookings[activeTab] || [];
+    const filteredBookings = filterBookingsByStatus(currentBookings);
     const indexOfLastItem = currentPage * bookingsPerPage;
     const indexOfFirstItem = indexOfLastItem - bookingsPerPage;
-    const currentItems = currentBookings.slice(indexOfFirstItem, indexOfLastItem);
-
+    const currentItems = filteredBookings.slice(indexOfFirstItem, indexOfLastItem);
+  
     if (currentItems.length === 0) {
       return (
         <>
         <EmptyStateContainer></EmptyStateContainer>
         <EmptyStateContainer>
+          
           <EmptyStateImage src={noBookingsImage} alt="No bookings" />
           <EmptyStateText>
             {translate('bookings.emptyState.noBookings')} {activeTab}.
@@ -474,95 +508,132 @@ const Bookings = () => {
         </>
       );
     }
-
-    return currentItems.map((booking) => (
-      <Card  key={booking._id} onClick={() => handleBookingClick(booking)}>
-        <CardHeader>
-          <BookingId>#{booking._id}</BookingId>
-          <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
-        </CardHeader>
-        <BookingDetails>
-          <LocationOn /> {booking.farmLocation}
-        </BookingDetails>
-        <DateTimeRow>
-          <BookingDetails>
-            <CalendarToday /> {new Date(booking.date).toLocaleDateString()}
-          </BookingDetails>
-          <BookingDetails>
-            <AccessTime /> {booking.time}
-          </BookingDetails>
-        </DateTimeRow>
-        <BookingDetails>
-          {translate('bookings.card.bookingName')}: {booking.farmerName}
-        </BookingDetails>
-        <BookingDetails>
-          {translate('bookings.card.farmArea')}: {booking.farmArea} {translate('bookings.card.acres')}
-        </BookingDetails>
-        <TempHumidityCropRow>
-          <TempHumidity>
-            <Temperature>{booking.weather}</Temperature>
-            <Humidity>
-              <Opacity /> {booking.weather}
-            </Humidity>
-          </TempHumidity>
-          <Crop>
-            {translate('bookings.card.crop')}: {booking.cropName}
-          </Crop>
-        </TempHumidityCropRow>
-        {booking.quotePrice && (
-          <PriceSummary>
-            {translate('bookings.card.quotedPrice')}: ₹{booking.quotePrice}
-          </PriceSummary>
-        )}
-       {booking.runner && (
-  <RunnnerDetails>
-    <RunnerName>
-      <Avatar sx={{ width: 40, height: 40 }} />
-      <span>{booking.runner.name}</span>
-    </RunnerName>
-    <RunnerContactButton onClick={(e) => {
-      e.stopPropagation();
-      navigator.clipboard.writeText(booking.runner.mobileNumber);
-      toast.info(`Copied number: ${booking.runner.mobileNumber}`);
-    }}>
-      <Phone /> {translate('bookings.card.callNow')}
-    </RunnerContactButton>
-  </RunnnerDetails>
-)}
+  
+    return currentItems.map((booking) => {
+      const hasRunner = booking.runner != null;
+      const hasButtons = (activeTab === "Requests via Farmer" || activeTab === "Requests via admin") && 
+                        booking.status === "requested" || activeTab === "Assign Runner";
       
-      {(activeTab === "Requests via Farmer" || activeTab === "Requests via admin") && 
- booking.status === "requested" && (
-  <ButtonContainer>
-    <ActionButton onClick={() => handleDecline(booking)}>
-      {translate('bookings.card.decline')}
-    </ActionButton>
-    <ActionButton primary onClick={(e) => handleAccept(e,booking)}>
-      {translate('bookings.card.accept')}
-    </ActionButton>
-  </ButtonContainer>
-)}
-
-{activeTab === "Assign Runner" && (
-  <ButtonContainer>
-    <ActionButton 
-      primary 
-      fullWidth 
-      onClick={(e) => {
-        e.stopPropagation(); // Stop event bubbling
-        handleAssignRunner(booking._id);
-      }}
-    >
-      {translate('bookings.card.assignRunner')}
-    </ActionButton>
-  </ButtonContainer>
-)}
-      </Card>
-    ));
+      return (
+        <Card 
+          key={booking._id} 
+          onClick={() => handleBookingClick(booking)}
+          hasRunner={hasRunner}
+          hasButtons={hasButtons}
+        >
+          <CardHeader>
+            <BookingId>#{booking._id}</BookingId>
+            <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
+          </CardHeader>
+          <BookingDetails>
+            <img style={{ width: "16px", height: "16px", marginRight:"15px"}} src={locationIcon} alt="Location" /> 
+            {booking.farmLocation} 
+            <a 
+              href={`https://maps.google.com/?q=${booking?.location?.coordinates[0]},${booking?.location?.coordinates[1]}`} 
+              title="Open in Google Maps" 
+              style={{marginLeft:"15px",textDecoration:"none"}} 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              🔗
+            </a> 
+          </BookingDetails>
+          <DateTimeRow>
+            <BookingDetails>
+              <img style={{ width: "16px", height: "16px",marginRight:"15px" }} src={calendarIcon} alt="Calendar" /> 
+              {new Date(booking.date).toLocaleDateString()}
+            </BookingDetails>
+            <BookingDetails>
+              <img style={{ width: "16px", height: "16px",marginRight:"15px",marginLeft:"15px" }} src={timeIcon} alt="Time" /> 
+              {booking.time}
+            </BookingDetails>
+          </DateTimeRow>
+          <BookingDetails>
+            {translate('bookings.card.bookingName')}: {booking.farmerName}
+          </BookingDetails>
+          <BookingDetails>
+            {translate('bookings.card.farmArea')}: {booking.farmArea} {translate('bookings.card.acres')}
+          </BookingDetails>
+          <TempHumidityCropRow>
+  <TempHumidity>
+    <Temperature>{booking.weather}</Temperature>
+    <Humidity>
+      <Opacity /> {booking.farmLocation || 'N/A'}
+    </Humidity>
+  </TempHumidity>
+  <Crop>
+    {translate('bookings.card.crop')}: {booking.cropName}
+  </Crop>
+</TempHumidityCropRow>
+          {booking.quotePrice && (
+            <PriceSummary>
+              {translate('bookings.card.quotedPrice')}: ₹{booking.quotePrice}
+            </PriceSummary>
+          )}
+          {booking.runner && (
+            <RunnnerDetails>
+              <RunnerName>
+                <Avatar sx={{ width: 40, height: 40 }} />
+                <span>{booking.runner.name}</span>
+              </RunnerName>
+              <RunnerContactButton 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigator.clipboard.writeText(booking.runner.mobileNumber);
+                  toast.info(`Copied number: ${booking.runner.mobileNumber}`);
+                }}
+              >
+                <Phone /> {translate('bookings.card.callNow')}
+              </RunnerContactButton>
+            </RunnnerDetails>
+          )}
+          {(activeTab === "Requests via Farmer" || activeTab === "Requests via admin") && 
+            booking.status === "requested" && (
+              <ButtonContainer>
+                <ActionButton onClick={() => handleDecline(booking)}>
+                  {translate('bookings.card.decline')}
+                </ActionButton>
+                <ActionButton primary onClick={(e) => handleAccept(e,booking)}>
+                  {translate('bookings.card.accept')}
+                </ActionButton>
+              </ButtonContainer>
+          )}
+          {activeTab === "Assign Runner" && (
+            <ButtonContainer>
+              <ActionButton 
+                primary 
+                fullWidth 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAssignRunner(booking._id);
+                }}
+              >
+                {translate('bookings.card.assignRunner')}
+              </ActionButton>
+            </ButtonContainer>
+          )}
+        </Card>
+      );
+    });
   };
 
   return (
     <BookingsContainer>
       <Title>{translate('bookings.title')}</Title>
+      <FilterContainer>
+        <StatusFilter 
+          value={statusFilter} 
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="all">All Status</option>
+          <option value="requested">Requested</option>
+          <option value="quote_received">Quote Received</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="completed">Completed</option>
+          <option value="closed">Closed</option>
+          <option value="cancelled">Cancelled</option>
+        </StatusFilter>
+      </FilterContainer>
       <TabContainer>
   {Object.keys(bookings).map((tab) => {
     // Create a mapping for tab keys to translation keys
@@ -628,9 +699,12 @@ const Bookings = () => {
               onChange={(e) => setPrice(e.target.value)}
               placeholder={translate('bookings.modal.enterPricePlaceholder')}
             />
+            <div style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center" }} >
+
             <SubmitButton onClick={handlePriceSubmit}>
               {translate('bookings.modal.submit')}
             </SubmitButton>
+            </div>
           </ModalContent>
         </Modal>
       )}

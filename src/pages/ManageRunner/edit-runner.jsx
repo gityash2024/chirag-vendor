@@ -201,7 +201,7 @@ const EditRunner = () => {
         }));
         toast.success('Image uploaded successfully');
       } catch (error) {
-        toast.error('Failed to upload image');
+        toast.error('');
       } finally {
         setLoading(false);
       }
