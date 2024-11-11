@@ -300,6 +300,7 @@
         "serviceHistory": "Service History",
         "manageRunner": "Manage Runner",
         "reports": "Reports",
+        "Wallet": "Wallet",
         "sprayAssist": "Spray Assist"
       },
       "bottomMenu": {
@@ -322,6 +323,44 @@
         "assignrunner": "Assign Runner",
         "confirmedbookings": "Confirmed Bookings",
         "closedbookings": "Closed Bookings"
+      },
+      "assignRunner":{
+        "title": "Assign Runner",
+        "viewAll": "View all",
+        "bookings": "Bookings",
+        "loading": "Loading...",
+        "notFound": "Booking not found",
+        "details": {
+          "location": "Location",
+          "date": "Date",
+          "time": "Time",
+          "bookingName": "Booking Name",
+          "contactNumber": "Contact number",
+          "farmArea": "Farm Area",
+          "acres": "Acres",
+          "crop": "Crop"
+        },
+        "payment": {
+          "summary": "Payment Summary",
+          "estimatedTotal": "Estimated Total",
+          "taxesFee": "Taxes and fee",
+          "total": "Total"
+        },
+        "buttons": {
+          "assignRunner": "Assign Runner",
+          "select": "Select"
+        },
+        "modal": {
+          "selectRunner": "Select a Runner",
+          "runnerName": "Runner Name",
+          "runnerContact": "Runner Contact",
+          "status": "Status",
+          "action": "Action",
+          "active": "Active",
+          "inactive": "Inactive",
+          "requestSent": "Request sent to runner",
+          "updateSoon": "You will get an update soon"
+        }
       },
       "card": {
         "booking": "Booking",
@@ -521,9 +560,115 @@
       }
     },
     "noData": "No KPI data available for the selected period"
+  },
+  "confirmedBookings":{
+    "title": "Bookings",
+    "back": "Back",
+    "details": {
+      "farmArea": "Farm Area",
+      "acres": "Acres",
+      "crop": "Crop",
+      "bookingName": "Booking Name",
+      "contactNumber": "Contact Number",
+      "temperature": "Temperature",
+      "humidity": "Humidity",
+      "location": "Location",
+      "openInMaps": "Open in Maps"
+    },
+    "payment": {
+      "summary": "Payment Summary",
+      "estimatedTotal": "Estimated Total",
+      "taxesFee": "Taxes and fee",
+      "total": "Total"
+    },
+    "runner": {
+      "title": "Runner Details",
+      "callNow": "Call Now",
+      "viewDetails": "View Runner Details",
+      "copied": "Phone number copied to clipboard"
+    },
+    "service": {
+      "started": {
+        "title": "Service Started",
+        "battery": "Battery Sets Available"
+      },
+      "completed": {
+        "title": "Service Completed"
+      }
+    },
+    "rating": {
+      "title": "Average Rating"
+    },
+    "reports": {
+      "environmental": {
+        "title": "Environmental Report",
+        "waterSaved": "Water saved (litres)",
+        "pesticideSaved": "Pesticide saved",
+        "carbonFootprint": "Carbon footprint reduced"
+      },
+      "economic": {
+        "title": "Economic Report",
+        "droneRoi": "ROI for Drone spraying",
+        "batteryEfficiency": "Battery Efficiency (Hours/Cycle)",
+        "droneLongevity": "Drone ROI/Drone life"
+      }
+    }
   }
   },
   "hi": {
+    "confirmedBookings":{
+      "title": "बुकिंग",
+      "back": "वापस",
+      "details": {
+        "farmArea": "खेत का क्षेत्र",
+        "acres": "एकड़",
+        "crop": "फसल",
+        "bookingName": "बुकिंग नाम",
+        "contactNumber": "संपर्क नंबर", 
+        "temperature": "तापमान",
+        "humidity": "आर्द्रता",
+        "location": "स्थान",
+        "openInMaps": "मैप में खोलें"
+      },
+      "payment": {
+        "summary": "भुगतान सारांश",
+        "estimatedTotal": "अनुमानित कुल",
+        "taxesFee": "कर और शुल्क",
+        "total": "कुल"
+      },
+      "runner": {
+        "title": "रनर विवरण",
+        "callNow": "अभी कॉल करें",
+        "viewDetails": "रनर विवरण देखें",
+        "copied": "फोन नंबर क्लिपबोर्ड पर कॉपी किया गया"
+      },
+      "service": {
+        "started": {
+          "title": "सेवा शुरू हुई",
+          "battery": "उपलब्ध बैटरी सेट"
+        },
+        "completed": {
+          "title": "सेवा पूरी हुई"
+        }
+      },
+      "rating": {
+        "title": "औसत रेटिंग"
+      },
+      "reports": {
+        "environmental": {
+          "title": "पर्यावरण रिपोर्ट",
+          "waterSaved": "बचाया गया पानी (लीटर)",
+          "pesticideSaved": "बचाया गया कीटनाशक",
+          "carbonFootprint": "कार्बन फुटप्रिंट कम किया गया"
+        },
+        "economic": {
+          "title": "आर्थिक रिपोर्ट",
+          "droneRoi": "ड्रोन स्प्रेइंग का आरओआई",
+          "batteryEfficiency": "बैटरी दक्षता (घंटे/चक्र)",
+          "droneLongevity": "ड्रोन आरओआई/ड्रोन जीवन"
+        }
+      }
+    },
     "reports": {
       "title": "रिपोर्ट",
       "filters": {
@@ -588,6 +733,44 @@
     "saving": "सहेजा जा रहा है...",
     "save": "सहेजें",
     "blockRunner": "रनर को ब्लॉक करें"
+  },
+  "assignRunner":{
+    "title": "रनर असाइन करें",
+    "viewAll": "सभी देखें",
+    "bookings": "बुकिंग",
+    "loading": "लोड हो रहा है...",
+    "notFound": "बुकिंग नहीं मिली",
+    "details": {
+      "location": "स्थान",
+      "date": "दिनांक",
+      "time": "समय",
+      "bookingName": "बुकिंग नाम",
+      "contactNumber": "संपर्क नंबर",
+      "farmArea": "खेत का क्षेत्र",
+      "acres": "एकड़",
+      "crop": "फसल"
+    },
+    "payment": {
+      "summary": "भुगतान सारांश",
+      "estimatedTotal": "अनुमानित कुल",
+      "taxesFee": "कर और शुल्क",
+      "total": "कुल"
+    },
+    "buttons": {
+      "assignRunner": "रनर असाइन करें",
+      "select": "चयन करें"
+    },
+    "modal": {
+      "selectRunner": "एक रनर का चयन करें",
+      "runnerName": "रनर का नाम",
+      "runnerContact": "रनर का संपर्क",
+      "status": "स्थिति",
+      "action": "कार्रवाई",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "requestSent": "रनर को अनुरोध भेजा गया",
+      "updateSoon": "आपको जल्द ही अपडेट मिलेगा"
+    }
   },
     "manageRunner": {
       "title": "रनर प्रबंधन",
@@ -744,7 +927,8 @@
         "serviceHistory": "सेवा इतिहास",
         "manageRunner": "रनर प्रबंधन",
         "reports": "रिपोर्ट",
-        "sprayAssist": "स्प्रे सहायक"
+        "sprayAssist": "स्प्रे सहायक",
+        "Wallet": "वॉलेट"
       },
       "bottomMenu": {
         "contactUs": "संपर्क करें",

@@ -12,6 +12,8 @@ import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import * as XLSX from 'xlsx';
 import { useTranslation } from '../../TranslationContext';
+import CloseIcon from '@mui/icons-material/Close';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
 const Container = styled.div`
   padding: 20px;
@@ -34,7 +36,39 @@ const Title = styled.h2`
   color: #333;
   margin: 0;
 `;
+const PasteIcon = styled.div`
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 8px;
+  
+  &:hover {
+    color: #333;
+  }
+`;
 
+const ClearButton = styled.button`
+  background: red;
+  border: 1px solid #ddd;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 4px;
+  gap: 4px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-style: normal;
+  font-size: 14px;
+  margin-left: 10px;
+ 
+`;
 const FilterGroup = styled.div`
   display: flex;
   align-items: center;
@@ -113,10 +147,58 @@ const ReportLabel = styled.span`
   color: #666;
 `;
 
+const SearchInput = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 200px;
+  margin-right: 15px;
+`;
+
+
+const Input = styled.input`
+  padding: 8px 35px 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 100%;
+  height: 38px;
+  
+  &:focus {
+    outline: none;
+    border-color: #999;
+  }
+`;
+
+const DateInput = styled.input`
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 150px;
+  height: 38px;
+  
+  &:focus {
+    outline: none;
+    border-color: #999;
+  }
+`;
+
+const DateFilter = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-right: 15px;
+`;
+
+
+
 const Reports = () => {
   const {translate} = useTranslation();
   const [bookings, setBookings] = useState([]);
   const [dateFilter, setDateFilter] = useState('yearly');
+  const [searchBookingId, setSearchBookingId] = useState('');
+const [fromDate, setFromDate] = useState('');
+const [toDate, setToDate] = useState('');
   const [environmentalStats, setEnvironmentalStats] = useState({
     waterSaved: 0,
     pesticideReduction: 0,
@@ -137,8 +219,7 @@ const Reports = () => {
 
   useEffect(() => {
     calculateStats();
-  }, [bookings, dateFilter]);
-
+  }, [bookings, dateFilter, searchBookingId, fromDate, toDate]); // Added all filters
   const fetchBookings = async () => {
     try {
       const response = await getAllBookingsList();
@@ -151,11 +232,27 @@ const Reports = () => {
       console.error('Error fetching bookings:', error);
     }
   };
-
   const filterBookingsByDate = (bookings) => {
     const now = new Date();
     return bookings.filter(booking => {
       const bookingDate = new Date(booking.date);
+  
+      // Booking ID filter
+      if (searchBookingId && !booking._id.includes(searchBookingId)) {
+        return false;
+      }
+  
+      // Date range filter
+      if (fromDate && toDate) {
+        const start = new Date(fromDate);
+        const end = new Date(toDate);
+        if (bookingDate < start || bookingDate > end) {
+          return false;
+        }
+        return true;
+      }
+  
+      // Original date filter
       switch (dateFilter) {
         case 'weekly':
           const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -304,19 +401,61 @@ const Reports = () => {
 
   return (
     <Container>
-      <HeaderContainer>
-        <Title>{translate('reports.title')}</Title>
-        <FilterGroup>
-          <Select value={dateFilter} onChange={(e) => setDateFilter(e.target.value)}>
-            <option value="yearly">{translate('reports.filters.yearly')}</option>
-            <option value="monthly">{translate('reports.filters.monthly')}</option>
-            <option value="weekly">{translate('reports.filters.weekly')}</option>
-          </Select>
-          <DownloadButton onClick={exportToExcel}>
-            {translate('reports.filters.exportReport')} <FaDownload />
-          </DownloadButton>
-        </FilterGroup>
-      </HeaderContainer>
+     <HeaderContainer>
+  <Title>{translate('reports.title')}</Title>
+  <FilterGroup>
+    <SearchInput>
+      <Input 
+        type="text"
+        placeholder="Search Booking ID"
+        value={searchBookingId}
+        onChange={(e) => setSearchBookingId(e.target.value)}
+      />
+      <PasteIcon onClick={() => {
+        navigator.clipboard.readText().then(text => setSearchBookingId(text));
+      }}>
+        <ContentPasteIcon fontSize="small" />
+      </PasteIcon>
+    </SearchInput>
+    
+    <DateFilter>
+      <DateInput
+        type="date"
+        value={fromDate}
+        onChange={(e) => setFromDate(e.target.value)}
+        max={toDate || undefined}
+      />
+      <DateInput
+        type="date"
+        value={toDate}
+        onChange={(e) => setToDate(e.target.value)}
+        min={fromDate || undefined}
+      />
+    </DateFilter>
+
+    <Select value={dateFilter} onChange={(e) => setDateFilter(e.target.value)}>
+      <option value="yearly">{translate('reports.filters.yearly')}</option>
+      <option value="monthly">{translate('reports.filters.monthly')}</option>
+      <option value="weekly">{translate('reports.filters.weekly')}</option>
+    </Select>
+
+    {(searchBookingId || fromDate || toDate) && (
+      <ClearButton onClick={() => {
+        setSearchBookingId('');
+        setFromDate('');
+        setToDate('');
+        setDateFilter('yearly');
+      }}>
+        <CloseIcon style={{ fontSize: 16 }} />
+        Clear Filters
+      </ClearButton>
+    )}
+
+    <DownloadButton onClick={exportToExcel}>
+      {translate('reports.filters.exportReport')} <FaDownload />
+    </DownloadButton>
+  </FilterGroup>
+</HeaderContainer>
       
       <ReportSection>
         <ReportHeader>

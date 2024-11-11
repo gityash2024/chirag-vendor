@@ -5,6 +5,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import OpacityIcon from '@mui/icons-material/Opacity';
+import Opacity from "@mui/icons-material/Opacity";
+
 import PhoneIcon from '@mui/icons-material/Phone';
 import StarIcon from '@mui/icons-material/Star';
 import { getAllBookingsList } from '../../services/commonService';
@@ -12,7 +14,16 @@ import { toast } from 'react-toastify';
 import Loader from '../../components/loader/index';
 import { useTranslation } from '../../TranslationContext';
 import { FiArrowLeft } from 'react-icons/fi';
-
+import waterIcon from '../../assets/water-icon.png';
+import pesticideIcon from '../../assets/pesticide-icon.png';
+import carbonFootprintIcon from '../../assets/carbon-footprint-icon.png';
+import droneSprayingIcon from '../../assets/drone-spraying.png';
+import batteryEfficiencyIcon from '../../assets/battery-efficiency.png';
+import droneRoiIcon from '../../assets/drone-roi.png';
+import cropYieldIcon from '../../assets/crop-yield.png';
+import locationIcon from '../../assets/location-icon.svg';
+import calendarIcon from '../../assets/calendar.svg';
+import timeIcon from '../../assets/clock.svg';
 const Container = styled.div`
   padding: 20px;
   font-family: 'Public Sans', sans-serif;
@@ -25,7 +36,42 @@ const Title = styled.h2`
   color: #333;
   margin-bottom: 10px;
 `;
+const TempHumidityCropRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+`;
 
+const TempHumidity = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Temperature = styled.span`
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 10px;
+  &:after {
+    content: '°';
+  }
+`;
+
+const Humidity = styled.span`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+`;
+
+
+
+const Crop = styled.span`
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+`;
 const BookingId = styled.h3`
   font-size: 24px;
   color: #333;
@@ -69,6 +115,12 @@ const BookingDetails = styled.div`
   border-radius: 8px;
   padding: 20px;
   flex: 7;
+  line-height: 1.5;
+`;
+
+const DateTimeRow = styled.div`
+  display: flex;
+  // justify-content: space-between;
 `;
 
 const PaymentSummary = styled.div`
@@ -78,6 +130,27 @@ const PaymentSummary = styled.div`
   border-radius: 8px;
   padding: 20px;
   flex: 3;
+      justify-content: space-between;
+  margin-bottom: 20px; // Add margin at the bottom
+`;
+
+// Update the DetailRow for payment section
+const PaymentDetailRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+`;
+
+const PaymentLabel = styled.span`
+  font-weight: 500;
+  color: #666;
+`;
+
+const PaymentValue = styled.span`
+  font-weight: 500;
+  color: #333;
+  text-align: right;
 `;
 
 const DetailRow = styled.div`
@@ -104,51 +177,6 @@ const HorizontalLine = styled.hr`
   margin: 15px 0;
 `;
 
-const RunnerCard = styled.div`
-  background: white;
-  border: 1px solid #E0E0E0;
-  border-radius: 8px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
-  padding: 20px;
-  margin-bottom: 20px;
-  width: 30%;
-`;
-
-const RunnerInfo = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const RunnerAvatar = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #ccc;
-  margin-right: 10px;
-`;
-
-const CallButton = styled.button`
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-`;
-
-const ServiceCard = styled.div`
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
-  background: white;
-  border: 1px solid #E0E0E0;
-  border-radius: 8px;
-  padding: 20px;
-  width: 31%;
-  margin-bottom: 20px;
-`;
 
 const ImageContainer = styled.div`
   display: flex;
@@ -184,6 +212,117 @@ const BackButton = styled.button`
 
 const BackIcon = styled(FiArrowLeft)`
   margin-right: 8px;
+`;
+
+
+
+const ServicesContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+`;
+
+const ServiceCard = styled.div`
+  flex: 1;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 20px;
+`;
+
+const RunnerCard = styled.div`
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  margin-top: 20px;
+  width: 30%;
+`;
+
+const RunnerDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+`;
+
+const RunnerInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`;
+
+const RunnerAvatar = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-image: url(${props => props.src || ''});
+  background-size: cover;
+  background-position: center;
+  background-color: #E0E0E0;
+`;
+
+const CallButton = styled.button`
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 8px 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f5f5f5;
+  }
+`;
+
+const ViewDetailsButton = styled.button`
+  width: 60%;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+const KPISection = styled.div`
+  margin-top: 30px;
+`;
+
+const KPIGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+`;
+
+const KPICard = styled.div`
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
+`;
+
+const KPIValue = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+  color: ${props => props.color || '#333'};
+  margin: 10px 0;
+`;
+
+const KPILabel = styled.div`
+  font-size: 14px;
+  color: #666;
 `;
 const ConfirmBookingDetails = () => {
   const navigate=useNavigate();
@@ -227,123 +366,130 @@ const ConfirmBookingDetails = () => {
 
     return (
       <Container>
-        <Title>{translate('bookingDetails.title')}</Title>
+        <Title>{translate('confirmedBookings.title')}</Title>
         <BackButton onClick={() => navigate(-1)}>
           <BackIcon />
-          Back
+          {translate('confirmedBookings.back')}
         </BackButton>
         <BookingId>#{booking._id}</BookingId>
         <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
         <FlexContainer>
           <BookingDetails>
             <DetailRow>
-              <DetailLabel><LocationOnIcon /> </DetailLabel>
-              <DetailValue>{booking.farmLocation}</DetailValue>
+              <img style={{ width: "16px", height: "16px", marginRight: "15px" }} src={locationIcon} alt={translate('confirmedBookings.details.location')} /> 
+              {booking.farmLocation}
+              <a 
+                href={`https://maps.google.com/?q=${booking?.location?.coordinates[0]},${booking?.location?.coordinates[1]}`} 
+                title={translate('confirmedBookings.details.openInMaps')} 
+                style={{marginLeft:"15px",textDecoration:"none"}} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                🔗
+              </a>
             </DetailRow>
+            <DateTimeRow>
+              <DetailRow>
+                <img style={{ width: "16px", height: "16px", marginRight: "15px" }} src={calendarIcon} alt="Calendar" />
+                {new Date(booking.date).toLocaleDateString()}
+              </DetailRow>
+              <DetailRow>
+                <img style={{ width: "16px", height: "16px", marginRight: "15px", marginLeft: "15px" }} src={timeIcon} alt="Time" />
+                {booking.time}
+              </DetailRow>
+            </DateTimeRow>
             <DetailRow>
-              <DetailLabel><CalendarTodayIcon /> </DetailLabel>
-              <DetailValue>{new Date(booking.date).toLocaleDateString()}</DetailValue>
-              <DetailLabel><AccessTimeIcon /> </DetailLabel>
-              <DetailValue>{booking.time}</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>{translate('bookingDetails.details.bookingName')}:</DetailLabel>
+              <DetailLabel>{translate('confirmedBookings.details.bookingName')}:</DetailLabel>
               <DetailValue>{booking.farmerName}</DetailValue>
             </DetailRow>
             <DetailRow>
-              <DetailLabel>{translate('bookingDetails.details.contactNumber')}:</DetailLabel>
+              <DetailLabel>{translate('confirmedBookings.details.contactNumber')}:</DetailLabel>
               <DetailValue>{booking.contactNumber}</DetailValue>
             </DetailRow>
             <DetailRow>
-              <DetailLabel>{translate('bookingDetails.details.farmArea')}:</DetailLabel>
-              <DetailValue>{booking.farmArea} {translate('bookingDetails.details.acres')}</DetailValue>
+              <DetailLabel>{translate('confirmedBookings.details.farmArea')}:</DetailLabel>
+              <DetailValue>{booking.farmArea} {translate('confirmedBookings.details.acres')}</DetailValue>
             </DetailRow>
-            <DetailRow>
-              <DetailLabel>{translate('bookingDetails.details.crop')}:</DetailLabel>
-              <DetailValue>{booking.cropName}</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>{booking.weather}</DetailLabel>
-              <DetailLabel><OpacityIcon /> {booking.weather}</DetailLabel>
-            </DetailRow>
+            <TempHumidityCropRow>
+              <TempHumidity>
+                <Temperature>{booking.weather}</Temperature>
+                <Humidity>
+                  <Opacity /> {booking.farmLocation || 'N/A'}
+                </Humidity>
+              </TempHumidity>
+              <Crop>
+                {translate('confirmedBookings.details.crop')}: {booking.cropName}
+              </Crop>
+            </TempHumidityCropRow>
           </BookingDetails>
           {booking.status !== 'requested' && (
             <PaymentSummary>
-              <h3>{translate('bookingDetails.payment.title')}</h3>
-              <DetailRow>
-                <DetailLabel>{translate('bookingDetails.payment.estimatedTotal')}:</DetailLabel>
-                <DetailValue>₹{booking.quotePrice}</DetailValue>
-              </DetailRow>
-              <DetailRow>
-                <DetailLabel>{translate('bookingDetails.payment.estimatedTotal')}</DetailLabel>
-                <DetailValue>₹{booking.quotePrice}</DetailValue>
-              </DetailRow>
-              <DetailRow>
-                <DetailLabel>{translate('bookingDetails.payment.taxesFee')}</DetailLabel>
-                <DetailValue>₹{0}</DetailValue>
-                {/* <DetailValue>₹{Math.round(booking.quotePrice * 0.1)}</DetailValue> */}
-              </DetailRow>
+              <h3 style={{ marginBottom: '20px' }}>{translate('confirmedBookings.payment.summary')}</h3>
+              <PaymentDetailRow>
+                <PaymentLabel>{translate('confirmedBookings.payment.estimatedTotal')}</PaymentLabel>
+                <PaymentValue>₹{booking.quotePrice}</PaymentValue>
+              </PaymentDetailRow>
+              <PaymentDetailRow>
+                <PaymentLabel>{translate('confirmedBookings.payment.taxesFee')}</PaymentLabel>
+                <PaymentValue>₹{0}</PaymentValue>
+              </PaymentDetailRow>
               <HorizontalLine />
-              <DetailRow>
-                <DetailLabel>{translate('bookingDetails.payment.total')}</DetailLabel>
-                <DetailValue>₹{Math.round(booking.quotePrice)}</DetailValue>
-                {/* <DetailValue>₹{Math.round(booking.quotePrice * 1.1)}</DetailValue> */}
-              </DetailRow>
+              <PaymentDetailRow>
+                <PaymentLabel>{translate('confirmedBookings.payment.total')}</PaymentLabel>
+                <PaymentValue>₹{Math.round(booking.quotePrice)}</PaymentValue>
+              </PaymentDetailRow>
             </PaymentSummary>
           )}
         </FlexContainer>
         {booking.status !== 'requested' && booking.status !== 'quote_received' && booking.runner && (
           <RunnerCard>
-            <h3>{translate('bookingDetails.runner.title')}</h3>
-            <RunnerInfo>
-              <RunnerAvatar />
-              <div>
-                <div>{booking.runner.name}</div>
-                <div>{translate('bookingDetails.runner.contactNumber')}: {booking.runner.mobileNumber}</div>
-              </div>
-            </RunnerInfo>
-            <CallButton onClick={() => toast.info(`Calling ${booking.runner.mobileNumber}`)}>
-              <PhoneIcon /> {translate('bookingDetails.runner.callNow')}
-            </CallButton>
+            <RunnerDetails>
+              <RunnerInfo>
+                <RunnerAvatar src={booking.runner.profilePic} />
+                <div>
+                  <h3>{booking.runner.name}</h3>
+                  <p>{booking.runner.mobileNumber}</p>
+                </div>
+              </RunnerInfo>
+              <CallButton onClick={() => {
+                navigator.clipboard.writeText(booking.runner.mobileNumber);
+                toast.success(translate('confirmedBookings.runner.copied'));
+              }}>
+                <PhoneIcon /> {translate('confirmedBookings.runner.callNow')}
+              </CallButton>
+            </RunnerDetails>
+            <ViewDetailsButton onClick={() => navigate(`/edit-runner/${booking.runner._id}/true`)}>
+              {translate('confirmedBookings.runner.viewDetails')}
+            </ViewDetailsButton>
           </RunnerCard>
         )}
-        {(booking.status === 'completed' || booking.status === 'closed') && (
-          <>
-            {booking.startFieldImages && booking.startFieldImages.length > 0 && (
-              <ServiceCard>
-                <h3>{translate('bookingDetails.service.started.title')}</h3>
-                <DetailRow>
-                  <DetailLabel>{translate('bookingDetails.service.started.battery')}:</DetailLabel>
-                  <DetailValue>{booking.batterySetAvailable}</DetailValue>
-                </DetailRow>
-                <DetailRow>
-                  <DetailLabel>{translate('bookingDetails.service.started.currentImage')}:</DetailLabel>
-                </DetailRow>
-                <ImageContainer>
-                  {booking.startFieldImages.map((image, index) => (
-                    <FieldImage key={index} src={image} alt="Field" />
-                  ))}
-                </ImageContainer>
-              </ServiceCard>
-            )}
-            {booking.endFieldImages && booking.endFieldImages.length > 0 && (
-              <ServiceCard>
-                <h3>{translate('bookingDetails.service.completed.title')}</h3>
-                <DetailRow>
-                  <DetailLabel>{translate('bookingDetails.service.completed.fieldImage')}:</DetailLabel>
-                </DetailRow>
-                <ImageContainer>
-                  {booking.endFieldImages.map((image, index) => (
-                    <FieldImage key={index} src={image} alt="Field" />
-                  ))}
-                </ImageContainer>
-              </ServiceCard>
-            )}
-          </>
+        {((booking.status === 'completed' || booking.status === 'closed') && booking?.startFieldImages?.length) && (
+          <ServicesContainer>
+            <ServiceCard>
+              <h3>{translate('confirmedBookings.service.started.title')}</h3>
+              <DetailRow>
+                <DetailLabel>{translate('confirmedBookings.service.started.battery')}:</DetailLabel>
+                <DetailValue>{booking.batterySetAvailable}</DetailValue>
+              </DetailRow>
+              <ImageContainer>
+                {booking.startFieldImages?.map((image, index) => (
+                  <FieldImage key={index} src={image} alt="Field" />
+                ))}
+              </ImageContainer>
+            </ServiceCard>
+            <ServiceCard>
+              <h3>{translate('confirmedBookings.service.completed.title')}</h3>
+              <ImageContainer>
+                {booking.endFieldImages?.map((image, index) => (
+                  <FieldImage key={index} src={image} alt="Field" />
+                ))}
+              </ImageContainer>
+            </ServiceCard>
+          </ServicesContainer>
         )}
         {averageRating && (
           <>
-            <h3>{translate('bookingDetails.rating.title')}</h3>
+            <h3>{translate('confirmedBookings.rating.title')}</h3>
             <RatingContainer>
               {[1, 2, 3, 4, 5].map((star) => (
                 <StarIcon key={star} color={star <= averageRating ? 'primary' : 'disabled'} />
@@ -351,6 +497,56 @@ const ConfirmBookingDetails = () => {
               <span>{averageRating}</span>
             </RatingContainer>
           </>
+        )}
+        {(booking.status === 'closed' && booking.droneWaterUsage && booking.dronePesticideUsage && booking.emissionSavedPerHectare) && (
+          <KPISection>
+            <h3>{translate('confirmedBookings.reports.environmental.title')}</h3>
+            <KPIGrid>
+              <KPICard>
+                <img src={waterIcon} alt="Water saved" style={{ width: 40, height: 40 }} />
+                <KPIValue color="#5CBEFF">{booking.droneWaterUsage || 0}</KPIValue>
+                <KPILabel>{translate('confirmedBookings.reports.environmental.waterSaved')}</KPILabel>
+              </KPICard>
+              <KPICard>
+                <img src={pesticideIcon} alt="Pesticide saved" style={{ width: 40, height: 40 }} />
+                <KPIValue color="#FF826E">{booking.dronePesticideUsage || 0}%</KPIValue>
+                <KPILabel>{translate('confirmedBookings.reports.environmental.pesticideSaved')}</KPILabel>
+              </KPICard>
+              <KPICard>
+                <img src={carbonFootprintIcon} alt="Carbon footprint" style={{ width: 40, height: 40 }} />
+                <KPIValue color="#6AD34D">{booking.emissionSavedPerHectare || 0}%</KPIValue>
+                <KPILabel>{translate('confirmedBookings.reports.environmental.carbonFootprint')}</KPILabel>
+              </KPICard>
+            </KPIGrid>
+          </KPISection>
+        )}
+        {(booking.status === 'closed' && booking.cropOutputPerAcre && booking.quotePrice && booking.droneFlightHours && booking.chargeCycles) && (
+          <KPISection>
+            <h3>{translate('confirmedBookings.reports.economic.title')}</h3>
+            <KPIGrid>
+              <KPICard>
+                <img src={droneSprayingIcon} alt="Drone ROI" style={{ width: 40, height: 40 }} />
+                <KPIValue color="#5CBEFF">
+                  {((booking.cropOutputPerAcre / booking.quotePrice) * 100).toFixed(1)}%
+                </KPIValue>
+                <KPILabel>{translate('confirmedBookings.reports.economic.droneRoi')}</KPILabel>
+              </KPICard>
+              <KPICard>
+                <img src={batteryEfficiencyIcon} alt="Battery efficiency" style={{ width: 40, height: 40 }} />
+                <KPIValue color="#FF826E">
+                  {(parseInt(booking.droneFlightHours) / (booking.chargeCycles || 1)).toFixed(1)}
+                </KPIValue>
+                <KPILabel>{translate('confirmedBookings.reports.economic.batteryEfficiency')}</KPILabel>
+              </KPICard>
+              <KPICard>
+                <img src={droneRoiIcon} alt="Drone life" style={{ width: 40, height: 40 }} />
+                <KPIValue color="#6AD34D">
+                  {((booking.cropOutputPerAcre - booking.quotePrice) / parseInt(booking.droneFlightHours || 1)).toFixed(1)}%
+                </KPIValue>
+                <KPILabel>{translate('confirmedBookings.reports.economic.droneLongevity')}</KPILabel>
+              </KPICard>
+            </KPIGrid>
+          </KPISection>
         )}
       </Container>
     );

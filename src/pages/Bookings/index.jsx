@@ -278,7 +278,7 @@ const Card = styled.div`
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
-  height: ${props => props.hasRunner || props.hasButtons ? '300px' : '250px'};
+  height: ${props => props.hasRunner || props.hasButtons ? '300px' : '300px'};
   padding-bottom: ${props => props.hasButtons ? '70px' : '20px'};
 `;
 const BookingId = styled.h3`
@@ -296,10 +296,10 @@ const StatusBadge = styled.span`
   font-weight: 500;
   color: #000000;
   background-color: ${props => {
-    if (props.status === "requested") return "#FDF0CC";
-    if (props.status === "quote_received") return "#C6EEFF";
-    if (props.status === "confirmed") return "#E8FFF3";
-    if (props.status === "completed") return "#DAB4FF";
+    if (props.status === "requested") return "#FEB89C";
+    if (props.status === "quote_received") return "#FDF0CC";
+    if (props.status === "confirmed") return "#BEF991";
+    if (props.status === "closed") return "#DAB4FF";
     return "#E0E0E0";
   }};
 `;
@@ -629,7 +629,7 @@ const Bookings = () => {
           <option value="requested">Requested</option>
           <option value="quote_received">Quote Received</option>
           <option value="confirmed">Confirmed</option>
-          <option value="completed">Completed</option>
+          {/* <option value="completed">Completed</option> */}
           <option value="closed">Closed</option>
           <option value="cancelled">Cancelled</option>
         </StatusFilter>

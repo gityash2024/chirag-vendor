@@ -10,6 +10,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import successWithdrawalCheck from '../../assets/check-wallet.svg';
 import { getAllBookingsList, assignBookingToRunner, getAllRunnersList } from '../../services/commonService';
 import { toast } from 'react-toastify';
+import { useTranslation } from '../../TranslationContext';
 
 const Container = styled.div`
   padding: 20px;
@@ -220,6 +221,7 @@ const PaymentRow = styled.div`
 `;
 
 const AssignRunnerDetails = () => {
+  const { translate } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const [showRunnerModal, setShowRunnerModal] = useState(false);
@@ -241,21 +243,22 @@ const AssignRunnerDetails = () => {
       if (foundBooking) {
         setBooking(foundBooking);
       } else {
-        toast.error('Booking not found');
+        toast.error(translate('bookings.assignRunner.notFound'));
       }
     } catch (error) {
-      toast.error('Failed to fetch booking details');
+      toast.error(translate('bookings.assignRunner.notFound'));
     } finally {
       setLoading(false);
     }
   };
 
   const fetchRunners = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
     try {
       const response = await getAllRunnersList();
-      setRunners(response.data);
+      setRunners(response.data?.filter((runner) => runner.vendor === user?._id));
     } catch (error) {
-      toast.error('Failed to fetch runners');
+      toast.error(translate('bookings.assignRunner.notFound'));
     }
   };
 
@@ -274,16 +277,16 @@ const AssignRunnerDetails = () => {
         navigate('/bookings');
       }, 2000);
     } catch (error) {
-      toast.error('Failed to assign runner');
+      toast.error(translate('bookings.assignRunner.notFound'));
     }
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p>{translate('bookings.assignRunner.loading')}</p>;
   }
 
   if (!booking) {
-    return <p>Booking not found</p>;
+    return <p>{translate('bookings.assignRunner.notFound')}</p>;
   }
 
   return (
@@ -293,13 +296,13 @@ const AssignRunnerDetails = () => {
           <BackButton onClick={() => navigate('/bookings')}>
             <ArrowBackIcon />
           </BackButton>
-          <Title>Assign Runner</Title>
+          <Title>{translate('bookings.assignRunner.title')}</Title>
         </TitleContainer>
         <ViewAllButton onClick={() => navigate('/bookings')}>
-          View all <ChevronRightIcon />
+          {translate('bookings.assignRunner.viewAll')} <ChevronRightIcon>»</ChevronRightIcon>
         </ViewAllButton>
       </Header>
-      <BookingTitle>Bookings</BookingTitle>
+      <BookingTitle>{translate('bookings.assignRunner.bookings')}</BookingTitle>
       <FlexContainer>
         <BookingDetailsContainer>
           <BookingDetailsCard>
@@ -315,19 +318,19 @@ const AssignRunnerDetails = () => {
               <DetailValue>{booking.time}</DetailValue>
             </DetailRow>
             <DetailRow>
-              <DetailLabel>Booking Name:</DetailLabel>
+              <DetailLabel>{translate('bookings.assignRunner.details.bookingName')}:</DetailLabel>
               <DetailValue>{booking.farmerName}</DetailValue>
             </DetailRow>
             <DetailRow>
-              <DetailLabel>Contact number:</DetailLabel>
+              <DetailLabel>{translate('bookings.assignRunner.details.contactNumber')}:</DetailLabel>
               <DetailValue>{booking.contactNumber}</DetailValue>
             </DetailRow>
             <DetailRow>
-              <DetailLabel>Farm Area:</DetailLabel>
-              <DetailValue>{booking.farmArea} Acres</DetailValue>
+              <DetailLabel>{translate('bookings.assignRunner.details.farmArea')}:</DetailLabel>
+              <DetailValue>{booking.farmArea} {translate('bookings.assignRunner.details.acres')}</DetailValue>
             </DetailRow>
             <DetailRow>
-              <DetailLabel>Crop:</DetailLabel>
+              <DetailLabel>{translate('bookings.assignRunner.details.crop')}:</DetailLabel>
               <DetailValue>{booking.cropName}</DetailValue>
             </DetailRow>
             <HorizontalLine />
@@ -337,30 +340,30 @@ const AssignRunnerDetails = () => {
             <DetailRow>
               <DetailLabel><OpacityIcon /> {booking.weather}</DetailLabel>
             </DetailRow>
-            <ActionButton onClick={handleAssignRunner}>Assign Runner</ActionButton>
+            <ActionButton onClick={handleAssignRunner}>
+              {translate('bookings.assignRunner.buttons.assignRunner')}
+            </ActionButton>
           </BookingDetailsCard>
         </BookingDetailsContainer>
         <PaymentSummary>
-          <h3>Payment Summary</h3>
+          <h3>{translate('bookings.assignRunner.payment.summary')}</h3>
           <DetailRow>
-            <DetailLabel>Estimated Total:</DetailLabel>
+            <DetailLabel>{translate('bookings.assignRunner.payment.estimatedTotal')}:</DetailLabel>
             <DetailValue>₹{booking.quotePrice || 0}</DetailValue>
           </DetailRow>
           <HorizontalLine />
           <PaymentRow>
-            <DetailLabel>Estimated Total</DetailLabel>
+            <DetailLabel>{translate('bookings.assignRunner.payment.estimatedTotal')}</DetailLabel>
             <DetailValue>₹{booking.quotePrice || 0}</DetailValue>
           </PaymentRow>
           <PaymentRow>
-            <DetailLabel>Taxes and fee</DetailLabel>
+            <DetailLabel>{translate('bookings.assignRunner.payment.taxesFee')}</DetailLabel>
             <DetailValue>₹{0}</DetailValue>
-            {/* <DetailValue>₹{Math.round(booking.quotePrice * 0.1) || 0}</DetailValue> */}
           </PaymentRow>
           <HorizontalLine />
           <PaymentRow>
-            <DetailLabel>Total</DetailLabel>
+            <DetailLabel>{translate('bookings.assignRunner.payment.total')}</DetailLabel>
             <DetailValue>₹{Math.round(booking.quotePrice) || 0}</DetailValue>
-            {/* <DetailValue>₹{Math.round(booking.quotePrice * 1.1) || 0}</DetailValue> */}
           </PaymentRow>
         </PaymentSummary>
       </FlexContainer>
@@ -368,14 +371,14 @@ const AssignRunnerDetails = () => {
         <Modal>
           <ModalContent>
             <CloseButton onClick={() => setShowRunnerModal(false)}><CloseIcon /></CloseButton>
-            <Title>Select a Runner</Title>
+            <Title>{translate('bookings.assignRunner.modal.selectRunner')}</Title>
             <RunnerTable>
               <thead>
                 <tr>
-                  <TableHeader>Runner Name</TableHeader>
-                  <TableHeader>Runner Contact</TableHeader>
-                  <TableHeader>Status</TableHeader>
-                  <TableHeader>Action</TableHeader>
+                  <TableHeader>{translate('bookings.assignRunner.modal.runnerName')}</TableHeader>
+                  <TableHeader>{translate('bookings.assignRunner.modal.runnerContact')}</TableHeader>
+                  <TableHeader>{translate('bookings.assignRunner.modal.status')}</TableHeader>
+                  <TableHeader>{translate('bookings.assignRunner.modal.action')}</TableHeader>
                 </tr>
               </thead>
               <tbody>
@@ -383,9 +386,19 @@ const AssignRunnerDetails = () => {
                   <TableRow key={runner._id}>
                     <TableCell>{runner.name}</TableCell>
                     <TableCell>{runner.mobileNumber}</TableCell>
-                    <TableCell>{runner.isBlocked ? 'Inactive' : 'Active'}</TableCell>
                     <TableCell>
-                      <ActionButton onClick={() => handleRunnerSelect(runner)} disabled={runner.isBlocked}>Select</ActionButton>
+                      {runner.isBlocked ? 
+                        translate('bookings.assignRunner.modal.inactive') : 
+                        translate('bookings.assignRunner.modal.active')
+                      }
+                    </TableCell>
+                    <TableCell>
+                      <ActionButton 
+                        onClick={() => handleRunnerSelect(runner)} 
+                        disabled={runner.isBlocked}
+                      >
+                        {translate('bookings.assignRunner.buttons.select')}
+                      </ActionButton>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -399,8 +412,8 @@ const AssignRunnerDetails = () => {
           <SuccessModal>
             <CloseButton onClick={() => setShowSuccessModal(false)}><CloseIcon /></CloseButton>
             <SuccessIcon src={successWithdrawalCheck} alt="Success" />
-            <Title>Request sent to runner</Title>
-            <p>You will get an update soon</p>
+            <Title>{translate('bookings.assignRunner.modal.requestSent')}</Title>
+            <p>{translate('bookings.assignRunner.modal.updateSoon')}</p>
           </SuccessModal>
         </Modal>
       )}

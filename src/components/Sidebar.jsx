@@ -14,6 +14,7 @@ import termsIcon from '../assets/terms.png';
 import privacyIcon from '../assets/privacy.png';
 import logoutIcon from '../assets/logout.png';
 import { useTranslation } from '../TranslationContext';
+import WalletIcon from '../assets/wallet-white.svg';
 
 const SidebarContainer = styled.div`
   background-color: #383838;
@@ -153,6 +154,7 @@ const Sidebar = () => {
     { icon: reportsIcon, text: translate('sidebar.menu.manageRunner'), path: '/manage-runner' },
     { icon: manageRunnerIcon, text: translate('sidebar.menu.reports'), path: '/reports' },
     { icon: recommendation, text: translate('sidebar.menu.sprayAssist'), path: '/recommendation' },
+    { icon: WalletIcon, text: translate('sidebar.menu.Wallet'), path: '/wallet' },
   ];
 
   const bottomMenuItems = [

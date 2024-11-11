@@ -12,6 +12,9 @@ import { getAllBookingsList } from '../../services/commonService';
 import { toast } from 'react-toastify';
 import Loader from '../../components/loader/index';
 import {useTranslation} from '../../TranslationContext';
+import locationIcon from '../../assets/location-icon.svg';
+import calendarIcon from '../../assets/calendar.svg';
+import timeIcon from '../../assets/clock.svg';
 const CalendarContainer = styled.div`
   display: flex;
   font-family: 'Public Sans', sans-serif;
@@ -64,59 +67,6 @@ const BookingColumn = styled.div`
   overflow-y: auto;
   max-height: 100vh;
 `;
-
-const CardHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-
-
-const DateTimeRow = styled.div`
-  display: flex;
-  justify-content: start;
-  width: 100%;
-`;
-
-const TempHumidityCropRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-`;
-
-const TempHumidity = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Temperature = styled.span`
-  font-size: 16px;
-  font-weight: 600;
-  margin-right: 10px;
-`;
-
-const Humidity = styled.span`
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #666;
-`;
-
-const Crop = styled.span`
-  font-size: 14px;
-  color: #666;
-`;
-
-const PriceSummary = styled.p`
-  font-size: 16px;
-  font-weight: 700;
-  color: #333;
-  margin-top: 15px;
-`;
-
 const RunnerDetails = styled.div`
   margin-top: 15px;
 `;
@@ -132,9 +82,10 @@ const AvatarIcon = styled(Avatar)`
   margin-right: 10px;
 `;
 
+
+
 const Card = styled(Link)`
   background: white;
-  cursor: pointer;
   border: 1px solid #E0E0E0;
   border-radius: 8px;
   padding: 20px;
@@ -144,7 +95,30 @@ const Card = styled(Link)`
   color: inherit;
   display: block;
   position: relative;
-  min-height: 300px;
+  height: ${props => props.hasRunner ? '300px' : '300px'};
+  padding-bottom: ${props => props.hasRunner ? '70px' : '20px'};
+`;
+
+const BookingDetails = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  color: #121212CC;
+  margin-bottom: 5px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 15px;
+  }
+`;
+
+const CardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 `;
 
 const BookingId = styled.h3`
@@ -162,34 +136,67 @@ const StatusBadge = styled.span`
   font-weight: 500;
   color: #000000;
   background-color: ${props => {
-    if (props.status === "requested") return "#FDF0CC";
-    if (props.status === "quote_received") return "#C6EEFF";
-    if (props.status === "confirmed") return "#E8FFF3";
-    if (props.status === "completed") return "#DAB4FF";
+    if (props.status === "requested") return "#FEB89C";
+    if (props.status === "quote_received") return "#FDF0CC";
+    if (props.status === "confirmed") return "#BEF991";
+    if (props.status === "closed") return "#DAB4FF";
     return "#E0E0E0";
   }};
 `;
 
-const BookingDetails = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  color: #121212;
-  margin-bottom: 5px;
+const DateTimeRow = styled.div`
+  display: flex;
+`;
+
+const TempHumidityCropRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const TempHumidity = styled.div`
   display: flex;
   align-items: center;
-  svg {
-    margin-right: 5px;
+`;
+
+const Temperature = styled.span`
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 10px;
+  &:after {
+    content: '°';
   }
+`;
+
+const Humidity = styled.span`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+`;
+
+const Crop = styled.span`
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+`;
+
+const PriceSummary = styled.p`
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  margin-top: 15px;
 `;
 
 const RunnnerDetails = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #F8F9FA;
   padding: 12px 16px;
   border-radius: 8px;
-  margin-top: 15px;
+  margin-top: 10px;
 `;
 
 const RunnerName = styled.div`
@@ -202,8 +209,8 @@ const RunnerContactButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #FFFFFF;
-  color: #000000;
+  background: #000000;
+  color: #ffffff;
   border: 1px solid #000000;
   padding: 8px 16px;
   border-radius: 4px;
@@ -220,6 +227,7 @@ const RunnerContactButton = styled.button`
     height: 16px;
   }
 `;
+
 const Calendar = () => {
   const { translate } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -263,21 +271,42 @@ const Calendar = () => {
     return isAfter(bookingDate, new Date()) ;
   });
 
+
   const renderBookingCard = (booking) => (
-    <Card to={`/booking-details/${booking._id}`} key={booking._id}>
+    <Card 
+      to={`/booking-details/${booking._id}`} 
+      key={booking._id}
+      hasRunner={booking.runner != null}
+    >
       <CardHeader>
         <BookingId>#{booking._id}</BookingId>
         <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
       </CardHeader>
       <BookingDetails>
-        <LocationOn /> {booking.farmLocation}
+        <img src={locationIcon} alt="Location" />
+        {booking.farmLocation}
+        <a 
+          href={`https://maps.google.com/?q=${booking?.location?.coordinates[0]},${booking?.location?.coordinates[1]}`}
+          title="Open in Google Maps"
+          style={{marginLeft: "15px", textDecoration: "none"}}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          🔗
+        </a>
       </BookingDetails>
       <DateTimeRow>
         <BookingDetails>
-          <CalendarToday /> {format(parseISO(booking.date), 'yyyy-MM-dd')}
+          <img src={calendarIcon} alt="Calendar" />
+          {format(parseISO(booking.date), 'yyyy-MM-dd')}
         </BookingDetails>
         <BookingDetails>
-          <AccessTime /> {booking.time}
+          <img 
+            src={timeIcon} 
+            alt="Time" 
+            style={{marginLeft: "15px"}}
+          />
+          {booking.time}
         </BookingDetails>
       </DateTimeRow>
       <BookingDetails>
@@ -289,41 +318,37 @@ const Calendar = () => {
       <TempHumidityCropRow>
         <TempHumidity>
           <Temperature>{booking.weather}</Temperature>
-          <Humidity>
-            <Opacity /> {booking.weather}
-          </Humidity>
+          <Humidity>{booking.farmLocation || 'N/A'}</Humidity>
         </TempHumidity>
         <Crop>
           {translate('calendar.bookings.crop')}: {booking.cropName}
         </Crop>
       </TempHumidityCropRow>
-      <PriceSummary>
-        {booking.quotePrice 
-          ? `${translate('calendar.bookings.priceSummary')}${booking.quotePrice}`
-          : translate('calendar.bookings.priceNotQuoted')
-        }
-      </PriceSummary>
+      {booking.quotePrice && (
+        <PriceSummary>
+          {translate('calendar.bookings.priceSummary')}: ₹{booking.quotePrice}
+        </PriceSummary>
+      )}
       {booking.runner && (
-        <RunnerDetails>
-          <strong>{translate('calendar.bookings.assignedRunner')}:</strong>
+        <RunnnerDetails>
           <RunnerName>
-            <RunnerInfo>
-              <AvatarIcon />
-              <span>{booking.runner.name}</span>
-            </RunnerInfo>
-            <RunnerContactButton 
-              onClick={(e) => { 
-                e.preventDefault(); 
-                toast.info(`Calling ${booking.runner.mobileNumber}`); 
-              }}
-            >
-              <Phone /> {translate('calendar.bookings.callNow')}
-            </RunnerContactButton>
+            <Avatar sx={{ width: 40, height: 40 }} />
+            <span>{booking.runner.name}</span>
           </RunnerName>
-        </RunnerDetails>
+          <RunnerContactButton
+            onClick={(e) => {
+              e.preventDefault();
+              navigator.clipboard.writeText(booking.runner.mobileNumber);
+              toast.info(`Copied number: ${booking.runner.mobileNumber}`);
+            }}
+          >
+            <Phone /> {translate('calendar.bookings.callNow')}
+          </RunnerContactButton>
+        </RunnnerDetails>
       )}
     </Card>
   );
+
 
   if (loading) {
     return <Loader />;
@@ -362,62 +387,17 @@ const Calendar = () => {
         </CalendarGrid>
       </CalendarColumn>
       <BookingColumn>
-        <h3 style={{marginBottom:"5px"}}>
+        <h3 style={{marginBottom: "5px"}}>
           {translate('calendar.bookings.forDate')} {format(selectedDate, 'MMMM d, yyyy')}
         </h3>
         {filteredBookings.length > 0 ? (
-          filteredBookings.map(booking => (
-            <Card to={`/booking-details/${booking._id}`} key={booking._id}>
-              <CardHeader>
-                <BookingId>#{booking._id}</BookingId>
-                <StatusBadge status={booking.status}>{booking.status}</StatusBadge>
-              </CardHeader>
-              <BookingDetails><LocationOn /> {booking.farmLocation}</BookingDetails>
-              <DateTimeRow>
-                <BookingDetails><CalendarToday /> {format(parseISO(booking.date), 'yyyy-MM-dd')}</BookingDetails>
-                <BookingDetails><AccessTime /> {booking.time}</BookingDetails>
-              </DateTimeRow>
-              <BookingDetails>
-                {translate('calendar.bookings.bookingName')}: {booking.farmerName}
-              </BookingDetails>
-              <BookingDetails>
-                {translate('calendar.bookings.farmArea')}: {booking.farmArea} {translate('calendar.bookings.acres')}
-              </BookingDetails>
-              <TempHumidityCropRow>
-                <TempHumidity>
-                  <Temperature>{booking.weather}</Temperature>
-                  <Humidity><Opacity /> {booking.weather}</Humidity>
-                </TempHumidity>
-                <Crop>{translate('calendar.bookings.crop')}: {booking.cropName}</Crop>
-              </TempHumidityCropRow>
-              <PriceSummary>
-                {booking.quotePrice 
-                  ? `${translate('calendar.bookings.priceSummary')}${booking.quotePrice}`
-                  : translate('calendar.bookings.priceNotQuoted')
-                }
-              </PriceSummary>
-              {booking.runner && (
-                <RunnerDetails>
-                  <strong>{translate('calendar.bookings.assignedRunner')}:</strong>
-                  <RunnerName>
-                    <RunnerInfo>
-                      <AvatarIcon />
-                      <span>{booking.runner.name}</span>
-                    </RunnerInfo>
-                    <RunnerContactButton onClick={(e) => { e.preventDefault(); toast.info(`Calling ${booking.runner.mobileNumber}`); }}>
-                      <Phone /> {translate('calendar.bookings.callNow')}
-                    </RunnerContactButton>
-                  </RunnerName>
-                </RunnerDetails>
-              )}
-            </Card>
-          ))
+          filteredBookings.map(renderBookingCard)
         ) : (
           <Card as="div">{translate('calendar.bookings.noBookings')}</Card>
         )}
       </BookingColumn>
       <BookingColumn>
-        <h3 style={{marginBottom:"5px"}}>{translate('calendar.bookings.upcoming')}</h3>
+        <h3 style={{marginBottom: "5px"}}>{translate('calendar.bookings.upcoming')}</h3>
         {upcomingBookings.length > 0 ? (
           upcomingBookings.map(renderBookingCard)
         ) : (
