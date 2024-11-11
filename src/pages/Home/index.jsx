@@ -298,7 +298,11 @@ const Home = () => {
   };
 
   const calculateEnvironmentalStats = () => {
-    const completedBookings = filterBookingsByDate(bookingRequests).filter(booking => 
+    const vendorBookings = bookingRequests.filter(booking => 
+      booking?.vendor?._id === user?._id
+    );
+
+    const completedBookings = filterBookingsByDate(vendorBookings).filter(booking => 
       booking.status === "completed" || booking.status === "closed"
     );
 
@@ -311,14 +315,22 @@ const Home = () => {
       return;
     }
 
-    const totalWaterSaved = completedBookings.reduce((sum, booking) => sum + (booking.droneWaterUsage || 0), 0);
-    const totalPesticide = completedBookings.reduce((sum, booking) => sum + (booking.dronePesticideUsage || 0), 0);
-    const totalEmissions = completedBookings.reduce((sum, booking) => sum + (booking.emissionSavedPerHectare || 0), 0);
+    const totalWaterSaved = completedBookings.reduce((sum, booking) => 
+      sum + (booking.droneWaterUsage || 0), 0
+    );
+
+    const totalPesticide = completedBookings.reduce((sum, booking) => 
+      sum + (booking.dronePesticideUsage || 0), 0
+    );
+
+    const totalEmissions = completedBookings.reduce((sum, booking) => 
+      sum + (booking.emissionSavedPerHectare || 0), 0
+    );
 
     setEnvironmentalStats({
       waterSaved: totalWaterSaved,
-      pesticideReduction: totalPesticide ? (totalPesticide / completedBookings.length) * 100 : 0,
-      carbonFootprint: totalEmissions ? (totalEmissions / completedBookings.length) * 100 : 0
+      pesticideReduction: totalPesticide / completedBookings.length,
+      carbonFootprint: totalEmissions / completedBookings.length
     });
   };
 
@@ -329,14 +341,18 @@ const Home = () => {
       const runnersResponse = await getAllRunnersList();
       
       const vendorBookings = bookingsResponse.data.filter(booking => 
-        booking?.vendor?._id === user?._id && booking?.status === 'requested'
+        booking?.vendor?._id === user?._id
       );
       
       const vendorRunners = runnersResponse.data.filter(runner => 
-        runner?.vendor?._id === user?._id
+        runner?.vendor === user?._id
       );
 
-      setBookingRequests(vendorBookings.slice(0, 3));
+      const requestedBookings = vendorBookings.filter(booking => 
+        booking.status === 'requested'
+      );
+
+      setBookingRequests(vendorBookings);
       setRunners(vendorRunners.slice(0, 6));
     } catch (error) {
       toast.error('Failed to fetch data');
@@ -382,10 +398,10 @@ const Home = () => {
   };
 
   if (loading) {
-    return (
-        <Loader />
-    );
+    return <Loader />;
   }
+
+  const requestedBookings = bookingRequests.filter(booking => booking.status === 'requested');
 
   return (
     <HomeContainer>
@@ -395,8 +411,8 @@ const Home = () => {
           <ViewAllLink to="/bookings">{translate('home.viewAll')}</ViewAllLink>
         </SectionHeader>
         <BookingRequestsContainer>
-          {bookingRequests.length > 0 ? (
-            bookingRequests.map((booking) => (
+          {requestedBookings.length > 0 ? (
+            requestedBookings.slice(0, 3).map((booking) => (
               <BookingCard key={booking._id}>
                 <BookingId>#{booking._id}</BookingId>
                 <BookingDetails>{booking.farmLocation}</BookingDetails>
@@ -456,44 +472,46 @@ const Home = () => {
         </RunnersTable>
       </Section>
 
-      <Environmental_wraper className='Environmental_wraper'> 
-        <SectionHeader>
-          <SectionTitle>{translate('home.environmentalReport')}</SectionTitle>
-          <select 
-            className='weekly' 
-            value={dateFilter} 
-            style={{float: 'right', marginRight: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #ccc'}}
-            onChange={(e) => setDateFilter(e.target.value)}
-          >
-            <option value="yearly">Yearly</option>
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-          </select>
-        </SectionHeader>
-        <EnvironmentalReportContainer>
-          <ReportCard>
-            <ReportIcon src={waterIcon} alt="Water saved" />
-            <ReportValue color="#5CB1FF">
-              {environmentalStats.waterSaved.toFixed(2)}
-            </ReportValue>
-            <ReportLabel>{translate('home.waterSaved')}</ReportLabel>
-          </ReportCard>
-          <ReportCard>
-            <ReportIcon src={pesticideIcon} alt="Pesticide usage" />
-            <ReportValue color="#F1614B">
-              {environmentalStats.pesticideReduction.toFixed(1)}%
-            </ReportValue>
-            <ReportLabel>{translate('home.pesticideReduction')}</ReportLabel>
-          </ReportCard>
-          <ReportCard>
-            <ReportIcon src={carbonFootprintIcon} alt="Carbon footprint" />
-            <ReportValue color="#41B079">
-              {environmentalStats.carbonFootprint.toFixed(1)}%
-            </ReportValue>
-            <ReportLabel>{translate('home.carbonFootprint')}</ReportLabel>
-          </ReportCard>
-        </EnvironmentalReportContainer>
-      </Environmental_wraper>
+      {bookingRequests.some(booking => booking.status === "completed" || booking.status === "closed") && (
+        <Environmental_wraper className='Environmental_wraper'> 
+          <SectionHeader>
+            <SectionTitle>{translate('home.environmentalReport')}</SectionTitle>
+            <select 
+              className='weekly' 
+              value={dateFilter} 
+              style={{float: 'right', marginRight: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #ccc'}}
+              onChange={(e) => setDateFilter(e.target.value)}
+            >
+              <option value="yearly">Yearly</option>
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+            </select>
+          </SectionHeader>
+          <EnvironmentalReportContainer>
+            <ReportCard>
+              <ReportIcon src={waterIcon} alt="Water saved" />
+              <ReportValue color="#5CB1FF">
+                {environmentalStats.waterSaved.toFixed(2)}
+              </ReportValue>
+              <ReportLabel>{translate('home.waterSaved')}</ReportLabel>
+            </ReportCard>
+            <ReportCard>
+              <ReportIcon src={pesticideIcon} alt="Pesticide usage" />
+              <ReportValue color="#F1614B">
+                {environmentalStats.pesticideReduction.toFixed(1)}%
+              </ReportValue>
+              <ReportLabel>{translate('home.pesticideReduction')}</ReportLabel>
+            </ReportCard>
+            <ReportCard>
+              <ReportIcon src={carbonFootprintIcon} alt="Carbon footprint" />
+              <ReportValue color="#41B079">
+                {environmentalStats.carbonFootprint.toFixed(1)}%
+              </ReportValue>
+              <ReportLabel>{translate('home.carbonFootprint')}</ReportLabel>
+            </ReportCard>
+          </EnvironmentalReportContainer>
+        </Environmental_wraper>
+      )}
     </HomeContainer>
   );
 };
