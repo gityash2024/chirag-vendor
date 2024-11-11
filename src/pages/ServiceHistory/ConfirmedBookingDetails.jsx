@@ -6,7 +6,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import OpacityIcon from '@mui/icons-material/Opacity';
 import Opacity from "@mui/icons-material/Opacity";
-
+import avatarImage from '../../assets/runner-avatar.png';
 import PhoneIcon from '@mui/icons-material/Phone';
 import StarIcon from '@mui/icons-material/Star';
 import { getAllBookingsList } from '../../services/commonService';
@@ -88,16 +88,12 @@ const StatusBadge = styled.span`
   font-size: 12px;
   font-weight: 500;
   color: #000;
-  background-color: ${props => {
-    switch(props.status) {
-      case 'requested': return '#FDF0CC';
-      case 'quote_received': return '#CDCCFD';
-      case 'confirmed': return '#E8FFF3';
-      case 'completed': return '#B1FF8C';
-      case 'closed': return '#E0E0E0';
-      case 'cancelled': return '#FFF0F1';
-      default: return '#E0E0E0';
-    }
+   background-color: ${props => {
+    if (props.status === "requested") return "#FEB89C";
+    if (props.status === "quote_received") return "#FDF0CC";
+    if (props.status === "confirmed") return "#BEF991";
+    if (props.status === "closed") return "#DAB4FF";
+    return "#E0E0E0";
   }};
   margin-bottom: 20px;
 `;
@@ -445,8 +441,8 @@ const ConfirmBookingDetails = () => {
           <RunnerCard>
             <RunnerDetails>
               <RunnerInfo>
-                <RunnerAvatar src={booking.runner.profilePic} />
-                <div>
+              <img src={booking?.runner?.profilePic||avatarImage} alt="profile pic" style={{width:"50px",height:"50px",borderRadius:"50%"}} />
+              <div>
                   <h3>{booking.runner.name}</h3>
                   <p>{booking.runner.mobileNumber}</p>
                 </div>

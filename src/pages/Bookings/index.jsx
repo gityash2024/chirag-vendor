@@ -11,6 +11,7 @@ import Avatar from '@mui/icons-material/AccountCircle';
 import locationIcon from '../../assets/location-icon.svg';
 import calendarIcon from '../../assets/calendar.svg';
 import timeIcon from '../../assets/clock.svg';
+import avatarImage from '../../assets/runner-avatar.png';
 
 import Phone from '@mui/icons-material/Phone';
 
@@ -573,7 +574,8 @@ const Bookings = () => {
           {booking.runner && (
             <RunnnerDetails>
               <RunnerName>
-                <Avatar sx={{ width: 40, height: 40 }} />
+              <img src={booking?.runner?.profilePic||avatarImage} alt="profile pic" style={{width:"50px",height:"50px",borderRadius:"50%"}} />
+
                 <span>{booking.runner.name}</span>
               </RunnerName>
               <RunnerContactButton 
