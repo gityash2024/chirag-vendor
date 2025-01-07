@@ -98,15 +98,14 @@ export const requestWithdrawal = (payload) => {
   });
 };
 
+// services/commonService.js
 export const createCashfreeOrder = (payload) => {
-  const url = `${baseUrl}/wallet/create-cashfree-order`;
-  return instance.post(url, payload, {
+  return instance.post(`${baseUrl}/wallet/create-cashfree-order`, payload, {
     headers: {
       'Content-Type': 'application/json'
     }
   });
 };
-
 export const verifyCashfreePayment = (payload) => {
   const url = `${baseUrl}/wallet/verify-cashfree-payment`;
   return instance.post(url, payload, {

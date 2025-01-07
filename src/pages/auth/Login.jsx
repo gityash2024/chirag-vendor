@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import loginImage from '../../assets/login-image.png';
+import loginImage from '../../assets/login-image-2.png';
 import chiragLogo from '../../assets/logo-dark.svg';
 import { sendOtp, verifyOtp } from '../../services/commonService';
 import { toast } from 'react-toastify';
@@ -23,9 +23,10 @@ const ImageSection = styled.div`
 `;
 
 const Image = styled.img`
-  width: 50vw;
-  height: 100vh;
-  object-fit: contain;
+ width: 40vw;
+  height: 80vh;
+  margin-left: 100px;
+  border-radius: 40px !important;
 `;
 
 const FormSection = styled.div`

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import addMoneyImage from '../../assets/add-money-image.png';
@@ -6,8 +6,10 @@ import chiragLogo from '../../assets/chirag-logo-dark.png';
 import { toast } from 'react-toastify';
 import CircularProgress from '@mui/material/CircularProgress';
 import WarningIcon from '@mui/icons-material/Warning';
-import { createCashfreeOrder,verifyCashfreePayment } from '../../services/commonService';
+import { createCashfreeOrder, verifyCashfreePayment } from '../../services/commonService';
+import { useLocation } from 'react-router-dom';
 
+// Styled Components
 const Container = styled.div`
   display: flex;
   height: 100%;
@@ -40,7 +42,7 @@ const ImageSection = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   height: auto;
   object-fit: contain;
 `;
@@ -58,10 +60,14 @@ const FormContent = styled.div`
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Logo = styled.img`
-  width: 180px;
+  width: 150px;
   margin-bottom: 40px;
 `;
 
@@ -174,11 +180,119 @@ const MIN_AMOUNT = 100;
 const MAX_AMOUNT = 50000;
 
 const AddMoney = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
+  const [verifyingPayment, setVerifyingPayment] = useState(false);
   const [error, setError] = useState('');
   const [selectedQuickAmount, setSelectedQuickAmount] = useState(null);
+  useEffect(() => {
+    console.log('Location state:', location.state);
+    console.log('URL Search Params:', window.location.search);
+    
+    const verifyPayment = async () => {
+      // Add processed flag check
+      const isProcessed = localStorage.getItem('paymentProcessed');
+      const searchParams = new URLSearchParams(window.location.search);
+      const orderId = searchParams.get('order_id') || localStorage.getItem('lastOrderId');
+      const storedAmount = localStorage.getItem('lastPaymentAmount');
+  
+      console.log('Payment verification params:', {
+        orderId,
+        storedAmount,
+        isProcessed,
+        searchParams: Object.fromEntries(searchParams.entries()),
+        fullUrl: window.location.href
+      });
+  
+      // Only proceed if not already processed
+      if (orderId && storedAmount && !isProcessed) {
+        try {
+          setVerifyingPayment(true);
+          setError('');
+  
+          // Set processed flag immediately
+          localStorage.setItem('paymentProcessed', 'true');
+  
+          console.log('Starting payment verification for:', { orderId, amount: storedAmount });
+          
+          const response = await verifyCashfreePayment({ 
+            orderId,
+            orderAmount: parseFloat(storedAmount)
+          });
+          
+          console.log('Verification API response:', response);
+  
+          if (response?.data?.success) {
+            // Clear all payment related data
+            localStorage.removeItem('lastPaymentAmount');
+            localStorage.removeItem('lastOrderId');
+            localStorage.removeItem('paymentProcessed');
+            
+            toast.success('Payment successful! Your wallet has been updated.', {
+              toastId: orderId // Prevent duplicate toasts
+            });
+            
+            // Navigate to wallet
+            navigate('/wallet', { 
+              replace: true,
+              state: { 
+                paymentSuccess: true,
+                amount: response.data.transaction?.amount || storedAmount,
+                fromPayment: true
+              }
+            });
+          } else {
+            // Clear processed flag on failure
+            localStorage.removeItem('paymentProcessed');
+            
+            setError('Payment verification failed');
+            toast.error('Payment verification failed. Please contact support.', {
+              toastId: 'payment-error' // Prevent duplicate toasts
+            });
+            console.error('Verification failed:', response?.data);
+          }
+        } catch (error) {
+          // Clear processed flag on error
+          localStorage.removeItem('paymentProcessed');
+          
+          console.error('Payment verification error:', {
+            message: error.message,
+            response: error.response?.data,
+            stack: error.stack
+          });
+          
+          const errorMessage = error.response?.data?.message || 'Payment verification failed';
+          setError(errorMessage);
+          toast.error(errorMessage, {
+            toastId: 'payment-error' // Prevent duplicate toasts
+          });
+  
+          // Clean up on error
+          localStorage.removeItem('lastPaymentAmount');
+          localStorage.removeItem('lastOrderId');
+        } finally {
+          setVerifyingPayment(false);
+        }
+      }
+    };
+  
+    verifyPayment();
+  }, [location.pathname, location.search, navigate]);
+  useEffect(() => {
+    // Load Cashfree SDK
+    const script = document.createElement('script');
+    script.src = "https://sdk.cashfree.com/js/v3/cashfree.js";
+    script.async = true;
+    document.body.appendChild(script);
+    
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -213,7 +327,6 @@ const AddMoney = () => {
     }
     return true;
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -222,48 +335,74 @@ const AddMoney = () => {
     try {
       setLoading(true);
       setError('');
+      
+      // Clear any existing payment data
+      localStorage.removeItem('paymentProcessed');
+      localStorage.removeItem('lastPaymentAmount');
+      localStorage.removeItem('lastOrderId');
 
-      // Create order
       const orderResponse = await createCashfreeOrder({ amount: Number(amount) });
-      const order = orderResponse.data;
+      
+      console.log('Cashfree order created:', orderResponse.data);
 
-      // Initialize Cashfree
+      if (!orderResponse.data?.paymentSessionId) {
+        throw new Error('Invalid order response');
+      }
+
+      // Store payment data
+      localStorage.setItem('lastPaymentAmount', amount);
+      localStorage.setItem('lastOrderId', orderResponse.data.orderId);
+
       const cashfree = new window.Cashfree({
-        mode: 'sandbox', // or 'production'
-        orderToken: order.order_token,
-        onSuccess: async (data) => {
-          try {
-            await verifyCashfreePayment({
-              orderId: data.orderId,
-              orderAmount: order.order_amount,
-              referenceId: data.referenceId,
-              txStatus: data.txStatus
-            });
-            toast.success('Payment successful!');
-            navigate('/wallet');
-          } catch (error) {
-            console.error('Payment verification failed:', error);
-            toast.error('Payment verification failed. Please contact support.');
-          }
-        },
-        onFailure: (data) => {
-          console.error('Payment failed:', data);
-          toast.error('Payment failed. Please try again.');
-        },
-        onClose: () => {
-          toast.info('Payment window closed');
-        }
+        mode: "sandbox"
       });
 
-      cashfree.redirect();
+      const checkoutOptions = {
+        paymentSessionId: orderResponse.data.paymentSessionId,
+        returnUrl: `${window.location.origin}/add-money/verify`,
+        redirectTarget: "_self"
+      };
+
+      console.log('Initiating Cashfree checkout:', checkoutOptions);
+      await cashfree.checkout(checkoutOptions);
+
     } catch (error) {
-      console.error('Error initiating payment:', error);
-      setError(error.response?.data?.message || 'Invalid Api Key or Secret Key');
-      toast.error('Failed to initiate payment process (Invalid Api Key or Secret Key). Please try again.');
+      console.error('Payment Error:', error);
+      
+      // Clean up all payment data on error
+      localStorage.removeItem('lastPaymentAmount');
+      localStorage.removeItem('lastOrderId');
+      localStorage.removeItem('paymentProcessed');
+      
+      const errorMsg = error.response?.data?.message || 'Payment initialization failed';
+      setError(errorMsg);
+      toast.error(errorMsg, {
+        toastId: 'payment-init-error' // Prevent duplicate toasts
+      });
     } finally {
       setLoading(false);
     }
-  };
+};
+if (verifyingPayment) {
+  return (
+    <Container>
+      <ContentWrapper>
+        <FormSection>
+          <FormContent>
+            <Logo src={chiragLogo} alt="CHIRAG Logo" />
+            <div style={{ textAlign: 'center' }}>
+              <LoadingSpinner size={40} />
+              <p>Verifying payment...</p>
+              <p style={{ fontSize: '14px', color: '#666', marginTop: '10px' }}>
+                Please wait while we confirm your payment
+              </p>
+            </div>
+          </FormContent>
+        </FormSection>
+      </ContentWrapper>
+    </Container>
+  );
+}
 
   return (
     <Container>
@@ -326,13 +465,13 @@ const AddMoney = () => {
               <p>• Maximum amount: ₹{MAX_AMOUNT}</p>
               <p>• Transaction charges: 0%</p>
             </div>
+
+            <div id="dropin-container"></div>
           </FormContent>
         </FormSection>
-        </ContentWrapper>
-
-
-</Container>
-);
+      </ContentWrapper>
+    </Container>
+  );
 };
 
 export default AddMoney;

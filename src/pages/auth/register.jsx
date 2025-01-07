@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import registerImage from "../../assets/register-image.png";
+import registerImage from "../../assets/register-2.png";
 import chiragLogo from "../../assets/chirag-logo-dark.png";
 import Loader from "../../components/loader/index";
 import { toast } from "react-toastify";
@@ -34,16 +34,13 @@ const ImageSection = styled.div`
 `;
 
 const Image = styled.img`
-  width: 50vw;
+ width: 40vw;
   height: 80vh;
-  object-fit: contain;
+  margin-left: 100px;
+  border-radius: 40px !important;
 `;
 
-const FormContent = styled.div`
-  width: 100%;
-  max-width: 500px;
-  position: relative;
-`;
+
 
 const Input = styled.input`
   width: 100%;
@@ -68,7 +65,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 100%;
+  width: 100px;
   margin-top: 20px;
   &:disabled {
     background-color: #cccccc;
@@ -134,6 +131,13 @@ const RemoveButton = styled.button`
   cursor: pointer;
 `;
 
+
+const FormScrollContainer = styled.div`
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 10px;
+  margin: 20px 0;
+`;
 const FormSection = styled.div`
   flex: 1;
   display: flex;
@@ -141,13 +145,7 @@ const FormSection = styled.div`
   padding: 40px;
   height: 100vh;
   position: relative;
-`;
-
-const FormScrollContainer = styled.div`
-  overflow-y: auto;
-  flex: 1;
-  padding-right: 10px;
-  margin: 20px 0;
+  align-items: center; // Add this line to center children horizontally
 `;
 
 const Logo = styled.img`
@@ -157,6 +155,16 @@ const Logo = styled.img`
   top: 0;
   z-index: 1;
   background: white;
+  align-self: center; // Add this line to ensure logo stays centered
+`;
+
+const FormContent = styled.div`
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Add this line to center its children
 `;
 
 const Title = styled.h2`
@@ -173,13 +181,20 @@ const Title = styled.h2`
   background: white;
   z-index: 1;
 `;
-
 const ButtonContainer = styled.div`
   position: sticky;
   bottom: 0;
   background: white;
   padding: 20px 0;
   z-index: 1;
+  display: flex;
+  gap: 10px;
+`;
+
+const BackButton = styled(Button)`
+  background-color: white;
+  color: #121212;
+  border: 1px solid #121212;
 `;
 
 const StepIndicator = styled.div`
@@ -537,7 +552,7 @@ const Register = () => {
               drones: newDrones,
             }));
           } catch (error) {
-            toast.error("Server error while upload image, please try again.");
+            // toast.error("Server error while upload image, please try again.");
           }
         } else {
           setPreviewImages({
@@ -554,7 +569,7 @@ const Register = () => {
               [e.target.name]: response.data.fileUrl,
             }));
           } catch (error) {
-            toast.error("Server error while upload image, please try again.");
+            // toast.error("Server error while upload image, please try again.");
           }
         }
       };
@@ -670,8 +685,8 @@ const Register = () => {
               : step === 2
               ? "Service Details"
               : step === 3
-              ? "Drone Specs"
-              : "Battery Specs"}
+              ? "Your Drone (or Agricultural Machinery) Specifications"
+              : "Your Drone Battery Specifications"}
           </Title>
           <FormScrollContainer>
             <form onSubmit={handleSubmit}>
@@ -825,7 +840,7 @@ const Register = () => {
 
               {step === 2 && (
                 <>
-                  <InputLabel>Experience * </InputLabel>
+                  <InputLabel>Experience (Agricultural Services) * </InputLabel>
                   <Input
                     name="experience"
                     value={formData.experience}
@@ -834,7 +849,7 @@ const Register = () => {
                     type="number"
                     required
                   />
-                  <InputLabel>Pricing * </InputLabel>
+                  <InputLabel>Pricing (Per Acre) * </InputLabel>
                   <Input
                     name="pricing"
                     value={formData.pricing}
@@ -1081,14 +1096,19 @@ const Register = () => {
             </form>
           </FormScrollContainer>
           <ButtonContainer>
-            <Button type="submit" onClick={handleSubmit} disabled={isLoading}>
-              {isLoading
-                ? "Processing..."
-                : step === 4
-                ? "Save and Proceed"
-                : "Next Step"}
-            </Button>
-          </ButtonContainer>
+  {step > 1 && (
+    <BackButton type="button" onClick={() => setStep(step - 1)}>
+      Back
+    </BackButton>
+  )}
+  <Button type="submit" onClick={handleSubmit} disabled={isLoading}>
+    {isLoading 
+      ? "Processing..." 
+      : step === 4 
+      ? "Save and Proceed" 
+      : "Next Step"}
+  </Button>
+</ButtonContainer>
         </FormSection>
       </Container>
     </>

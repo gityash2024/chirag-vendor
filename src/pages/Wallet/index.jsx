@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import WarningIcon from "@mui/icons-material/Warning";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -361,21 +361,49 @@ const Wallet = () => {
     isDefault: false,
   });
 
-  useEffect(() => {
-    fetchWalletData();
-  }, []);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+ 
+  const location = useLocation();
 
   const fetchWalletData = async () => {
     try {
       setLoading(true);
+      console.log('Fetching wallet data...');
+      
       const response = await getWalletBalance();
+      console.log('Wallet data received:', response.data);
+      
       setWalletData(response.data);
+
+      // If coming from successful payment, show success message
+      if (location.state?.paymentSuccess) {
+        toast.success(`₹${location.state.amount} added successfully to your wallet!`);
+        // Clear the state
+        window.history.replaceState({}, document.title);
+      }
+
     } catch (error) {
-      toast.error("Failed to fetch wallet data");
+      console.error('Error fetching wallet data:', error);
+      toast.error('Failed to fetch wallet data');
     } finally {
       setLoading(false);
     }
   };
+
+  // Initial load
+  useEffect(() => {
+    fetchWalletData();
+  }, []);
+
+  // Handle refresh after payment
+  useEffect(() => {
+    const needsRefresh = localStorage.getItem('walletNeedsRefresh');
+    if (needsRefresh) {
+      console.log('Wallet needs refresh, fetching fresh data...');
+      localStorage.removeItem('walletNeedsRefresh');
+      fetchWalletData();
+    }
+  }, []);
 
   const handleAddBankAccount = async (e) => {
     e.preventDefault();

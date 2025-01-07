@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useTranslation } from '../../TranslationContext.jsx';
-import languageSelectionImage from '../../assets/language-selection-image.png';
+import languageSelectionImage from '../../assets/login-image-1.png';
 import chiragLogo from '../../assets/logo-dark.svg';
 
 const Container = styled.div`
@@ -19,9 +19,11 @@ const ImageSection = styled.div`
 `;
 
 const Image = styled.img`
-  width: 50vw;
-  height: 100vh;
-  object-fit: contain;
+  width: 40vw;
+  height: 80vh;
+  margin-left: 100px;
+  border-radius: 40px !important;
+  // object-fit: contain;
 `;
 
 const FormSection = styled.div`
@@ -124,7 +126,7 @@ const LanguageSelection = () => {
           <Logo src={chiragLogo} alt="CHIRAG Logo" />
         </LogoContainer>
         <Title>{translate('languageSelection.title')}</Title>
-        <Subtitle>{translate('languageSelection.subtitle')}</Subtitle>
+        {/* <Subtitle>{translate('languageSelection.subtitle')}</Subtitle> */}
         <SelectLabel>{translate('languageSelection.selectLabel')}</SelectLabel>
         <form onSubmit={handleSubmit}>
           <Select

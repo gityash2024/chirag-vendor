@@ -203,7 +203,7 @@ const EmptyStateContainer = styled.div`
 `;
 
 const EmptyStateImage = styled.img`
-  width: 200px;
+  width: 380px;
   height: 400px;
   margin-bottom: 20px;
 `;

@@ -87,7 +87,6 @@ const ContactInfoContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 `;
-
 const ContactCard = styled.div`
   margin-top: 20px;
   background-color: #fff;
@@ -96,6 +95,19 @@ const ContactCard = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+const ContactLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+  display: block;
 `;
 
 const ContactIcon = styled.img`
@@ -191,10 +203,10 @@ const ContactUs = () => {
         window.location.href = 'tel:+1234567890';
         break;
       case 'mail':
-        window.location.href = 'mailto:info@chiragconnect.com';
+        window.location.href = 'mailto:contact@chiragtechnologies.com';
         break;
       case 'address':
-        window.open('https://maps.google.com?q=3474 Don Jackson Lane, Port Huron, MI 48060', '_blank');
+        window.open('https://maps.google.com?q=CHIRAG TECHNOLOGIES, Saeedpur Khas, Prayagraj, Uttar Pradesh-211011', '_blank');
         break;
       default:
         break;
@@ -205,7 +217,7 @@ const ContactUs = () => {
     <Container>
       <Title>{translate("contact.title")}</Title>
       <FormContainer>
-        <FormTitle>{translate("contact.formTitle")}</FormTitle>
+        {/* <FormTitle>{translate("contact.formTitle")}</FormTitle> */}
         <Form onSubmit={handleSubmit}>
           <InputGroup>
             <Label htmlFor="firstName">{translate("contact.firstName")}</Label>
@@ -268,22 +280,32 @@ const ContactUs = () => {
         </Form>
       </FormContainer>
       <ContactInfoContainer>
-        <ContactCard onClick={() => handleCardClick('phone')}>
-          <ContactIcon src={phoneIcon} alt="Phone" />
-          <ContactTitle>{translate("contact.phoneTitle")}</ContactTitle>
-          <ContactText>{translate("contact.phoneNumber")}</ContactText>
-        </ContactCard>
-        <ContactCard onClick={() => handleCardClick('mail')}>
-          <ContactIcon src={mailIcon} alt="Mail" />
-          <ContactTitle>{translate("contact.mailTitle")}</ContactTitle>
-          <ContactText>{translate("contact.mailAddress")}</ContactText>
-        </ContactCard>
-        <ContactCard onClick={() => handleCardClick('address')}>
-          <ContactIcon src={addressIcon} alt="Address" />
-          <ContactTitle>{translate("contact.addressTitle")}</ContactTitle>
-          <ContactText>{translate("contact.addressText")}</ContactText>
-        </ContactCard>
-      </ContactInfoContainer>
+    <ContactCard>
+      <ContactLink href="tel:+1234567890">
+        <ContactIcon src={phoneIcon} alt="Phone" />
+        <ContactTitle>{translate("contact.phoneTitle")}</ContactTitle>
+        <ContactText>{translate("contact.phoneNumber")}</ContactText>
+      </ContactLink>
+    </ContactCard>
+    <ContactCard>
+      <ContactLink href="mailto:contact@chiragtechnologies.com">
+        <ContactIcon src={mailIcon} alt="Mail" />
+        <ContactTitle>{translate("contact.mailTitle")}</ContactTitle>
+        <ContactText>{translate("contact.mailAddress")}</ContactText>
+      </ContactLink>
+    </ContactCard>
+    <ContactCard>
+      <ContactLink 
+        href="https://maps.google.com?q=CHIRAG TECHNOLOGIES, Saeedpur Khas, Prayagraj, Uttar Pradesh-211011" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        <ContactIcon src={addressIcon} alt="Address" />
+        <ContactTitle>{translate("contact.addressTitle")}</ContactTitle>
+        <ContactText>{translate("contact.addressText")}</ContactText>
+      </ContactLink>
+    </ContactCard>
+  </ContactInfoContainer>
     </Container>
   );
 };

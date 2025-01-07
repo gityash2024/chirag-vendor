@@ -16,83 +16,6 @@ import logoutIcon from '../assets/logout.png';
 import { useTranslation } from '../TranslationContext';
 import WalletIcon from '../assets/wallet-white.svg';
 
-const SidebarContainer = styled.div`
-  background-color: #383838;
-  color: white;
-  width: 280px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Logo = styled.div`
-  cursor: pointer;
-  padding: 20px;
-  img {
-    width: 100%;
-    max-width: 300px;
-  }
-`;
-
-const Menu = styled.nav`
-  display: flex;
-  flex-direction: column;
-  flex-grow: ${props => props.bottom ? 0 : 1};
-  ${props => props.bottom && `
-    margin-top: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 20px;
-    margin-bottom: 100px;
-  `}
-`;
-
-const MenuItem = styled(Link)`
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: white;
-  &.active {
-    background-color: #000000;
-  }
-  img {
-    width: 30px;
-    height: 30px;
-    margin-right: 15px;
-  }
-`;
-
-const DisabledMenuItem = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.5);
-  cursor: not-allowed;
-  opacity: 0.6;
-  img {
-    width: 30px;
-    height: 30px;
-    margin-right: 15px;
-  }
-`;
-
-const LogoutButton = styled.button`
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  img {
-    width: 35px;
-    height: 35px;
-    margin-right: 15px;
-  }
-`;
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -137,7 +60,102 @@ const ConfirmButton = styled(ModalButton)`
   background-color: #383838;
   color: white;
 `;
+// Updated Sidebar styled components
+const SidebarContainer = styled.div`
+  background-color: #383838;
+  color: white;
+  width: 280px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent scrolling */
+`;
 
+const Logo = styled.div`
+  cursor: pointer;
+  padding: 20px;
+  flex-shrink: 0; /* Prevent logo from shrinking */
+  img {
+    width: 100%;
+    max-width: 300px;
+  }
+`;
+
+const Menu = styled.nav`
+  display: flex;
+  flex-direction: column;
+  ${props => props.bottom ? `
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-shrink: 0; /* Prevent bottom menu from shrinking */
+  ` : `
+    flex: 1;
+    overflow-y: auto; /* Allow scrolling only in main menu if needed */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #383838;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #666;
+      border-radius: 3px;
+    }
+  `}
+`;
+
+const MenuItem = styled(Link)`
+  display: flex;
+  align-items: center;
+  padding: 8px 20px; /* Slightly reduced padding */
+  text-decoration: none;
+  color: white;
+  flex-shrink: 0; /* Prevent menu items from shrinking */
+  &.active {
+    background-color: #000000;
+  }
+  img {
+    width: 24px; /* Slightly reduced icon size */
+    height: 24px;
+    margin-right: 15px;
+  }
+`;
+
+const DisabledMenuItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  opacity: 0.6;
+  flex-shrink: 0;
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+  }
+`;
+
+const LogoutButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  flex-shrink: 0;
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+  }
+`;
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -162,6 +180,8 @@ const Sidebar = () => {
     { icon: termsIcon, text: translate('sidebar.bottomMenu.termsAndConditions'), path: '/terms-and-conditions' },
     { icon: privacyIcon, text: translate('sidebar.bottomMenu.privacyPolicy'), path: '/privacy-policy' },
   ];
+
+  
 
   const handleLogout = () => {
     setShowLogoutModal(true);

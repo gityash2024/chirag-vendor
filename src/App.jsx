@@ -124,6 +124,7 @@ function App() {
                       <Route path="/calendar-confirm-booking-details/:id" element={<VerificationCheck><RunnerReachedBookingDetail /></VerificationCheck>} />
                       <Route path="/calendar-cancelled-booking-details/:id" element={<VerificationCheck><RunnerCanceledBookingDetail /></VerificationCheck>} />
                       <Route path="/add-money" element={<VerificationCheck><AddMoney /></VerificationCheck>} />
+                      <Route path="/add-money/verify" element={<VerificationCheck><AddMoney /></VerificationCheck>} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </PageContent>
