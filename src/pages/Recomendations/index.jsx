@@ -5,10 +5,10 @@ import image2 from "../../assets/recommendation-2.png";
 import image3 from "../../assets/recommendation-3.png";
 import image4 from "../../assets/recommendation-4.png";
 import image5 from "../../assets/recommendation-5.png";
-import { FaCheck } from 'react-icons/fa';
 import image6 from "../../assets/recommendation-6.png";
 import image7 from "../../assets/recommendation-7.png";
 import image8 from "../../assets/recommendation-8.png";
+import { FaCheck } from 'react-icons/fa';
 import riceImage from "../../assets/rice.png";
 import maizeImage from "../../assets/maize.png";
 import groundnutImage from "../../assets/groundnut.png";
@@ -125,15 +125,33 @@ const CardTitle = styled.h2`
   margin-bottom: 10px;
 `;
 
-const CardText = styled.p`
+const CardText = styled.div`
   font-size: 14px;
   line-height: 1.6;
   color: #333;
+
+  ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  li {
+    margin-bottom: 4px;
+  }
 `;
 
 const WarningContainer = styled.div`
   margin-top: 20px;
   color: #DE0000;
+  
+  ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
 `;
 
 const CheckboxContainer = styled.div`
@@ -216,44 +234,85 @@ const Recommendations = () => {
   const recommendationData = [
     {
       title: translate('recommendations.flyingSpeed.title'),
-      content: translate('recommendations.flyingSpeed.content'),
-      image: image1,
+      points: [
+        "During Spraying: (4.5-5.0)",
+        "During Turning RTL etc: <5.5"
+      ],
+      image: image1
     },
     {
       title: translate('recommendations.height.title'),
-      content: translate('recommendations.height.content'),
-      image: image2,
+      points: [
+        "During Spraying: (4.5-5.0)",
+        "During Turning RTL etc: <5.5"
+      ],
+      image: image2
     },
     {
       title: translate('recommendations.waterVolume.title'),
-      content: translate('recommendations.waterVolume.content'),
-      image: image3,
+      points: [
+        "Stage 1: Early stage: 20 L/HA",
+        "Full canopy stage: 25 L/HA"
+      ],
+      image: image3
     },
     {
       title: translate('recommendations.nozzle.title'),
-      content: translate('recommendations.nozzle.content'),
-      image: image4,
+      points: [
+        "Type of nozzle: Anti Drift fan",
+        "Droplet size (μm) Insecticide: 250-350",
+        "Droplet size (μm) Fungicide: 250-350",
+        "Nozzle discharge rate (l/min): 0.8-1.0",
+        "Mesh: 50-100",
+        "Swath (m): 3-4",
+        "Number of Nozzles: 4-8",
+        "Pressure (bar): 2-3"
+      ],
+      image: image4
     },
     {
       title: translate('recommendations.sprayTime.title'),
-      content: translate('recommendations.sprayTime.content'),
-      image: image5,
+      points: [
+        "Summer & rainy season: 6am-10am & 3pm-6pm",
+        "Winter season: 8am-11am & 2pm-5pm",
+        "Strictly avoid spraying during flowering season (8am - 5pm)"
+      ],
+      image: image5
     },
     {
       title: translate('recommendations.environmentalConditions.title'),
-      content: translate('recommendations.environmentalConditions.content'),
-      image: image6,
+      points: [
+        "Temperature: <35°C",
+        "Humidity: >60%",
+        "Wind Speed: <10km/h",
+        "During Rain: Do not Spray",
+        "Do not operate if visibility during mist/fog is not good"
+      ],
+      image: image6
     },
     {
       title: translate('recommendations.siteSpecific.title'),
-      content: translate('recommendations.siteSpecific.content'),
-      image: image7,
+      points: [
+        "Plain land: take care of obstacles present in field: Yes",
+        "Sloppy terrain: Use terrain following sensors: Yes",
+        "Do not operate if visibility during mist/fog is not good"
+      ],
+      image: image7
     },
     {
       title: translate('recommendations.bufferZone.title'),
-      content: translate('recommendations.bufferZone.content'),
-      image: image8,
-    },
+      points: [
+        "Non-targeted Crops: 5 meters",
+        "Water bodies etc: 100 meters"
+      ],
+      image: image8
+    }
+  ];
+
+  const warnings = [
+    translate('recommendations.warnings.nightSpray'),
+    translate('recommendations.warnings.earlySpray'),
+    translate('recommendations.warnings.precautions')
   ];
 
   const renderInitialScreen = () => (
@@ -276,17 +335,17 @@ const Recommendations = () => {
         ))}
       </CropGrid>
       <div style={{ display: "flex", justifyContent: "center", marginTop: "20px"}}>
-
-      <Button 
-        style={{
-          disabled: !selectedCrop,
-          cursor: !selectedCrop ? "not-allowed" : "pointer",
-          width: "200px"
-        }} 
-        onClick={handleViewRecommendations}
-      >
-        {translate('recommendations.nextButton')}
-      </Button>
+        <Button 
+          style={{
+            opacity: !selectedCrop ? 0.5 : 1,
+            cursor: !selectedCrop ? "not-allowed" : "pointer",
+            width: "200px"
+          }} 
+          onClick={handleViewRecommendations}
+          disabled={!selectedCrop}
+        >
+          {translate('recommendations.nextButton')}
+        </Button>
       </div>
     </>
   );
@@ -303,15 +362,23 @@ const Recommendations = () => {
             </CardImageContainer>
             <CardContent>
               <CardTitle>{item.title}</CardTitle>
-              <CardText>{item.content}</CardText>
+              <CardText>
+                <ul>
+                  {item.points.map((point, idx) => (
+                    <li key={idx}>{point}</li>
+                  ))}
+                </ul>
+              </CardText>
             </CardContent>
           </Card>
         ))}
       </CardContainer>
       <WarningContainer>
-        <p>{translate('recommendations.warnings.nightSpray')}</p>
-        <p>{translate('recommendations.warnings.earlySpray')}</p>
-        <p>{translate('recommendations.warnings.precautions')}</p>
+        <ul>
+          {warnings.map((warning, index) => (
+            <li key={index}>{warning}</li>
+          ))}
+        </ul>
       </WarningContainer>
       <CheckboxContainer>
         <Checkbox 
