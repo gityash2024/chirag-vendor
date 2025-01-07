@@ -46,6 +46,7 @@ const Divider = styled.hr`
   margin: 0 10px;
 `;
 
+
 const NotificationList = styled.div`
   display: flex;
   flex-direction: column;
