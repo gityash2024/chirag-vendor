@@ -147,7 +147,7 @@ const Login = () => {
     try {
       await sendOtp({ mobileNumber });
       setOtpSent(true);
-      toast.success('OTP sent successfully');
+      toast.success('OTP sent successfully, check your gmail inbox.');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to send OTP');
     } finally {
