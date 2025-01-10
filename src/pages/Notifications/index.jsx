@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+// src/pages/Notifications/index.jsx
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import noNotificationsImage from '../../assets/no-notifications.png';
 import { listNotifications } from '../../services/commonService';
 import { toast } from 'react-toastify';
-import Loader from '../../components/loader/index';
 import { useTranslation } from '../../TranslationContext';
+import { useNotifications } from '../../hooks/useNotifications';
 
 const Container = styled.div`
   padding: 20px;
@@ -46,7 +47,6 @@ const Divider = styled.hr`
   margin: 0 10px;
 `;
 
-
 const NotificationList = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,22 +57,26 @@ const NotificationItem = styled.div`
   align-items: center;
   padding: 15px 0;
   border-bottom: 1px solid #DBDADE;
-`;
+  background-color: ${props => props.isRead ? '#FFFFFF' : '#F5F5F5'};
+  cursor: pointer;
+  transition: all 0.3s ease;
 
-const Avatar = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 15px;
+  &:hover {
+    background-color: ${props => props.isRead ? '#F8F8F8' : '#EFEFEF'};
+  }
 `;
 
 const NotificationContent = styled.div`
   flex-grow: 1;
+  padding: 0 15px;
 `;
 
 const NotificationText = styled.p`
   margin: 0;
   color: #121212;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: ${props => props.isRead ? 'normal' : 'bold'};
 `;
 
 const NotificationTime = styled.span`
@@ -88,7 +92,7 @@ const Pagination = styled.div`
 `;
 
 const PageInfo = styled.span`
-  margin-right: 10px;
+  margin: 0 15px;
   color: #8D98A4;
 `;
 
@@ -98,8 +102,13 @@ const PageButton = styled.button`
   border: 1px solid #DBDADE;
   background-color: ${props => props.active ? '#121212' : '#FFFFFF'};
   color: ${props => props.active ? '#FFFFFF' : '#121212'};
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  opacity: ${props => props.disabled ? 0.5 : 1};
   margin: 0 2px;
+  
+  &:hover {
+    background-color: ${props => !props.disabled && '#F5F5F5'};
+  }
 `;
 
 const NoNotifications = styled.div`
@@ -108,6 +117,7 @@ const NoNotifications = styled.div`
   align-items: center;
   justify-content: center;
   height: 400px;
+  padding: 20px;
 `;
 
 const NoNotificationsImage = styled.img`
@@ -121,65 +131,84 @@ const NoNotificationsText = styled.p`
   text-align: center;
 `;
 
+const EmptyState = styled(NoNotifications)``;
+const EmptyStateImage = styled(NoNotificationsImage)``;
+const EmptyStateText = styled(NoNotificationsText)``;
+
 const Notifications = () => {
   const { translate } = useTranslation();
   const [notifications, setNotifications] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [error, setError] = useState(null);
+  const itemsPerPage = 10;
+
+  const fetchNotifications = useCallback(async () => {
+    try {
+      const response = await listNotifications({ recipientRole: 'vendor' });
+      if (response.data?.notifications) {
+        setNotifications(response.data.notifications);
+        // Update badge count in localStorage or context
+        localStorage.setItem('notificationCount', response.data.notifications.length);
+      }
+      setError(null);
+    } catch (err) {
+      setError('Failed to fetch notifications');
+      toast.error('Failed to fetch notifications');
+    }
+  }, []);
 
   useEffect(() => {
     fetchNotifications();
-  }, [currentPage]);
+    const pollInterval = setInterval(() => {
+      fetchNotifications();
+    }, 10000);
 
-  const fetchNotifications = async () => {
-    setLoading(true);
+    return () => clearInterval(pollInterval);
+  }, [fetchNotifications]);
+
+  const handleMarkAsRead = async (notificationId) => {
     try {
-      const response = await listNotifications({ page: currentPage, limit: 10, recipientRole: 'vendor' });
-      setNotifications(response.data.notifications);
-      setTotalPages(response.data.totalPages);
+      // Call your markAsRead API here
+      const updatedNotifications = notifications.map(notification =>
+        notification._id === notificationId
+          ? { ...notification, isRead: true }
+          : notification
+      );
+      setNotifications(updatedNotifications);
     } catch (error) {
-      toast.error('Failed to fetch notifications');
-    } finally {
-      setLoading(false);
+      toast.error('Failed to mark notification as read');
     }
   };
 
-  const markAllAsRead = () => {
-    console.log('Marked all as read');
-  };
+  if (error) return <div>{error}</div>;
 
-  const clearAll = () => {
-    setNotifications([]);
-  };
+  const paginatedNotifications = notifications.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const totalPages = Math.ceil(notifications.length / itemsPerPage);
 
   return (
     <Container>
       <Header>
         <Title>{translate('notifications.title')}</Title>
-        <ActionContainer>
-          <ActionText onClick={markAllAsRead}>
-            {translate('notifications.markAllAsRead')}
-          </ActionText>
-          <Divider />
-          <ActionText onClick={clearAll}>
-            {translate('notifications.clearAll')}
-          </ActionText>
-        </ActionContainer>
+        <ActionContainer />
       </Header>
-      {loading ? (
-        <Loader />
-      ) : notifications.length > 0 ? (
+
+      {notifications.length > 0 ? (
         <>
           <NotificationList>
-            {notifications.map(notification => (
-              <NotificationItem key={notification._id}>
-                <Avatar 
-                  src={`https://ui-avatars.com/api/?name=${notification.type}&background=random`} 
-                  alt="Notification type" 
-                />
+            {paginatedNotifications.map(notification => (
+              <NotificationItem
+                key={notification._id}
+                onClick={() => !notification.isRead && handleMarkAsRead(notification._id)}
+                isRead={notification.isRead}
+              >
                 <NotificationContent>
-                  <NotificationText>{notification.description}</NotificationText>
+                  <NotificationText isRead={notification.isRead}>
+                    {notification.description}
+                  </NotificationText>
                   <NotificationTime>
                     {new Date(notification.createdAt).toLocaleString()}
                   </NotificationTime>
@@ -187,40 +216,37 @@ const Notifications = () => {
               </NotificationItem>
             ))}
           </NotificationList>
-          <Pagination>
-            <PageInfo>
-              {`${(currentPage - 1) * 10 + 1}-${Math.min(currentPage * 10, notifications.length)} ${translate('notifications.of')} ${notifications.length}`}
-            </PageInfo>
-            <PageButton 
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
-              disabled={currentPage === 1}
-            >
-              &lt;
-            </PageButton>
-            {[...Array(totalPages).keys()].map(page => (
-              <PageButton 
-                key={page} 
-                active={currentPage === page + 1} 
-                onClick={() => setCurrentPage(page + 1)}
+          {totalPages > 1 && (
+            <Pagination>
+              <PageButton
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
               >
-                {page + 1}
+                &lt;
               </PageButton>
-            ))}
-            <PageButton 
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
-              disabled={currentPage === totalPages}
-            >
-              &gt;
-            </PageButton>
-          </Pagination>
+              <PageInfo>
+                Page {currentPage} of {totalPages}
+              </PageInfo>
+              <PageButton
+                onClick={() => 
+                  setCurrentPage(prev => 
+                    Math.min(prev + 1, totalPages)
+                  )
+                }
+                disabled={currentPage === totalPages}
+              >
+                &gt;
+              </PageButton>
+            </Pagination>
+          )}
         </>
       ) : (
-        <NoNotifications>
-          <NoNotificationsImage src={noNotificationsImage} alt="No notifications" />
-          <NoNotificationsText>
+        <EmptyState>
+          <EmptyStateImage src={noNotificationsImage} alt="No notifications" />
+          <EmptyStateText>
             {translate('notifications.noNotifications')}
-          </NoNotificationsText>
-        </NoNotifications>
+          </EmptyStateText>
+        </EmptyState>
       )}
     </Container>
   );

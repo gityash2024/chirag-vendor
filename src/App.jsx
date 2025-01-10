@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import NotFound from './components/404';
 import VerificationPending from './components/VerificationPending';
+import { initializeSocket, disconnectSocket } from './services/socketService';
 
 import LanguageSelection from './pages/auth/LanguageSelection';
 import Login from './pages/auth/Login';
@@ -85,6 +86,19 @@ const VerificationCheck = ({ children }) => {
 };
 
 function App() {
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      // Only initialize socket if user is logged in
+      const socket = initializeSocket('vendor');
+      
+      return () => {
+        disconnectSocket();
+      };
+    }
+  }, []); 
+
   return (
     <Router>
       <GlobalStyle />

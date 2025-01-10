@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import printIcon from '../assets/wallet.svg';
 import notificationIcon from '../assets/bell.svg';
 import profileIcon from '../assets/profile-icon.png';
 import { useNavigate } from 'react-router-dom';
 import { listNotifications } from '../services/commonService';
-import io from 'socket.io-client';
 import { useTranslation } from '../TranslationContext';
-
 
 const LanguageToggle = styled.div`
   display: flex;
@@ -56,9 +54,8 @@ const TopbarIcon = styled.img`
 
 const NotificationCount = styled.div`
   position: absolute;
-  bottom: 20px;
-  right: 0px;
-  left: 32px;
+  top: -5px;
+  right: -5px;
   background-color: red;
   color: white;
   border-radius: 50%;
@@ -68,72 +65,88 @@ const NotificationCount = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 `;
 
 const IconContainer = styled.div`
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Topbar = () => {
   const navigate = useNavigate();
   const { language, setLanguagePreference, translate } = useTranslation();
-
   const [notificationCount, setNotificationCount] = useState(0);
   const [currentLanguage, setCurrentLanguage] = useState(localStorage.getItem("language") || "en");
+
   const handleLanguageToggle = () => {
     const newLang = currentLanguage === "en" ? "hi" : "en";
     setCurrentLanguage(newLang);
     setLanguagePreference(newLang);
   };
-  useEffect(() => {
-    fetchNotificationCount();
-    const socket = io("https://chirag.solminica.com", {
-      withCredentials: true,
-      transports: ['websocket']
-    });
-    
-    socket.on('connect', () => {
-      console.log('Connected to socket server');
-    });
 
-    socket.on('connect_error', (error) => {
-      console.error('Socket connection error:', error);
-    });
-
-    socket.on('newNotification', () => {
-      console.log('New notification received');
-      fetchNotificationCount();
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-  const fetchNotificationCount = async () => {
+  const fetchNotificationCount = useCallback(async () => {
     try {
-      const response = await listNotifications({ page: 1, limit: 1, recipientRole: 'vendor' });
-      setNotificationCount(response.data.totalNotifications);
+      const response = await listNotifications({ 
+        page: 1, 
+        limit: 1, 
+        recipientRole: 'vendor' 
+      });
+      
+      if (response.data?.totalNotifications !== undefined) {
+        setNotificationCount(response.data.totalNotifications);
+        localStorage.setItem('vendorNotificationCount', response.data.totalNotifications);
+      }
     } catch (error) {
-      console.error('Failed to fetch notification count', error);
+      console.error('Failed to fetch notification count:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Initial fetch
+    fetchNotificationCount();
+
+    // Set up polling interval
+    const pollInterval = setInterval(() => {
+      fetchNotificationCount();
+    }, 10000); // 10 seconds
+
+    // Load from localStorage on mount
+    const savedCount = localStorage.getItem('vendorNotificationCount');
+    if (savedCount) {
+      setNotificationCount(parseInt(savedCount, 10));
+    }
+
+    // Cleanup
+    return () => {
+      clearInterval(pollInterval);
+    };
+  }, [fetchNotificationCount]);
 
   return (
     <TopbarContainer>
       <TopbarLeft>
       </TopbarLeft>
       <TopbarRight>
-  <LanguageToggle onClick={handleLanguageToggle}>
-    <LanguageOption active={currentLanguage === "hi"}>Hindi</LanguageOption>
-    <LanguageOption active={currentLanguage === "en"}>English</LanguageOption>
-  </LanguageToggle>
-  <TopbarIcon onClick={() => navigate('/wallet')} src={printIcon} alt="Print" />
-  <IconContainer>
-    <TopbarIcon onClick={() => navigate('/notification')} src={notificationIcon} alt="Notifications" />
-    {notificationCount > 0 && <NotificationCount>{notificationCount}</NotificationCount>}
-  </IconContainer>
-  <TopbarIcon onClick={() => navigate('/profile')} src={profileIcon} alt="Profile" />
-</TopbarRight>
+        <LanguageToggle onClick={handleLanguageToggle}>
+          <LanguageOption active={currentLanguage === "hi"}>Hindi</LanguageOption>
+          <LanguageOption active={currentLanguage === "en"}>English</LanguageOption>
+        </LanguageToggle>
+        <TopbarIcon onClick={() => navigate('/wallet')} src={printIcon} alt="Print" />
+        <IconContainer>
+          <TopbarIcon 
+            onClick={() => navigate('/notification')} 
+            src={notificationIcon} 
+            alt="Notifications" 
+          />
+          {notificationCount > 0 && (
+            <NotificationCount>{notificationCount}</NotificationCount>
+          )}
+        </IconContainer>
+        <TopbarIcon onClick={() => navigate('/profile')} src={profileIcon} alt="Profile" />
+      </TopbarRight>
     </TopbarContainer>
   );
 };

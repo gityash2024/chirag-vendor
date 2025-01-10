@@ -178,7 +178,17 @@ export const listNotifications = (payload) => {
     }
   }); 
 }
-
+export const markNotificationsAsRead = (payload) => {
+  const url = `${baseUrl}/notifications/mark-as-read`;
+  return instance.post(url, {
+    notificationIds: payload.notificationIds  // Make sure it's an array
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}` // If not already handled by your instance
+    }
+  });
+}
 
 
 export const updateBooking = (payload) => {
