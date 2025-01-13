@@ -410,14 +410,14 @@ const Register = () => {
       toast.error("Please enter a valid 12-digit Aadhaar number");
       return false;
     }
-    if (!formData.aadhaarFront) {
-      toast.error("Please upload front side of Aadhaar card");
-      return false;
-    }
-    if (!formData.aadhaarBack) {
-      toast.error("Please upload back side of Aadhaar card");
-      return false;
-    }
+    // if (!formData.aadhaarFront) {
+    //   toast.error("Please upload front side of Aadhaar card");
+    //   return false;
+    // }
+    // if (!formData.aadhaarBack) {
+    //   toast.error("Please upload back side of Aadhaar card");
+    //   return false;
+    // }
     return true;
   };
 
