@@ -229,7 +229,7 @@ const [toDate, setToDate] = useState('');
       console.log('Vendor bookings:', vendorBookings);
       setBookings(vendorBookings);
     } catch (error) {
-      console.error('Error fetching bookings:', error);
+      // console.error('Error fetching bookings:', error);
     }
   };
   const filterBookingsByDate = (bookings) => {

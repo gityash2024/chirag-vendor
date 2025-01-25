@@ -318,7 +318,7 @@ const Register = () => {
       setAuthToken(response.data.auth_token);
       return response.data.auth_token;
     } catch (error) {
-      toast.error("Error fetching authentication token");
+      // toast.error("Error fetching authentication token");
       return null;
     }
   };
@@ -337,7 +337,7 @@ const Register = () => {
       );
       setStates(response.data);
     } catch (error) {
-      toast.error("Error fetching states");
+      // toast.error("Error fetching states");
     }
   };
 
@@ -355,7 +355,7 @@ const Register = () => {
       );
       setCities(response.data);
     } catch (error) {
-      toast.error("Error fetching cities");
+      // toast.error("Error fetching cities");
     }
   };
 

@@ -383,7 +383,7 @@ const Wallet = () => {
       }
 
     } catch (error) {
-      console.error('Error fetching wallet data:', error);
+      // console.error('Error fetching wallet data:', error);
       toast.error('Failed to fetch wallet data');
     } finally {
       setLoading(false);
