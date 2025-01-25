@@ -402,6 +402,7 @@ const AssignRunnerDetails = () => {
                     </TableCell>
                   </TableRow>
                 ))}
+                {!runners.length && <TableRow style={{ textAlign: 'center' }}><TableCell colSpan={4}>{translate('bookings.assignRunner.modal.noRunners')}</TableCell></TableRow>}
               </tbody>
             </RunnerTable>
           </ModalContent>

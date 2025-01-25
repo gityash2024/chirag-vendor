@@ -419,7 +419,7 @@ const Bookings = () => {
           (b) => b.status === "quote_received"
         ),
         "Assign Runner": filteredBookings.filter(
-          (b) => b.status === "confirmed" && !b.runner
+          (b) =>( b.status === "quote_received"|| b.status === "confirmed" )&& !b.runner
         ),
         "Confirmed Bookings": filteredBookings.filter((b) =>
           ["confirmed", "completed"].includes(b.status)

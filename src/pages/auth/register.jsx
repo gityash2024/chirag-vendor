@@ -733,7 +733,7 @@ const Register = () => {
                     placeholder="Address line 2"
                   />
                   <InputLabel>State * </InputLabel>
-                  <Select
+                  {/* <Select
                     name="state"
                     value={formData.state}
                     onChange={handleInputChange}
@@ -745,10 +745,17 @@ const Register = () => {
                         {state.state_name}
                       </option>
                     ))}
-                  </Select>
+                  </Select> */}
+                  <Input
+                    name="state"
+                    value={formData.state}
+                    onChange={handleInputChange}
+                    placeholder="State"
+                    required
+                  />
 
                   <InputLabel>City * </InputLabel>
-                  <Select
+                  {/* <Select
                     name="city"
                     value={formData.city}
                     onChange={handleInputChange}
@@ -761,7 +768,15 @@ const Register = () => {
                         {city.city_name}
                       </option>
                     ))}
-                  </Select>
+                  </Select> */}
+                  <Input
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
+                    placeholder="City"
+                    required
+                    disabled={!formData.state}
+                  />
                   <InputLabel>Drone License * </InputLabel>
                   <Input
                     name="droneLicense"

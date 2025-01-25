@@ -353,6 +353,7 @@
         "modal": {
           "selectRunner": "Select a Runner",
           "runnerName": "Runner Name",
+          "noRunners": "No runners found",
           "runnerContact": "Runner Contact",
           "status": "Status",
           "action": "Action",
@@ -763,6 +764,7 @@
     "modal": {
       "selectRunner": "एक रनर का चयन करें",
       "runnerName": "रनर का नाम",
+      "noRunners": "कोई रनर नहीं मिला",
       "runnerContact": "रनर का संपर्क",
       "status": "स्थिति",
       "action": "कार्रवाई",
