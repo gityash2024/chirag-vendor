@@ -378,7 +378,7 @@ const Profile = () => {
               </InputGroup>
               <InputGroup>
                 <Label>{translate('profile.basicDetails.state')}</Label>
-                <Select
+                {/* <Select
                   name="state"
                   value={vendorData.state}
                   onChange={handleInputChange}
@@ -388,7 +388,14 @@ const Profile = () => {
                   <option value="Maharashtra">Maharashtra</option>
                   <option value="Rajasthan">Rajasthan</option>
                   <option value="Karnataka">Karnataka</option>
-                </Select>
+                </Select> */}
+                <Input
+                  type="text"
+                  name="state"
+                  value={vendorData.state}
+                  onChange={handleInputChange}
+                  placeholder={translate('profile.basicDetails.statePlaceholder')}
+                />
               </InputGroup>
               <InputGroup>
                 <Label>{translate('profile.basicDetails.droneLicense')}</Label>

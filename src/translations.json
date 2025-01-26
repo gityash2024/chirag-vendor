@@ -9,6 +9,7 @@
         "batterySpecs": "Battery Specs"
       },
       "basicDetails": {
+        "statePlaceholder":"Select your state",
         "uploadPhoto": "Upload new photo",
         "reset": "Reset",
         "fullName": "Full Name *",
@@ -953,6 +954,7 @@
         "batterySpecs": "बैटरी विशिष्टताएं"
       },
       "basicDetails": {
+        "statePlaceholder":"अपना राज्य चुनें",
         "uploadPhoto": "नई फोटो अपलोड करें",
         "reset": "रीसेट",
         "fullName": "पूरा नाम *",

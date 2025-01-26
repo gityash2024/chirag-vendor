@@ -874,7 +874,7 @@ const Register = () => {
                     required
                   />
                   <InputLabel>Service State * </InputLabel>
-                  <Select
+                  {/* <Select
                     name="serviceState"
                     value={formData.serviceState}
                     onChange={handleInputChange}
@@ -886,10 +886,18 @@ const Register = () => {
                         {state.state_name}
                       </option>
                     ))}
-                  </Select>
+                  </Select> */}
+
+                  <Input
+                    name="serviceState"
+                    value={formData.serviceState}
+                    onChange={handleInputChange}
+                    placeholder="Service State"
+                    required
+                  />
 
                   <InputLabel>Service City * </InputLabel>
-                  <Select
+                  {/* <Select
                     name="serviceCity"
                     value={formData.serviceCity}
                     onChange={handleInputChange}
@@ -902,7 +910,16 @@ const Register = () => {
                         {city.city_name}
                       </option>
                     ))}
-                  </Select>
+                  </Select> */}
+
+                  <Input
+                    name="serviceCity"
+                    value={formData.serviceCity}
+                    onChange={handleInputChange}
+                    placeholder="Service City"
+                    required
+                    disabled={!formData.serviceState}
+                  />
                   <InputLabel>Village * </InputLabel>
                   <Input
                     name="village"
