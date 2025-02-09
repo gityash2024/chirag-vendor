@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import loginImage from '../../assets/login-image-2.png';
 import chiragLogo from '../../assets/logo-dark.svg';
@@ -118,7 +118,6 @@ const OtpContainer = styled.div`
 `;
 
 const ResendText = styled.p`
-  // text-align: center;
   color: #121212;
   cursor: pointer;
   margin-top: 15px;
@@ -135,7 +134,15 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { translate } = useTranslation();
+
+  useEffect(() => {
+    if (location.state?.fromRegister) {
+      setMobileNumber(location.state.mobileNumber || '');
+      toast.success('Registration successful! Please login to continue');
+    }
+  }, [location]);
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -145,11 +152,21 @@ const Login = () => {
     }
     setIsLoading(true);
     try {
-      await sendOtp({ mobileNumber });
-      setOtpSent(true);
-      toast.success('OTP sent successfully, check your gmail inbox.');
+      const response = await sendOtp({ mobileNumber });
+      if (response.data.isRegistered) {
+        setOtpSent(true);
+        toast.success('OTP sent successfully');
+      } else {
+        toast.error('Please register first');
+        navigate('/register');
+      }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to send OTP');
+      if (error.response?.data?.message.includes('register')) {
+        toast.error('Please register first');
+        navigate('/register');
+      } else {
+        toast.error(error.response?.data?.message || 'Failed to send OTP');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -164,9 +181,14 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await verifyOtp({ mobileNumber, otp });
-      localStorage.setItem('user', JSON.stringify(response.data));
-      toast.success('Welcome to CHIRAG Vendor Portal');
-      navigate('/home');
+      if (response.data.isRegistered) {
+        localStorage.setItem('user', JSON.stringify(response.data));
+        toast.success('Welcome to CHIRAG Vendor Portal');
+        navigate('/home');
+      } else {
+        toast.error('Please register first');
+        navigate('/register');
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to verify OTP');
     } finally {
@@ -178,9 +200,21 @@ const Login = () => {
     navigate('/register');
   };
 
+  const handleResendOtp = async () => {
+    setIsLoading(true);
+    try {
+      await sendOtp({ mobileNumber });
+      toast.success('OTP re-sent successfully');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to resend OTP');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Container>
-     {isLoading && <Loader/>}
+      {isLoading && <Loader />}
       <ImageSection>
         <Image src={loginImage} alt="Login" />
       </ImageSection>
@@ -219,7 +253,7 @@ const Login = () => {
                   containerStyle="display: flex; justify-content: space-between;"
                 />
               </OtpContainer>
-              <ResendText onClick={() => {sendOtp({ mobileNumber });toast.success(translate('OTP re-sent successfully'))}}>{translate('login.resendOtp')}</ResendText>
+              <ResendText onClick={handleResendOtp}>{translate('login.resendOtp')}</ResendText>
               <Button type="submit">{translate('login.verifyOtpButton')}</Button>
             </form>
           </>

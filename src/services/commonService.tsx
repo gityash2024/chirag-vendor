@@ -17,6 +17,11 @@ export const verifyOtp = (payload) => {
     }
   });
 };
+export const listCommissions = () => {
+  const url = `${baseUrl}/commissions/list`;
+  return instance.get(url);
+};
+
 
 export const registerVendor = (payload) => {
 
@@ -27,6 +32,7 @@ export const registerVendor = (payload) => {
   }
 });
 }
+
 export const getVendorByMobileNumber = (payload) => {
   const url = `${baseUrl}/vendors/get-vendor-by-mobile`;
   return instance.post(url, payload, {

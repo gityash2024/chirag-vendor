@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import WarningIcon from "@mui/icons-material/Warning";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -10,6 +10,7 @@ import {
   getWalletBalance,
   requestWithdrawal,
   addBankAccount,
+  listCommissions,
 } from "../../services/commonService";
 import { useTranslation } from "../../TranslationContext";
 
@@ -333,6 +334,35 @@ const LoadingSpinner = styled(CircularProgress)`
   }
 `;
 
+const CommissionList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
+const CommissionItem = styled.div`
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 15px;
+`;
+
+const CommissionDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CommissionName = styled.div`
+  font-weight: 600;
+  color: #383838;
+`;
+
+const CommissionPercentage = styled.div`
+  font-size: 14px;
+  color: #8d98a4;
+`;
+
 const Wallet = () => {
   const { translate } = useTranslation();
 
@@ -345,6 +375,7 @@ const Wallet = () => {
     bankAccounts: [],
   });
 
+  const [commissions, setCommissions] = useState([]);
   const [showAddBankModal, setShowAddBankModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -361,49 +392,52 @@ const Wallet = () => {
     isDefault: false,
   });
 
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
- 
   const location = useLocation();
 
   const fetchWalletData = async () => {
     try {
       setLoading(true);
-      console.log('Fetching wallet data...');
-      
       const response = await getWalletBalance();
-      console.log('Wallet data received:', response.data);
-      
       setWalletData(response.data);
 
-      // If coming from successful payment, show success message
       if (location.state?.paymentSuccess) {
         toast.success(`₹${location.state.amount} added successfully to your wallet!`);
-        // Clear the state
         window.history.replaceState({}, document.title);
       }
 
     } catch (error) {
-      // console.error('Error fetching wallet data:', error);
       toast.error('Failed to fetch wallet data');
     } finally {
       setLoading(false);
     }
   };
 
-  // Initial load
   useEffect(() => {
     fetchWalletData();
   }, []);
 
-  // Handle refresh after payment
   useEffect(() => {
     const needsRefresh = localStorage.getItem('walletNeedsRefresh');
     if (needsRefresh) {
-      console.log('Wallet needs refresh, fetching fresh data...');
       localStorage.removeItem('walletNeedsRefresh');
       fetchWalletData();
     }
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "commissions") {
+      fetchCommissions();
+    }
+  }, [activeTab]);
+
+  const fetchCommissions = async () => {
+    try {
+      const response = await listCommissions();
+      setCommissions(response.data);
+    } catch (error) {
+      toast.error("Failed to fetch commissions");
+    }
+  };
 
   const handleAddBankAccount = async (e) => {
     e.preventDefault();
@@ -524,6 +558,7 @@ const Wallet = () => {
         <Button primary onClick={handleAddMoney}>{translate('wallet.addMoney')}</Button>
         <Button onClick={() => setShowWithdrawModal(true)}>{translate('wallet.withdraw')}</Button>
         <Button onClick={() => setShowAddBankModal(true)}>{translate('wallet.addBankAccount')}</Button>
+        <Button onClick={() => setActiveTab("commissions")}>{translate('wallet.commissions')}</Button>
       </ButtonGroup>
       <Tabs>
         <Tab active={activeTab === "transactions"} onClick={() => setActiveTab("transactions")}>
@@ -531,6 +566,9 @@ const Wallet = () => {
         </Tab>
         <Tab active={activeTab === "bankAccounts"} onClick={() => setActiveTab("bankAccounts")}>
           {translate('wallet.bankAccounts')}
+        </Tab>
+        <Tab active={activeTab === "commissions"} onClick={() => setActiveTab("commissions")}>
+          {translate('wallet.commissions')}
         </Tab>
       </Tabs>
       {activeTab === "transactions" ? (
@@ -565,7 +603,7 @@ const Wallet = () => {
             <NoDataMessage>{translate('wallet.noTransactions')}</NoDataMessage>
           )}
         </TransactionList>
-      ) : (
+      ) : activeTab === "bankAccounts" ? (
         <BankAccountList>
           {walletData.bankAccounts.length > 0 ? (
             walletData.bankAccounts.map((account, index) => (
@@ -583,6 +621,20 @@ const Wallet = () => {
             <NoDataMessage>{translate('wallet.noBankAccounts')}</NoDataMessage>
           )}
         </BankAccountList>
+      ) : (
+        <CommissionList>
+          {commissions.map((commission, index) => (
+            <CommissionItem key={index}>
+              <CommissionDetails>
+                <CommissionName>{commission.cropName}</CommissionName>
+                <CommissionPercentage>{commission.commissionPercentage}%</CommissionPercentage>
+              </CommissionDetails>
+            </CommissionItem>
+          ))}
+          {commissions.length === 0 && (
+            <NoDataMessage>{translate('wallet.noCommissions')}</NoDataMessage>
+          )}
+        </CommissionList>
       )}
       {showAddBankModal && (
         <Modal>

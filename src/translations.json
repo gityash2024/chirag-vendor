@@ -250,6 +250,8 @@
       "enterQuotePrice": "Please enter a price for this booking:"
     },"wallet": {
       "title": "My Wallet",
+       "commissions": "Commissions",
+      "noCommissions": "No commissions found",
       "availableBalance": "Available Balance",
       "totalAdded": "Total Added",
       "totalWithdrawn": "Total Withdrawn",
@@ -618,6 +620,7 @@
   }
   },
   "hi": {
+    
     "confirmedBookings":{
       "title": "बुकिंग",
       "back": "वापस",
@@ -1193,6 +1196,8 @@
   "enterQuotePrice": "कृपया इस बुकिंग के लिए एक मूल्य दर्ज करें:"
 },"wallet": {
       "title": "मेरा वॉलेट",
+       "commissions": "कमीशन",
+      "noCommissions": "कोई कमीशन नहीं मिला",
       "availableBalance": "उपलब्ध बैलेंस",
       "totalAdded": "कुल जमा",
       "totalWithdrawn": "कुल निकासी",
