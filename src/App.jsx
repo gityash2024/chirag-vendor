@@ -79,8 +79,9 @@ const VerificationCheck = ({ children }) => {
   const isContactPage = window.location.pathname === '/contact-us';
   const isTermsPage = window.location.pathname === '/terms-and-conditions';
   const isPrivacyPage = window.location.pathname === '/privacy-policy';
+  const isPricingPage = window.location.pathname === '/pricing-policy';
 
-  if (!user?.vendorDroneVerified && !isContactPage && !isTermsPage && !isPrivacyPage) {
+  if (!user?.vendorDroneVerified && !isContactPage && !isTermsPage && !isPrivacyPage && !isPricingPage) {
     return <VerificationPending />;
   }
   return children;
@@ -109,6 +110,37 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/otp" element={<OTP />} />
           <Route path="/register" element={<Register />} />
+          
+          {/* Unprotected routes */}
+          <Route path="/contact-us" element={
+            <MainContent>
+              <PageContent>
+                <ContactUs />
+              </PageContent>
+            </MainContent>
+          } />
+          <Route path="/terms-and-conditions" element={
+            <MainContent>
+              <PageContent>
+                <TermsAndConditions />
+              </PageContent>
+            </MainContent>
+          } />
+          <Route path="/privacy-policy" element={
+            <MainContent>
+              <PageContent>
+                <PrivacyPolicy />
+              </PageContent>
+            </MainContent>
+          } />
+          <Route path="/pricing-policy" element={
+            <MainContent>
+              <PageContent>
+                <PricingAndPolicies />
+              </PageContent>
+            </MainContent>
+          } />
+          
           <Route
             path="*"
             element={
@@ -127,10 +159,6 @@ function App() {
                       <Route path="/calendar" element={<VerificationCheck><Calendar /></VerificationCheck>} />
                       <Route path="/manage-runner" element={<VerificationCheck><ManageRunner /></VerificationCheck>} />
                       <Route path="/reports" element={<VerificationCheck><Reports /></VerificationCheck>} />
-                      <Route path="/contact-us" element={<ContactUs />} />
-                      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                      <Route path="/pricing-policy" element={<PricingAndPolicies />} />
                       <Route path="/notification" element={<VerificationCheck><Notifications /></VerificationCheck>} />
                       <Route path="/wallet" element={<VerificationCheck><Wallet /></VerificationCheck>} />
                       <Route path="/edit-runner/:id/:isView?" element={<VerificationCheck><EditRunner /></VerificationCheck>} />
