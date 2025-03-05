@@ -461,9 +461,11 @@ if (verifyingPayment) {
             </form>
 
             <div style={{ marginTop: '20px', fontSize: '14px', color: '#666' }}>
-              <p>• Minimum amount: ₹{MIN_AMOUNT}</p>
-              <p>• Maximum amount: ₹{MAX_AMOUNT}</p>
-              <p>• Transaction charges: 0%</p>
+              <p style={{marginTop:"6px"}}>• Minimum amount: ₹{MIN_AMOUNT}</p>
+              <p style={{marginTop:"6px"}}>• Maximum amount: ₹{MAX_AMOUNT}</p>
+              <p style={{marginTop:"6px"}}>• Transaction charges: 0%</p>
+              <p style={{textAlign:"center", marginTop:"6px"}}> <a href='https://chiragvendor.com/pricing-policy' target="_blank">Pricing & Policy:</a></p>
+
             </div>
 
             <div id="dropin-container"></div>

@@ -33,6 +33,7 @@ import AssignRunnerDetails from './pages/Bookings/AssignRunnerDetails';
 import GlobalStyle from './GlobalStyle';
 import AddMoney from './pages/Wallet/AddMoney';
 import Recommedations from './pages/Recomendations';
+import PricingAndPolicies from './pages/PricingAndPolicies';
 
 const AppContainer = styled.div`
   display: flex;
@@ -129,6 +130,7 @@ function App() {
                       <Route path="/contact-us" element={<ContactUs />} />
                       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                      <Route path="/pricing-policy" element={<PricingAndPolicies />} />
                       <Route path="/notification" element={<VerificationCheck><Notifications /></VerificationCheck>} />
                       <Route path="/wallet" element={<VerificationCheck><Wallet /></VerificationCheck>} />
                       <Route path="/edit-runner/:id/:isView?" element={<VerificationCheck><EditRunner /></VerificationCheck>} />

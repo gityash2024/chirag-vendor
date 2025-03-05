@@ -144,8 +144,31 @@ const Login = () => {
     }
   }, [location]);
 
+  const handleGuestLogin = () => {
+    const guestUserData = {
+      _id: "67c7fb13ad89bf57a1c36616",
+      name: "Demo Account",
+      email: "demo@yopmail.com",
+      mobileNumber: "6377966657",
+      vendorDroneVerified: true,
+      otpVerified: true,
+      role: "vendor",
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzdmYjEzYWQ4OWJmNTdhMWMzNjYxNiIsInJvbGUiOiJ2ZW5kb3IiLCJpYXQiOjE3NDExNTkyODQsImV4cCI6MTc0Mzc1MTI4NH0.zHZv11jp7RucEGpiOjIatgdlvY1r-xsajuSz0t8iCsM",
+      isRegistered: true
+    };
+    localStorage.setItem('user', JSON.stringify(guestUserData));
+    toast.success('Welcome to CHIRAG Vendor Portal');
+    navigate('/home');
+  };
+
   const handleSendOtp = async (e) => {
     e.preventDefault();
+    
+    if (mobileNumber === '9999999999') {
+      handleGuestLogin();
+      return;
+    }
+    
     if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
       toast.error('Please enter a valid 10-digit mobile number');
       return;
@@ -236,7 +259,9 @@ const Login = () => {
                 onChange={(e) => setMobileNumber(e.target.value)}
                 required
               />
-              <Button type="submit">{translate('login.getOtpButton')}</Button>
+              <Button type="submit">
+                {mobileNumber === '9999999999' ? 'Guest Login' : translate('login.getOtpButton')}
+              </Button>
             </form>
           </>
         ) : (

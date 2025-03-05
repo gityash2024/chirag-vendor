@@ -76,157 +76,145 @@ const TermsAndConditions = () => {
 
   return (
     <Container>
-      <Title>Terms and Conditions</Title>
+      <Title>{translate('termsAndConditions.title')}</Title>
       <CardContainer>
         <Card>
           <CardContent>
             <Paragraph>
-              Welcome to the CHIRAG CONNECT™ Vendor Web App. By accessing or using this platform, 
-              you agree to comply with and be bound by the following terms and conditions. 
-              Please read them carefully before proceeding.
+              {translate('termsAndConditions.intro')}
             </Paragraph>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>1. Introduction</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section1.title')}</CardTitle>
           <CardContent>
             <Paragraph>
-              CHIRAG CONNECT™ Vendor Web App ("Platform") is an online platform developed by 
-              CHIRAG TECHNOLOGIES™ for vendors/service providers (hereafter referred to as "you" or "Vendor") 
-              to connect with farmers and other stakeholders in the agriculture ecosystem.
+              {translate('termsAndConditions.section1.para1')}
             </Paragraph>
             <Paragraph>
-              By registering on this platform, you accept these terms and conditions, as well as our Privacy Policy.
+              {translate('termsAndConditions.section1.para2')}
             </Paragraph>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>2. Vendor Account</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section2.title')}</CardTitle>
           <CardContent>
             <List>
-              <ListItem><strong>Eligibility:</strong> Vendors must be legally authorized to operate and provide services/products in their respective jurisdictions.</ListItem>
-              <ListItem><strong>Registration:</strong> You agree to provide accurate, complete, and up-to-date information during the registration process.</ListItem>
-              <ListItem><strong>Account Security:</strong> You are responsible for maintaining the confidentiality of your account credentials. Any activity under your account will be considered your responsibility.</ListItem>
+              <ListItem><strong>{translate('termsAndConditions.section2.item1.title')}</strong> {translate('termsAndConditions.section2.item1.content')}</ListItem>
+              <ListItem><strong>{translate('termsAndConditions.section2.item2.title')}</strong> {translate('termsAndConditions.section2.item2.content')}</ListItem>
+              <ListItem><strong>{translate('termsAndConditions.section2.item3.title')}</strong> {translate('termsAndConditions.section2.item3.content')}</ListItem>
             </List>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>3. Vendor Responsibilities</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section3.title')}</CardTitle>
           <CardContent>
             <List>
-              <ListItem><strong>Service Standards:</strong> Vendors are required to provide accurate information about their products or services, maintain transparency, and deliver high-quality services/products as promised.</ListItem>
-              <ListItem><strong>Compliance:</strong> Vendors must adhere to all applicable laws, including agricultural, trade, and taxation laws.</ListItem>
-              <ListItem><strong>Prohibited Activities:</strong> Misrepresentation, fraud, or unauthorized use of the Platform is strictly prohibited.</ListItem>
+              <ListItem><strong>{translate('termsAndConditions.section3.item1.title')}</strong> {translate('termsAndConditions.section3.item1.content')}</ListItem>
+              <ListItem><strong>{translate('termsAndConditions.section3.item2.title')}</strong> {translate('termsAndConditions.section3.item2.content')}</ListItem>
+              <ListItem><strong>{translate('termsAndConditions.section3.item3.title')}</strong> {translate('termsAndConditions.section3.item3.content')}</ListItem>
             </List>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>4. Transactions and Payments</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section4.title')}</CardTitle>
           <CardContent>
             <SubSection>
-              <SubTitle>Pricing</SubTitle>
+              <SubTitle>{translate('termsAndConditions.section4.pricing.title')}</SubTitle>
               <Paragraph>
-                Vendors must ensure the pricing of their services or products is accurate and displayed transparently.
+                {translate('termsAndConditions.section4.pricing.content')}
               </Paragraph>
             </SubSection>
             <SubSection>
-              <SubTitle>Wallet System</SubTitle>
+              <SubTitle>{translate('termsAndConditions.section4.wallet.title')}</SubTitle>
               <List>
-                <ListItem>CHIRAG TECHNOLOGIES™ deducts a commission for every service completed through the Platform from the Vendor's Wallet.</ListItem>
-                <ListItem>Vendors need to top up or recharge their Wallets for new service bookings.</ListItem>
+                <ListItem>{translate('termsAndConditions.section4.wallet.item1')}</ListItem>
+                <ListItem>{translate('termsAndConditions.section4.wallet.item2')}</ListItem>
               </List>
             </SubSection>
             <SubSection>
-              <SubTitle>Promotional Offer</SubTitle>
+              <SubTitle>{translate('termsAndConditions.section4.promo.title')}</SubTitle>
               <Paragraph>
-                As a promotional benefit for new onboarding vendors and service providers, no commission is currently being charged. 
-                CHIRAG TECHNOLOGIES™ will inform vendors when commissions become chargeable.
+                {translate('termsAndConditions.section4.promo.content')}
               </Paragraph>
             </SubSection>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>5. Data Collection and Use</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section5.title')}</CardTitle>
           <CardContent>
             <Paragraph>
-              Vendors agree that CHIRAG CONNECT™ may collect and use certain data for operational purposes, 
-              including analytics, recommendations, and service improvement.
+              {translate('termsAndConditions.section5.para1')}
             </Paragraph>
             <Paragraph>
-              Data collected from the Vendor will be handled as per the Privacy Policy.
+              {translate('termsAndConditions.section5.para2')}
             </Paragraph>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>6. Intellectual Property</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section6.title')}</CardTitle>
           <CardContent>
             <Paragraph>
-              All intellectual property rights related to the Platform, including but not limited to logos, 
-              designs, and technology, belong to CHIRAG TECHNOLOGIES™.
+              {translate('termsAndConditions.section6.para1')}
             </Paragraph>
             <Paragraph>
-              Vendors may not reproduce, distribute, or create derivative works from the Platform without prior written consent.
+              {translate('termsAndConditions.section6.para2')}
             </Paragraph>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>7. Termination</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section7.title')}</CardTitle>
           <CardContent>
             <List>
-              <ListItem><strong>Voluntary Termination:</strong> Vendors can discontinue using the platform by deactivating their accounts.</ListItem>
-              <ListItem><strong>Breach of Terms:</strong> CHIRAG CONNECT™ reserves the right to suspend or terminate accounts found violating these terms without prior notice.</ListItem>
+              <ListItem><strong>{translate('termsAndConditions.section7.item1.title')}</strong> {translate('termsAndConditions.section7.item1.content')}</ListItem>
+              <ListItem><strong>{translate('termsAndConditions.section7.item2.title')}</strong> {translate('termsAndConditions.section7.item2.content')}</ListItem>
             </List>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>8. Limitation of Liability</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section8.title')}</CardTitle>
           <CardContent>
             <Paragraph>
-              CHIRAG CONNECT™ is a facilitator and does not guarantee the accuracy, reliability, or quality of 
-              services/products offered by vendors. We are not liable for any direct, indirect, or consequential 
-              damages arising from your use of the platform.
+              {translate('termsAndConditions.section8.content')}
             </Paragraph>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>9. Amendments</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section9.title')}</CardTitle>
           <CardContent>
             <Paragraph>
-              CHIRAG CONNECT™ reserves the right to amend these terms and conditions at any time. 
-              Changes will be notified via the Platform or registered email.
+              {translate('termsAndConditions.section9.content')}
             </Paragraph>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>10. Governing Law</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section10.title')}</CardTitle>
           <CardContent>
             <Paragraph>
-              These terms are governed by and construed in accordance with the laws of India. 
-              Any disputes arising out of or related to the use of the Platform will be subject to 
-              the exclusive jurisdiction of the courts in Prayagraj, Uttar Pradesh.
+              {translate('termsAndConditions.section10.content')}
             </Paragraph>
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>11. Contact Us</CardTitle>
+          <CardTitle>{translate('termsAndConditions.section11.title')}</CardTitle>
           <CardContent>
             <Paragraph>
-              If you have any questions about these terms, please contact us at:
+              {translate('termsAndConditions.section11.contact')}
             </Paragraph>
             <ContactInfo>
-              <Paragraph>Email: contact@chiragtechnologies.com</Paragraph>
-              <Paragraph>Phone: +91-7838750472</Paragraph>
+              <Paragraph>{translate('termsAndConditions.section11.email')}</Paragraph>
+              <Paragraph>{translate('termsAndConditions.section11.phone')}</Paragraph>
             </ContactInfo>
           </CardContent>
         </Card>

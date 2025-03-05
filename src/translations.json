@@ -1,5 +1,361 @@
 {
   "en": {
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "intro": "Welcome to the CHIRAG CONNECT™ Vendor Web App. This Privacy Policy outlines how CHIRAG TECHNOLOGIES collects, uses, shares, and protects your personal and business information when you access or use our platform. By using the platform, you agree to the practices outlined in this Privacy Policy.",
+      "section1": {
+        "title": "1. Information We Collect",
+        "intro": "When you register and use the CHIRAG CONNECT™ Vendor Web App, we collect the following types of information:",
+        "personal": {
+          "title": "1.1 Personal Information",
+          "item1": "Name, address, email address, phone number, and other contact details.",
+          "item2": "Business details such as GSTIN, PAN, bank account information, and operational address."
+        },
+        "service": {
+          "title": "1.2 Service Data",
+          "item1": "Details of services you provide through the platform, including service descriptions, pricing, and availability.",
+          "item2": "Wallet transactions, service bookings, and payment details."
+        },
+        "usage": {
+          "title": "1.3 Usage Information",
+          "item1": "Information about how you interact with the platform, such as login activity, page views, and clickstream data.",
+          "item2": "Device information (IP address, browser type, and operating system)."
+        }
+      },
+      "section2": {
+        "title": "2. How We Use Your Information",
+        "item1": {
+          "title": "To facilitate platform operations:",
+          "content": "Ensure smooth transactions, service bookings, and Wallet management."
+        },
+        "item2": {
+          "title": "To improve the platform:",
+          "content": "Analyze usage patterns to enhance user experience and functionality."
+        },
+        "item3": {
+          "title": "To communicate with you:",
+          "content": "Share important updates, promotional offers, and service notifications."
+        },
+        "item4": {
+          "title": "For compliance and security:",
+          "content": "Prevent fraudulent activities and ensure compliance with legal and regulatory requirements."
+        }
+      },
+      "section3": {
+        "title": "3. Sharing of Information",
+        "intro": "CHIRAG TECHNOLOGIES™ respects your privacy and ensures that your information is not sold, rented, or shared with third parties except in the following cases:",
+        "item1": {
+          "title": "Service Fulfillment:",
+          "content": "Information shared with farmers or other stakeholders to facilitate service bookings."
+        },
+        "item2": {
+          "title": "Third-Party Service Providers:",
+          "content": "Vendors assisting us with payment processing, analytics, or other operational tasks (bound by confidentiality agreements)."
+        },
+        "item3": {
+          "title": "Legal Compliance:",
+          "content": "When required to comply with applicable laws, regulations, or legal processes."
+        }
+      },
+      "section4": {
+        "title": "4. Wallet Data Usage",
+        "item1": "The Wallet feature is designed for virtual transactions related to service bookings.",
+        "item2": "Your Wallet balance remains secure and is solely used for service-related activities.",
+        "item3": "Withdrawal of the Wallet balance is permitted anytime without charges.",
+        "item4": "No interest is accrued on Wallet funds."
+      },
+      "section5": {
+        "title": "5. Data Security",
+        "intro": "We implement industry-standard measures to protect your information, including:",
+        "item1": "Encryption of sensitive data.",
+        "item2": "Secure access controls to prevent unauthorized access.",
+        "item3": "Regular audits to ensure system security."
+      },
+      "section6": {
+        "title": "6. Cookies and Tracking Technologies",
+        "intro": "We use cookies and similar tracking technologies to improve your experience on the platform. Cookies help us:",
+        "item1": "Remember your login information.",
+        "item2": "Provide personalized recommendations and notifications.",
+        "item3": "Analyze platform usage for improvements.",
+        "outro": "You can manage or disable cookies in your browser settings, though this may affect platform functionality."
+      },
+      "section7": {
+        "title": "7. Your Rights",
+        "intro": "As a user of the platform, you have the right to:",
+        "item1": "Access and review the personal information we hold about you.",
+        "item2": "Request corrections or updates to your information.",
+        "item3": "Delete your account and associated data (subject to compliance with legal obligations).",
+        "contact": "To exercise these rights, please contact us at contact@chiragtechnologies.com."
+      },
+      "section8": {
+        "title": "8. Data Retention",
+        "content": "We retain your data for as long as it is necessary to provide our services and comply with legal obligations. Once you deactivate your account, we will delete or anonymize your data, except where retention is required by law."
+      },
+      "section9": {
+        "title": "9. Changes to This Privacy Policy",
+        "content": "CHIRAG TECHNOLOGIES reserves the right to update this Privacy Policy at any time. Any changes will be communicated via the platform or registered email. Continued use of the platform constitutes your agreement to the updated Privacy Policy."
+      },
+      "section10": {
+        "title": "10. Governing Law",
+        "content": "This Privacy Policy is governed by the laws of India. Any disputes arising from it will be resolved in the courts of Prayagraj, Uttar Pradesh."
+      },
+      "section11": {
+        "title": "11. Contact Us",
+        "intro": "If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us at:",
+        "email": "Email: contact@chiragtechnologies.com",
+        "phone": "Phone: +91-7837750472",
+        "consent": "By using the CHIRAG CONNECT™ Vendor Web App, you consent to the practices outlined in this Privacy Policy."
+      }
+    },
+    "termsAndConditions": {
+      "title": "Terms and Conditions",
+      "intro": "Welcome to the CHIRAG CONNECT™ Vendor Web App. By accessing or using this platform, you agree to comply with and be bound by the following terms and conditions. Please read them carefully before proceeding.",
+      "section1": {
+        "title": "1. Introduction",
+        "para1": "CHIRAG CONNECT™ Vendor Web App (\"Platform\") is an online platform developed by CHIRAG TECHNOLOGIES™ for vendors/service providers (hereafter referred to as \"you\" or \"Vendor\") to connect with farmers and other stakeholders in the agriculture ecosystem.",
+        "para2": "By registering on this platform, you accept these terms and conditions, as well as our Privacy Policy."
+      },
+      "section2": {
+        "title": "2. Vendor Account",
+        "item1": {
+          "title": "Eligibility:",
+          "content": "Vendors must be legally authorized to operate and provide services/products in their respective jurisdictions."
+        },
+        "item2": {
+          "title": "Registration:",
+          "content": "You agree to provide accurate, complete, and up-to-date information during the registration process."
+        },
+        "item3": {
+          "title": "Account Security:",
+          "content": "You are responsible for maintaining the confidentiality of your account credentials. Any activity under your account will be considered your responsibility."
+        }
+      },
+      "section3": {
+        "title": "3. Vendor Responsibilities",
+        "item1": {
+          "title": "Service Standards:",
+          "content": "Vendors are required to provide accurate information about their products or services, maintain transparency, and deliver high-quality services/products as promised."
+        },
+        "item2": {
+          "title": "Compliance:",
+          "content": "Vendors must adhere to all applicable laws, including agricultural, trade, and taxation laws."
+        },
+        "item3": {
+          "title": "Prohibited Activities:",
+          "content": "Misrepresentation, fraud, or unauthorized use of the Platform is strictly prohibited."
+        }
+      },
+      "section4": {
+        "title": "4. Transactions and Payments",
+        "pricing": {
+          "title": "Pricing",
+          "content": "Vendors must ensure the pricing of their services or products is accurate and displayed transparently."
+        },
+        "wallet": {
+          "title": "Wallet System",
+          "item1": "CHIRAG TECHNOLOGIES™ deducts a commission for every service completed through the Platform from the Vendor's Wallet.",
+          "item2": "Vendors need to top up or recharge their Wallets for new service bookings."
+        },
+        "promo": {
+          "title": "Promotional Offer",
+          "content": "As a promotional benefit for new onboarding vendors and service providers, no commission is currently being charged. CHIRAG TECHNOLOGIES™ will inform vendors when commissions become chargeable."
+        }
+      },
+      "section5": {
+        "title": "5. Data Collection and Use",
+        "para1": "Vendors agree that CHIRAG CONNECT™ may collect and use certain data for operational purposes, including analytics, recommendations, and service improvement.",
+        "para2": "Data collected from the Vendor will be handled as per the Privacy Policy."
+      },
+      "section6": {
+        "title": "6. Intellectual Property",
+        "para1": "All intellectual property rights related to the Platform, including but not limited to logos, designs, and technology, belong to CHIRAG TECHNOLOGIES™.",
+        "para2": "Vendors may not reproduce, distribute, or create derivative works from the Platform without prior written consent."
+      },
+      "section7": {
+        "title": "7. Termination",
+        "item1": {
+          "title": "Voluntary Termination:",
+          "content": "Vendors can discontinue using the platform by deactivating their accounts."
+        },
+        "item2": {
+          "title": "Breach of Terms:",
+          "content": "CHIRAG CONNECT™ reserves the right to suspend or terminate accounts found violating these terms without prior notice."
+        }
+      },
+      "section8": {
+        "title": "8. Limitation of Liability",
+        "content": "CHIRAG CONNECT™ is a facilitator and does not guarantee the accuracy, reliability, or quality of services/products offered by vendors. We are not liable for any direct, indirect, or consequential damages arising from your use of the platform."
+      },
+      "section9": {
+        "title": "9. Amendments",
+        "content": "CHIRAG CONNECT™ reserves the right to amend these terms and conditions at any time. Changes will be notified via the Platform or registered email."
+      },
+      "section10": {
+        "title": "10. Governing Law",
+        "content": "These terms are governed by and construed in accordance with the laws of India. Any disputes arising out of or related to the use of the Platform will be subject to the exclusive jurisdiction of the courts in Prayagraj, Uttar Pradesh."
+      },
+      "section11": {
+        "title": "11. Contact Us",
+        "contact": "If you have any questions about these terms, please contact us at:",
+        "email": "Email: contact@chiragtechnologies.com",
+        "phone": "Phone: +91-7838750472"
+      }
+    },
+    "pricingPolicy": {
+      "title": "Pricing & Policies",
+      "intro": "Welcome to the CHIRAG CONNECT™ Vendor Web App Pricing & Policies section. This document outlines our service pricing, commission model, refund policy, and payment information. Please review this information carefully to understand our operational framework.",
+      "serviceEstimates": {
+        "title": "Service Pricing Estimates (AOV) - Based on Common Crops",
+        "headers": {
+          "serviceType": "Service Type",
+          "crops": "Example Crops",
+          "cost": "Estimated Service Cost (INR)",
+          "aov": "AOV Estimate per Booking (INR)"
+        },
+        "rows": {
+          "droneSpray": {
+            "serviceType": "Drone Spraying",
+            "crops": "Paddy, Wheat, Mustard, Chilli",
+            "cost": "₹500-₹2,500 per acre",
+            "aov": "₹1,500 (avg.)"
+          },
+          "soilTest": {
+            "serviceType": "Soil Testing",
+            "crops": "Any crop",
+            "cost": "₹300-₹1,200 per sample",
+            "aov": "₹750 (avg.)"
+          },
+          "tractor": {
+            "serviceType": "Tractor & Equipment Rental",
+            "crops": "Sugarcane, Maize, Pulses",
+            "cost": "₹800-₹4,500 per use",
+            "aov": "₹2,500 (avg.)"
+          },
+          "harvesting": {
+            "serviceType": "Harvesting & Post-Harvest Processing",
+            "crops": "Tomato, Potato, Onion",
+            "cost": "₹1,500-₹6,000 per acre",
+            "aov": "₹3,000 (avg.)"
+          },
+          "advisory": {
+            "serviceType": "Farm Advisory & Consultation",
+            "crops": "All crops",
+            "cost": "₹500-₹2,000 per session",
+            "aov": "₹1,000 (avg.)"
+          }
+        },
+        "summary": {
+          "aovRange": {
+            "label": "AOV Range for Services:",
+            "value": "₹750 - ₹3,000 per booking."
+          },
+          "avgAov": {
+            "label": "Average AOV Across Services:",
+            "value": "₹1,500 per booking."
+          }
+        }
+      },
+      "commission": {
+        "title": "1. Vendor Commission Model & Wallet Top-Up",
+        "walletTopUp": {
+          "label": "Vendors Top-Up Wallets:",
+          "value": "Vendors must add money to their wallets to process bookings."
+        },
+        "deduction": {
+          "label": "Commission Deduction:",
+          "value": "A small commission is deducted per service booked."
+        },
+        "farmerCosts": {
+          "label": "Farmer Costs:",
+          "value": "Farmers pay vendors directly; no commission is charged to farmers."
+        },
+        "runnerModel": {
+          "label": "Runner Model:",
+          "value": "Runners coordinate with vendors and charge farmers for service fulfillment."
+        },
+        "promo": {
+          "title": "Promotional Offer",
+          "content": "As a promotional benefit for new onboarding vendors and service providers, no commission is currently being charged. CHIRAG TECHNOLOGIES™ will inform vendors when commissions become chargeable."
+        },
+        "wallet": {
+          "title": "Wallet System",
+          "item1": "CHIRAG TECHNOLOGIES™ deducts a commission for every service completed through the Platform from the Vendor's Wallet.",
+          "item2": "Vendors need to top up or recharge their Wallets for new service bookings.",
+          "item3": "Your Wallet balance remains secure and is solely used for service-related activities.",
+          "item4": "Withdrawal of the Wallet balance is permitted anytime without charges.",
+          "item5": "No interest is accrued on Wallet funds."
+        }
+      },
+      "refund": {
+        "title": "2. Refund Policy & Timeline",
+        "eligibility": {
+          "label": "Refund Eligibility:",
+          "value": "Refunds are applicable only if the vendor cancels before execution."
+        },
+        "processing": {
+          "label": "Processing Time:",
+          "value": "Refunds will be credited back to the original payment method in 7-15 business days."
+        },
+        "nonRefundable": {
+          "label": "Non-Refundable Cases:",
+          "value": "If a service has been executed or partially completed, refunds are not applicable."
+        },
+        "cancellation": {
+          "title": "Cancellation Process",
+          "content": "Vendors must notify cancellations through the platform as early as possible to ensure a smooth refund process. The refund process will be initiated automatically once the cancellation is confirmed in the system."
+        }
+      },
+      "payment": {
+        "title": "3. Payment Gateway Information",
+        "solution": {
+          "label": "Payment Solution:",
+          "value": "We use Cashfree as our trusted payment gateway partner."
+        },
+        "security": {
+          "label": "Transaction Security:",
+          "value": "All payments are securely processed with industry-standard encryption."
+        },
+        "methods": {
+          "label": "Payment Methods:",
+          "value": "Support for UPI, credit/debit cards, net banking, and wallet payments."
+        },
+        "settlement": {
+          "label": "Settlement Timeline:",
+          "value": "Vendors receive payments typically within 24-48 hours after successful transaction."
+        },
+        "verification": {
+          "title": "Payment Verification",
+          "content": "All transactions on the platform are verified and secured. Payment receipts and transaction IDs are generated for each successful transaction and can be accessed through your dashboard."
+        }
+      },
+      "transparency": {
+        "title": "4. Pricing Transparency",
+        "content": "CHIRAG CONNECT™ is committed to maintaining transparency in all our pricing structures. Any changes to commission rates or service charges will be communicated to vendors with adequate notice before implementation.",
+        "vendorControl": {
+          "title": "Vendor Pricing Control",
+          "content": "Vendors have the flexibility to set their own service prices within the platform, based on market conditions, service quality, and operational costs. We recommend pricing your services competitively to attract more bookings."
+        }
+      },
+      "dispute": {
+        "title": "5. Dispute Resolution",
+        "content": "In case of payment-related disputes or discrepancies, vendors can raise concerns through the platform's support system. All disputes will be addressed within 48 hours of submission.",
+        "documentation": {
+          "label": "Documentation Requirement:",
+          "value": "Please provide all relevant transaction details when reporting payment issues."
+        },
+        "timeline": {
+          "label": "Resolution Timeline:",
+          "value": "We aim to resolve all payment disputes within 5-7 business days from the date of reporting."
+        }
+      },
+      "additional": {
+        "title": "6. Additional Information",
+        "item1": "Pricing structures may vary based on seasonal factors and geographical location.",
+        "item2": "Vendors are encouraged to utilize promotional offers to maximize their business opportunities.",
+        "item3": "For premium service listings and enhanced visibility, vendors can contact our support team.",
+        "contact": "For further assistance or clarification regarding our pricing and policies, please contact our support team at contact@chiragtechnologies.com or call +91-7837750472."
+      }
+    },
     "profile": {
       "title": "My Profile",
       "tabs": {
@@ -92,23 +448,7 @@
     "editCookie": "If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.",
     "embeddedContent": "Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.",
     "dataCollection": "These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracing your interaction with the embedded content if you have an account and are logged in to that website.",
-    "termsAndConditions": {
-      "Terms and Conditions": "Terms and Conditions",
-      "COMMENTS": "COMMENTS",
-      "commentCollection": "When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor's IP address and browser user agent string to help spam detection.",
-      "gravatarInfo": "An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: After approval of your comment, your profile picture is visible to the public in the context of your comment.",
-      "MEDIA": "MEDIA",
-      "mediaWarning": "If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.",
-      "CONTACT FORMS": "CONTACT FORMS",
-      "commentOptIn": "If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.",
-      "temporaryCookie": "If you have an account and you log in to this site, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.",
-      "loginCookies": "When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select 'Remember Me', your login will persist for two weeks. If you log out of your account, the login cookies will be removed.",
-      "editCookie": "If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.",
-      "EMBEDDED CONTENT FROM OTHER WEBSITES": "EMBEDDED CONTENT FROM OTHER WEBSITES",
-      "embeddedContent": "Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.",
-      "dataCollection": "These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracing your interaction with the embedded content if you have an account and are logged in to that website."
-      
-    },
+  
     "login": {
       "title": "Please login with your registered",
       "subtitle": "mobile number",
@@ -307,6 +647,8 @@
         "sprayAssist": "Spray Assist"
       },
       "bottomMenu": {
+        "pricePolicy":"Pricing Policy",
+
         "contactUs": "Contact us",
         "termsAndConditions": "Terms and Conditions",
         "privacyPolicy": "Privacy policy",
@@ -620,6 +962,362 @@
   }
   },
   "hi": {
+    "privacyPolicy": {
+      "title": "गोपनीयता नीति",
+      "intro": "CHIRAG CONNECT™ वेंडर वेब ऐप में आपका स्वागत है। यह गोपनीयता नीति बताती है कि CHIRAG TECHNOLOGIES आपके द्वारा हमारे प्लेटफॉर्म का उपयोग करते समय आपकी व्यक्तिगत और व्यावसायिक जानकारी को कैसे एकत्र करता है, उपयोग करता है, साझा करता है और सुरक्षित रखता है। प्लेटफॉर्म का उपयोग करके, आप इस गोपनीयता नीति में बताई गई प्रथाओं से सहमत होते हैं।",
+      "section1": {
+        "title": "1. हम कौन सी जानकारी एकत्र करते हैं",
+        "intro": "जब आप CHIRAG CONNECT™ वेंडर वेब ऐप पर पंजीकरण करते हैं और उपयोग करते हैं, तो हम निम्न प्रकार की जानकारी एकत्र करते हैं:",
+        "personal": {
+          "title": "1.1 व्यक्तिगत जानकारी",
+          "item1": "नाम, पता, ईमेल पता, फोन नंबर, और अन्य संपर्क विवरण।",
+          "item2": "व्यावसायिक विवरण जैसे GSTIN, PAN, बैंक खाता जानकारी, और परिचालन पता।"
+        },
+        "service": {
+          "title": "1.2 सेवा डेटा",
+          "item1": "आपके द्वारा प्लेटफॉर्म के माध्यम से प्रदान की जाने वाली सेवाओं का विवरण, जिसमें सेवा विवरण, मूल्य निर्धारण और उपलब्धता शामिल है।",
+          "item2": "वॉलेट लेनदेन, सेवा बुकिंग और भुगतान विवरण।"
+        },
+        "usage": {
+          "title": "1.3 उपयोग की जानकारी",
+          "item1": "आप प्लेटफॉर्म के साथ कैसे इंटरैक्ट करते हैं, जैसे लॉगिन गतिविधि, पेज व्यू और क्लिकस्ट्रीम डेटा।",
+          "item2": "डिवाइस जानकारी (IP पता, ब्राउज़र प्रकार और ऑपरेटिंग सिस्टम)।"
+        }
+      },
+      "section2": {
+        "title": "2. हम आपकी जानकारी का उपयोग कैसे करते हैं",
+        "item1": {
+          "title": "प्लेटफॉर्म संचालन को सुविधाजनक बनाने के लिए:",
+          "content": "सुचारू लेनदेन, सेवा बुकिंग और वॉलेट प्रबंधन सुनिश्चित करें।"
+        },
+        "item2": {
+          "title": "प्लेटफॉर्म में सुधार के लिए:",
+          "content": "उपयोगकर्ता अनुभव और कार्यक्षमता को बढ़ाने के लिए उपयोग पैटर्न का विश्लेषण करें।"
+        },
+        "item3": {
+          "title": "आपके साथ संवाद करने के लिए:",
+          "content": "महत्वपूर्ण अपडेट, प्रमोशनल ऑफर और सेवा सूचनाएं साझा करें।"
+        },
+        "item4": {
+          "title": "अनुपालन और सुरक्षा के लिए:",
+          "content": "धोखाधड़ी वाली गतिविधियों को रोकें और कानूनी और नियामक आवश्यकताओं के अनुपालन को सुनिश्चित करें।"
+        }
+      },
+      "section3": {
+        "title": "3. जानकारी का साझाकरण",
+        "intro": "CHIRAG TECHNOLOGIES™ आपकी गोपनीयता का सम्मान करता है और यह सुनिश्चित करता है कि आपकी जानकारी निम्नलिखित मामलों को छोड़कर तीसरे पक्षों को बेची, किराए पर दी या साझा नहीं की जाती है:",
+        "item1": {
+          "title": "सेवा पूर्ति:",
+          "content": "सेवा बुकिंग की सुविधा के लिए किसानों या अन्य हितधारकों के साथ साझा की गई जानकारी।"
+        },
+        "item2": {
+          "title": "तृतीय-पक्ष सेवा प्रदाता:",
+          "content": "भुगतान प्रसंस्करण, विश्लेषिकी या अन्य परिचालन कार्यों (गोपनीयता समझौतों द्वारा बाध्य) के साथ हमारी सहायता करने वाले विक्रेता।"
+        },
+        "item3": {
+          "title": "कानूनी अनुपालन:",
+          "content": "जब लागू कानूनों, नियमों या कानूनी प्रक्रियाओं का पालन करने के लिए आवश्यक हो।"
+        }
+      },
+      "section4": {
+        "title": "4. वॉलेट डेटा उपयोग",
+        "item1": "वॉलेट सुविधा सेवा बुकिंग से संबंधित आभासी लेनदेन के लिए डिज़ाइन की गई है।",
+        "item2": "आपका वॉलेट बैलेंस सुरक्षित रहता है और केवल सेवा-संबंधी गतिविधियों के लिए उपयोग किया जाता है।",
+        "item3": "वॉलेट बैलेंस की निकासी किसी भी समय बिना शुल्क के अनुमत है।",
+        "item4": "वॉलेट फंड पर कोई ब्याज अर्जित नहीं होता है।"
+      },
+      "section5": {
+        "title": "5. डेटा सुरक्षा",
+        "intro": "हम आपकी जानकारी की रक्षा के लिए उद्योग-मानक उपाय लागू करते हैं, जिनमें शामिल हैं:",
+        "item1": "संवेदनशील डेटा का एन्क्रिप्शन।",
+        "item2": "अनधिकृत पहुंच को रोकने के लिए सुरक्षित पहुंच नियंत्रण।",
+        "item3": "सिस्टम सुरक्षा सुनिश्चित करने के लिए नियमित ऑडिट।"
+      },
+      "section6": {
+        "title": "6. कुकीज़ और ट्रैकिंग प्रौद्योगिकियां",
+        "intro": "हम प्लेटफॉर्म पर आपके अनुभव को बेहतर बनाने के लिए कुकीज़ और इसी तरह की ट्रैकिंग प्रौद्योगिकियों का उपयोग करते हैं। कुकीज़ हमारी मदद करती हैं:",
+        "item1": "आपकी लॉगिन जानकारी याद रखें।",
+        "item2": "व्यक्तिगत सिफारिशें और सूचनाएं प्रदान करें।",
+        "item3": "सुधार के लिए प्लेटफॉर्म उपयोग का विश्लेषण करें।",
+        "outro": "आप अपनी ब्राउज़र सेटिंग्स में कुकीज़ को प्रबंधित या अक्षम कर सकते हैं, हालांकि इससे प्लेटफॉर्म कार्यक्षमता प्रभावित हो सकती है।"
+      },
+      "section7": {
+        "title": "7. आपके अधिकार",
+        "intro": "प्लेटफॉर्म के उपयोगकर्ता के रूप में, आपको निम्नलिखित अधिकार हैं:",
+        "item1": "हमारे पास आपके बारे में मौजूद व्यक्तिगत जानकारी तक पहुंच और समीक्षा करें।",
+        "item2": "अपनी जानकारी में सुधार या अपडेट का अनुरोध करें।",
+        "item3": "अपना खाता और संबंधित डेटा हटाएं (कानूनी दायित्वों के अनुपालन के अधीन)।",
+        "contact": "इन अधिकारों का प्रयोग करने के लिए, कृपया हमसे contact@chiragtechnologies.com पर संपर्क करें।"
+      },
+      "section8": {
+        "title": "8. डेटा प्रतिधारण",
+        "content": "हम आपके डेटा को तब तक बनाए रखते हैं जब तक कि यह हमारी सेवाएं प्रदान करने और कानूनी दायित्वों का पालन करने के लिए आवश्यक है। एक बार जब आप अपना खाता निष्क्रिय कर देते हैं, तो हम आपके डेटा को हटा देंगे या अनाम कर देंगे, सिवाय उन स्थितियों के जहां कानून द्वारा प्रतिधारण आवश्यक है।"
+      },
+      "section9": {
+        "title": "9. इस गोपनीयता नीति में परिवर्तन",
+        "content": "CHIRAG TECHNOLOGIES किसी भी समय इस गोपनीयता नीति को अपडेट करने का अधिकार सुरक्षित रखता है। किसी भी परिवर्तन की सूचना प्लेटफॉर्म या पंजीकृत ईमेल के माध्यम से दी जाएगी। प्लेटफॉर्म का निरंतर उपयोग अपडेटेड गोपनीयता नीति से आपकी सहमति का प्रतीक है।"
+      },
+      "section10": {
+        "title": "10. शासी कानून",
+        "content": "यह गोपनीयता नीति भारत के कानूनों द्वारा नियंत्रित है। इससे उत्पन्न होने वाले किसी भी विवाद का समाधान प्रयागराज, उत्तर प्रदेश के न्यायालयों में किया जाएगा।"
+      },
+      "section11": {
+        "title": "11. हमसे संपर्क करें",
+        "intro": "यदि आपके पास इस गोपनीयता नीति के बारे में कोई प्रश्न, चिंता या अनुरोध है, तो कृपया हमसे संपर्क करें:",
+        "email": "ईमेल: contact@chiragtechnologies.com",
+        "phone": "फोन: +91-7837750472",
+        "consent": "CHIRAG CONNECT™ वेंडर वेब ऐप का उपयोग करके, आप इस गोपनीयता नीति में बताई गई प्रथाओं से सहमत होते हैं।"
+      }
+    },
+    "termsAndConditions": {
+      "title": "नियम और शर्तें",
+      "intro": "CHIRAG CONNECT™ वेंडर वेब ऐप में आपका स्वागत है। इस प्लेटफॉर्म का उपयोग या एक्सेस करके, आप निम्नलिखित नियमों और शर्तों का पालन करने और उनसे बाध्य होने के लिए सहमत होते हैं। कृपया आगे बढ़ने से पहले उन्हें ध्यानपूर्वक पढ़ें।",
+      "section1": {
+        "title": "1. परिचय",
+        "para1": "CHIRAG CONNECT™ वेंडर वेब ऐप (\"प्लेटफॉर्म\") CHIRAG TECHNOLOGIES™ द्वारा विकसित एक ऑनलाइन प्लेटफॉर्म है, जो विक्रेताओं/सेवा प्रदाताओं (इसके बाद \"आप\" या \"विक्रेता\" के रूप में संदर्भित) को कृषि पारिस्थितिकी तंत्र में किसानों और अन्य हितधारकों से जोड़ने के लिए है।",
+        "para2": "इस प्लेटफॉर्म पर पंजीकरण करके, आप इन नियमों और शर्तों के साथ-साथ हमारी गोपनीयता नीति को भी स्वीकार करते हैं।"
+      },
+      "section2": {
+        "title": "2. विक्रेता खाता",
+        "item1": {
+          "title": "पात्रता:",
+          "content": "विक्रेताओं को अपने संबंधित क्षेत्राधिकारों में सेवाएं/उत्पाद प्रदान करने और संचालित करने के लिए कानूनी रूप से अधिकृत होना चाहिए।"
+        },
+        "item2": {
+          "title": "पंजीकरण:",
+          "content": "आप पंजीकरण प्रक्रिया के दौरान सटीक, पूर्ण और अद्यतित जानकारी प्रदान करने के लिए सहमत हैं।"
+        },
+        "item3": {
+          "title": "खाता सुरक्षा:",
+          "content": "आप अपने खाते के क्रेडेंशियल की गोपनीयता बनाए रखने के लिए जिम्मेदार हैं। आपके खाते के तहत की गई कोई भी गतिविधि आपकी जिम्मेदारी मानी जाएगी।"
+        }
+      },
+      "section3": {
+        "title": "3. विक्रेता की जिम्मेदारियां",
+        "item1": {
+          "title": "सेवा मानक:",
+          "content": "विक्रेताओं को अपने उत्पादों या सेवाओं के बारे में सटीक जानकारी प्रदान करने, पारदर्शिता बनाए रखने और वादा की गई उच्च गुणवत्ता वाली सेवाओं/उत्पादों को वितरित करने की आवश्यकता होती है।"
+        },
+        "item2": {
+          "title": "अनुपालन:",
+          "content": "विक्रेताओं को कृषि, व्यापार और कराधान कानूनों सहित सभी लागू कानूनों का पालन करना चाहिए।"
+        },
+        "item3": {
+          "title": "निषिद्ध गतिविधियां:",
+          "content": "गलत प्रस्तुति, धोखाधड़ी या प्लेटफॉर्म का अनधिकृत उपयोग सख्ती से निषिद्ध है।"
+        }
+      },
+      "section4": {
+        "title": "4. लेनदेन और भुगतान",
+        "pricing": {
+          "title": "मूल्य निर्धारण",
+          "content": "विक्रेताओं को अपनी सेवाओं या उत्पादों की कीमतों की सटीकता और पारदर्शी रूप से प्रदर्शित होने की सुनिश्चितता करनी चाहिए।"
+        },
+        "wallet": {
+          "title": "वॉलेट सिस्टम",
+          "item1": "CHIRAG TECHNOLOGIES™ विक्रेता के वॉलेट से प्लेटफॉर्म के माध्यम से पूरी की गई प्रत्येक सेवा के लिए एक कमीशन काटता है।",
+          "item2": "विक्रेताओं को नई सेवा बुकिंग के लिए अपने वॉलेट में पैसे जोड़ने या रिचार्ज करने की आवश्यकता होती है।"
+        },
+        "promo": {
+          "title": "प्रमोशनल ऑफर",
+          "content": "नए जुड़ने वाले विक्रेताओं और सेवा प्रदाताओं के लिए प्रमोशनल लाभ के रूप में, वर्तमान में कोई कमीशन नहीं लिया जा रहा है। CHIRAG TECHNOLOGIES™ विक्रेताओं को सूचित करेगा जब कमीशन वसूलने योग्य हो जाएगा।"
+        }
+      },
+      "section5": {
+        "title": "5. डेटा संग्रह और उपयोग",
+        "para1": "विक्रेता सहमत हैं कि CHIRAG CONNECT™ विश्लेषिकी, सिफारिशों और सेवा में सुधार सहित परिचालन उद्देश्यों के लिए कुछ डेटा एकत्र और उपयोग कर सकता है।",
+        "para2": "विक्रेता से एकत्रित डेटा का उपयोग गोपनीयता नीति के अनुसार किया जाएगा।"
+      },
+      "section6": {
+        "title": "6. बौद्धिक संपदा",
+        "para1": "लोगो, डिजाइन और प्रौद्योगिकी सहित, लेकिन इन्हीं तक सीमित नहीं, प्लेटफॉर्म से संबंधित सभी बौद्धिक संपदा अधिकार CHIRAG TECHNOLOGIES™ के हैं।",
+        "para2": "विक्रेता पूर्व लिखित सहमति के बिना प्लेटफॉर्म से पुनरुत्पादन, वितरण या व्युत्पन्न कार्य नहीं कर सकते हैं।"
+      },
+      "section7": {
+        "title": "7. समाप्ति",
+        "item1": {
+          "title": "स्वैच्छिक समाप्ति:",
+          "content": "विक्रेता अपने खातों को निष्क्रिय करके प्लेटफॉर्म का उपयोग बंद कर सकते हैं।"
+        },
+        "item2": {
+          "title": "शर्तों का उल्लंघन:",
+          "content": "CHIRAG CONNECT™ बिना पूर्व सूचना के इन शर्तों का उल्लंघन करने वाले खातों को निलंबित या समाप्त करने का अधिकार सुरक्षित रखता है।"
+        }
+      },
+      "section8": {
+        "title": "8. देयता की सीमा",
+        "content": "CHIRAG CONNECT™ एक सुविधादाता है और विक्रेताओं द्वारा पेश की जाने वाली सेवाओं/उत्पादों की सटीकता, विश्वसनीयता या गुणवत्ता की गारंटी नहीं देता है। हम प्लेटफॉर्म के आपके उपयोग से उत्पन्न होने वाले किसी भी प्रत्यक्ष, अप्रत्यक्ष या परिणामी क्षति के लिए उत्तरदायी नहीं हैं।"
+      },
+      "section9": {
+        "title": "9. संशोधन",
+        "content": "CHIRAG CONNECT™ किसी भी समय इन नियमों और शर्तों को संशोधित करने का अधिकार सुरक्षित रखता है। परिवर्तनों की सूचना प्लेटफॉर्म या पंजीकृत ईमेल के माध्यम से दी जाएगी।"
+      },
+      "section10": {
+        "title": "10. शासी कानून",
+        "content": "ये शर्तें भारत के कानूनों द्वारा नियंत्रित हैं और उनके अनुसार निर्मित हैं। प्लेटफॉर्म के उपयोग से उत्पन्न या संबंधित कोई भी विवाद प्रयागराज, उत्तर प्रदेश के न्यायालयों के विशेष अधिकार क्षेत्र के अधीन होगा।"
+      },
+      "section11": {
+        "title": "11. हमसे संपर्क करें",
+        "contact": "यदि आपके पास इन शर्तों के बारे में कोई प्रश्न है, तो कृपया हमसे संपर्क करें:",
+        "email": "ईमेल: contact@chiragtechnologies.com",
+        "phone": "फोन: +91-7838750472"
+      }
+    },
+    "pricingPolicy": {
+      "title": "मूल्य निर्धारण और नीतियां",
+      "intro": "CHIRAG CONNECT™ वेंडर वेब ऐप मूल्य निर्धारण और नीतियां अनुभाग में आपका स्वागत है। यह दस्तावेज़ हमारे सेवा मूल्य निर्धारण, कमीशन मॉडल, रिफंड नीति और भुगतान जानकारी को रेखांकित करता है। हमारे परिचालन ढांचे को समझने के लिए कृपया इस जानकारी की समीक्षा सावधानीपूर्वक करें।",
+      "serviceEstimates": {
+        "title": "सेवा मूल्य निर्धारण अनुमान (AOV) - सामान्य फसलों के आधार पर",
+        "headers": {
+          "serviceType": "सेवा प्रकार",
+          "crops": "उदाहरण फसलें",
+          "cost": "अनुमानित सेवा लागत (INR)",
+          "aov": "प्रति बुकिंग AOV अनुमान (INR)"
+        },
+        "rows": {
+          "droneSpray": {
+            "serviceType": "ड्रोन स्प्रेइंग",
+            "crops": "धान, गेहूं, सरसों, मिर्च",
+            "cost": "₹500-₹2,500 प्रति एकड़",
+            "aov": "₹1,500 (औसत)"
+          },
+          "soilTest": {
+            "serviceType": "मिट्टी परीक्षण",
+            "crops": "कोई भी फसल",
+            "cost": "₹300-₹1,200 प्रति नमूना",
+            "aov": "₹750 (औसत)"
+          },
+          "tractor": {
+            "serviceType": "ट्रैक्टर और उपकरण किराया",
+            "crops": "गन्ना, मक्का, दालें",
+            "cost": "₹800-₹4,500 प्रति उपयोग",
+            "aov": "₹2,500 (औसत)"
+          },
+          "harvesting": {
+            "serviceType": "फसल कटाई और कटाई के बाद की प्रक्रिया",
+            "crops": "टमाटर, आलू, प्याज",
+            "cost": "₹1,500-₹6,000 प्रति एकड़",
+            "aov": "₹3,000 (औसत)"
+          },
+          "advisory": {
+            "serviceType": "फार्म सलाहकार और परामर्श",
+            "crops": "सभी फसलें",
+            "cost": "₹500-₹2,000 प्रति सत्र",
+            "aov": "₹1,000 (औसत)"
+          }
+        },
+        "summary": {
+          "aovRange": {
+            "label": "सेवाओं के लिए AOV रेंज:",
+            "value": "₹750 - ₹3,000 प्रति बुकिंग।"
+          },
+          "avgAov": {
+            "label": "सभी सेवाओं में औसत AOV:",
+            "value": "₹1,500 प्रति बुकिंग।"
+          }
+        }
+      },
+      "commission": {
+        "title": "1. विक्रेता कमीशन मॉडल और वॉलेट टॉप-अप",
+        "walletTopUp": {
+          "label": "विक्रेता वॉलेट में पैसे जोड़ते हैं:",
+          "value": "विक्रेताओं को बुकिंग प्रोसेस करने के लिए अपने वॉलेट में पैसे जोड़ने होंगे।"
+        },
+        "deduction": {
+          "label": "कमीशन कटौती:",
+          "value": "प्रति बुक की गई सेवा पर एक छोटा कमीशन काटा जाता है।"
+        },
+        "farmerCosts": {
+          "label": "किसान लागत:",
+          "value": "किसान सीधे विक्रेताओं को भुगतान करते हैं; किसानों से कोई कमीशन नहीं लिया जाता है।"
+        },
+        "runnerModel": {
+          "label": "रनर मॉडल:",
+          "value": "रनर्स विक्रेताओं के साथ समन्वय करते हैं और सेवा पूरी करने के लिए किसानों से शुल्क लेते हैं।"
+        },
+        "promo": {
+          "title": "प्रमोशनल ऑफर",
+          "content": "नए जुड़ने वाले विक्रेताओं और सेवा प्रदाताओं के लिए प्रमोशनल लाभ के रूप में, वर्तमान में कोई कमीशन नहीं लिया जा रहा है। CHIRAG TECHNOLOGIES™ विक्रेताओं को सूचित करेगा जब कमीशन वसूलने योग्य हो जाएगा।"
+        },
+        "wallet": {
+          "title": "वॉलेट सिस्टम",
+          "item1": "CHIRAG TECHNOLOGIES™ विक्रेता के वॉलेट से प्लेटफॉर्म के माध्यम से पूरी की गई प्रत्येक सेवा के लिए एक कमीशन काटता है।",
+          "item2": "विक्रेताओं को नई सेवा बुकिंग के लिए अपने वॉलेट में पैसे जोड़ने या रिचार्ज करने की आवश्यकता होती है।",
+          "item3": "आपका वॉलेट बैलेंस सुरक्षित रहता है और केवल सेवा-संबंधी गतिविधियों के लिए उपयोग किया जाता है।",
+          "item4": "वॉलेट बैलेंस की निकासी किसी भी समय बिना शुल्क के अनुमत है।",
+          "item5": "वॉलेट फंड पर कोई ब्याज अर्जित नहीं होता है।"
+        }
+      },
+      "refund": {
+        "title": "2. रिफंड नीति और समयरेखा",
+        "eligibility": {
+          "label": "रिफंड पात्रता:",
+          "value": "रिफंड केवल तभी लागू होता है जब विक्रेता निष्पादन से पहले रद्द करता है।"
+        },
+        "processing": {
+          "label": "प्रोसेसिंग समय:",
+          "value": "रिफंड 7-15 कार्य दिवसों में मूल भुगतान विधि में वापस जमा किया जाएगा।"
+        },
+        "nonRefundable": {
+          "label": "गैर-वापसी योग्य मामले:",
+          "value": "यदि कोई सेवा निष्पादित की गई है या आंशिक रूप से पूरी हुई है, तो रिफंड लागू नहीं होता है।"
+        },
+        "cancellation": {
+          "title": "रद्दीकरण प्रक्रिया",
+          "content": "विक्रेताओं को एक सुचारू रिफंड प्रक्रिया सुनिश्चित करने के लिए जल्द से जल्द प्लेटफॉर्म के माध्यम से रद्दीकरण की सूचना देनी चाहिए। रिफंड प्रक्रिया सिस्टम में रद्दीकरण की पुष्टि होने के बाद स्वचालित रूप से शुरू की जाएगी।"
+        }
+      },
+      "payment": {
+        "title": "3. भुगतान गेटवे जानकारी",
+        "solution": {
+          "label": "भुगतान समाधान:",
+          "value": "हम अपने विश्वसनीय भुगतान गेटवे पार्टनर के रूप में Cashfree का उपयोग करते हैं।"
+        },
+        "security": {
+          "label": "लेनदेन सुरक्षा:",
+          "value": "सभी भुगतान उद्योग-मानक एन्क्रिप्शन के साथ सुरक्षित रूप से संसाधित किए जाते हैं।"
+        },
+        "methods": {
+          "label": "भुगतान विधियां:",
+          "value": "UPI, क्रेडिट/डेबिट कार्ड, नेट बैंकिंग और वॉलेट भुगतानों के लिए समर्थन।"
+        },
+        "settlement": {
+          "label": "निपटान समयरेखा:",
+          "value": "विक्रेताओं को सफल लेनदेन के बाद आमतौर पर 24-48 घंटों के भीतर भुगतान प्राप्त होता है।"
+        },
+        "verification": {
+          "title": "भुगतान सत्यापन",
+          "content": "प्लेटफॉर्म पर सभी लेनदेन सत्यापित और सुरक्षित हैं। प्रत्येक सफल लेनदेन के लिए भुगतान रसीदें और लेनदेन आईडी जनरेट की जाती हैं और आपके डैशबोर्ड के माध्यम से एक्सेस की जा सकती हैं।"
+        }
+      },
+      "transparency": {
+        "title": "4. मूल्य निर्धारण पारदर्शिता",
+        "content": "CHIRAG CONNECT™ अपने सभी मूल्य निर्धारण संरचनाओं में पारदर्शिता बनाए रखने के लिए प्रतिबद्ध है। कमीशन दरों या सेवा शुल्कों में किसी भी परिवर्तन की सूचना कार्यान्वयन से पहले पर्याप्त नोटिस के साथ विक्रेताओं को दी जाएगी।",
+        "vendorControl": {
+          "title": "विक्रेता मूल्य निर्धारण नियंत्रण",
+          "content": "विक्रेताओं के पास बाजार स्थितियों, सेवा गुणवत्ता और परिचालन लागतों के आधार पर प्लेटफॉर्म के भीतर अपनी सेवाओं के लिए अपने स्वयं के मूल्य निर्धारित करने की लचीलापन है। हम अधिक बुकिंग आकर्षित करने के लिए अपनी सेवाओं को प्रतिस्पर्धी रूप से मूल्य निर्धारित करने की सलाह देते हैं।"
+        }
+      },
+      "dispute": {
+        "title": "5. विवाद समाधान",
+        "content": "भुगतान-संबंधित विवादों या विसंगतियों के मामले में, विक्रेता प्लेटफॉर्म की सपोर्ट सिस्टम के माध्यम से चिंताएं उठा सकते हैं। सभी विवादों को जमा करने के 48 घंटों के भीतर संबोधित किया जाएगा।",
+        "documentation": {
+          "label": "दस्तावेज़ीकरण आवश्यकता:",
+          "value": "भुगतान समस्याओं की रिपोर्ट करते समय कृपया सभी प्रासंगिक लेनदेन विवरण प्रदान करें।"
+        },
+        "timeline": {
+          "label": "समाधान समयरेखा:",
+          "value": "हम रिपोर्टिंग की तारीख से 5-7 कार्य दिवसों के भीतर सभी भुगतान विवादों को हल करने का लक्ष्य रखते हैं।"
+        }
+      },
+      "additional": {
+        "title": "6. अतिरिक्त जानकारी",
+        "item1": "मूल्य निर्धारण संरचनाएं मौसमी कारकों और भौगोलिक स्थान के आधार पर भिन्न हो सकती हैं।",
+        "item2": "विक्रेताओं को अपने व्यापार के अवसरों को अधिकतम करने के लिए प्रमोशनल ऑफर का उपयोग करने के लिए प्रोत्साहित किया जाता है।",
+        "item3": "प्रीमियम सेवा लिस्टिंग और बेहतर दृश्यता के लिए, विक्रेता हमारी सपोर्ट टीम से संपर्क कर सकते हैं।",
+        "contact": "हमारे मूल्य निर्धारण और नीतियों के बारे में अधिक सहायता या स्पष्टीकरण के लिए, कृपया हमारी सपोर्ट टीम से contact@chiragtechnologies.com पर संपर्क करें या +91-7837750472 पर कॉल करें।"
+      }
+    },
     
     "confirmedBookings":{
       "title": "बुकिंग",
@@ -938,6 +1636,7 @@
       },
       "bottomMenu": {
         "contactUs": "संपर्क करें",
+        "pricePolicy":"मूल्य नीति",
         "termsAndConditions": "नियम और शर्तें",
         "privacyPolicy": "गोपनीयता नीति",
         "logout": "लॉग आउट"
@@ -1046,22 +1745,7 @@
       "selectLabel": "भाषा चुनें",
       "continueButton": "जारी रखें"
     },
-    "termsAndConditions": {
-      "Terms and Conditions": "शर्तें और नियम",
-      "COMMENTS": "टिप्पणियाँ",
-      "commentCollection": "जब विज़िटर साइट पर टिप्पणियाँ छोड़ते हैं, तो हम टिप्पणियाँ फ़ॉर्म में दिखाए गए डेटा को एकत्र करते हैं, और साथ ही विज़िटर का आईपी पता और ब्राउज़र उपयोगकर्ता एजेंट स्ट्रिंग भी एकत्र करते हैं ताकि स्पैम का पता लगाने में मदद मिल सके।",
-      "gravatarInfo": "आपके ईमेल पते से बनाए गए एक एनोनिमाइज्ड स्ट्रिंग (जिसे हैश भी कहा जाता है) को यह देखने के लिए ग्रेवेटर सेवा को प्रदान किया जा सकता है कि क्या आप इसका उपयोग कर रहे हैं। ग्रेवेटर सेवा की गोपनीयता नीति यहाँ उपलब्ध है: आपकी टिप्पणी की स्वीकृति के बाद, आपकी प्रोफ़ाइल चित्र आपकी टिप्पणी के संदर्भ में जनता के लिए दिखाई देती है।",
-      "MEDIA": "मीडिया",
-      "mediaWarning": "यदि आप वेबसाइट पर छवियाँ अपलोड करते हैं, तो आपको शामिल स्थान डेटा (EXIF GPS) वाली छवियाँ अपलोड करने से बचना चाहिए। वेबसाइट पर विज़िटर छवियों से कोई भी स्थान डेटा डाउनलोड और निकाल सकते हैं।",
-      "CONTACT FORMS": "संपर्क फ़ॉर्म",
-      "commentOptIn": "यदि आप हमारी साइट पर एक टिप्पणी छोड़ते हैं, तो आप कुकीज़ में अपने नाम, ईमेल पते और वेबसाइट को सहेजने के लिए ऑप्ट-इन कर सकते हैं। ये आपकी सुविधा के लिए हैं ताकि आपको दूसरी टिप्पणी छोड़ते समय अपने विवरण को फिर से भरने की आवश्यकता न पड़े। ये कुकीज़ एक साल तक रहेंगी।",
-      "temporaryCookie": "यदि आपके पास एक खाता है और आप इस साइट में लॉग इन करते हैं, तो हम यह निर्धारित करने के लिए एक अस्थायी कुकी सेट करेंगे कि क्या आपका ब्राउज़र कुकीज़ स्वीकार करता है। इस कुकी में कोई व्यक्तिगत डेटा नहीं होता है और जब आप अपने ब्राउज़र को बंद करते हैं तो इसे नष्ट कर दिया जाता है।",
-      "loginCookies": "जब आप लॉग इन करते हैं, तो हम आपकी लॉगिन जानकारी और आपकी स्क्रीन डिस्प्ले विकल्पों को सहेजने के लिए कई कुकीज़ सेट करेंगे। लॉगिन कुकीज़ दो दिनों तक चलती हैं, और स्क्रीन विकल्प कुकीज़ एक साल तक चलती हैं। यदि आप 'मुझे याद रखें' का चयन करते हैं, तो आपकी लॉगिन दो सप्ताह तक बनी रहेगी। यदि आप अपने खाते से लॉग आउट करते हैं, तो लॉगिन कुकीज़ हटा दी जाएंगी।",
-      "editCookie": "यदि आप एक लेख संपादित या प्रकाशित करते हैं, तो एक अतिरिक्त कुकी आपके ब्राउज़र में सहेजी जाएगी। इस कुकी में कोई व्यक्तिगत डेटा शामिल नहीं होता है और बस यह इंगित करता है कि आपने अभी-अभी संपादित किए गए लेख की पोस्ट आईडी क्या है। यह 1 दिन के बाद समाप्त हो जाती है।",
-      "EMBEDDED CONTENT FROM OTHER WEBSITES": "अन्य वेबसाइटों से एंबेडेड सामग्री",
-      "embeddedContent": "इस साइट पर लेख में एंबेडेड सामग्री (जैसे वीडियो, छवियाँ, लेख आदि) शामिल हो सकते हैं। अन्य वेबसाइटों से एंबेडेड सामग्री का व्यवहार ठीक उसी तरह होता है जैसे यदि विज़िटर ने दूसरी वेबसाइट पर दौरा किया है।",
-      "dataCollection": "ये वेबसाइटें आपके बारे में डेटा एकत्र कर सकती हैं, कुकीज़ का उपयोग कर सकती हैं, अतिरिक्त तृतीय-पक्ष ट्रैकिंग एम्बेड कर सकती हैं, और उस एंबेडेड सामग्री के साथ आपकी बातचीत की निगरानी कर सकती हैं, जिसमें एंबेडेड सामग्री के साथ आपकी बातचीत को ट्रेस करना शामिल है यदि आपके पास एक खाता है और आप उस वेबसाइट में लॉग इन हैं।"
-    },
+  
     "contact": {
       "title": "हमसे संपर्क करें",
       "formTitle": "हमसे संपर्क करें",

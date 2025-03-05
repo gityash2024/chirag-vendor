@@ -15,6 +15,7 @@ import privacyIcon from '../assets/privacy.png';
 import logoutIcon from '../assets/logout.png';
 import { useTranslation } from '../TranslationContext';
 import WalletIcon from '../assets/wallet-white.svg';
+import { PriceCheck } from '@mui/icons-material';
 
 
 const ModalOverlay = styled.div`
@@ -179,6 +180,7 @@ const Sidebar = () => {
     { icon: contactIcon, text: translate('sidebar.bottomMenu.contactUs'), path: '/contact-us' },
     { icon: termsIcon, text: translate('sidebar.bottomMenu.termsAndConditions'), path: '/terms-and-conditions' },
     { icon: privacyIcon, text: translate('sidebar.bottomMenu.privacyPolicy'), path: '/privacy-policy' },
+    { icon: privacyIcon, text: translate('sidebar.bottomMenu.pricePolicy'), path: '/pricing-policy' },
   ];
 
   
