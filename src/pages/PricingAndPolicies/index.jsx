@@ -12,7 +12,13 @@ const Title = styled.h1`
   font-weight: 600;
   margin-bottom: 20px;
 `;
-
+const CompanyName = styled.div`
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+`;
 const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -93,8 +99,9 @@ const PricingAndPolicies = () => {
 
   return (
     <Container>
-      <Title>{translate('pricingPolicy.title')}</Title>
-      <CardContainer>
+     <Title>{translate('pricingPolicy.title')}</Title>
+    <CompanyName>SVRC TECHNO INNOVATIONS PRIVATE LIMITED</CompanyName>
+    <CardContainer>
         <Card>
           <CardContent>
             <Paragraph>

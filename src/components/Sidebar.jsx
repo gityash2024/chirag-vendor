@@ -196,7 +196,10 @@ const Sidebar = () => {
   };
 
   const renderMenuItem = (item) => {
-    if (!isVerified && item.path !== '/contact-us' && item.path !== '/terms-and-conditions' && item.path !== '/privacy-policy') {
+    // Check if this is a bottom menu item
+    const isBottomMenuItem = bottomMenuItems.some(menuItem => menuItem.path === item.path);
+    
+    if (!isVerified && item.path !== '/contact-us' && item.path !== '/terms-and-conditions' && item.path !== '/privacy-policy' && item.path !== '/pricing-policy') {
       return (
         <DisabledMenuItem key={item.text}>
           <img src={item.icon} alt={item.text} />
@@ -204,6 +207,24 @@ const Sidebar = () => {
         </DisabledMenuItem>
       );
     }
+    
+    // For bottom menu items, add target="_blank" and rel="noopener noreferrer"
+    if (isBottomMenuItem) {
+      return (
+        <MenuItem
+          key={item.text}
+          to={item.path}
+          className={location.pathname === item.path ? 'active' : ''}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={item.icon} alt={item.text} />
+          <span>{item.text}</span>
+        </MenuItem>
+      );
+    }
+    
+    // Regular menu items (unchanged)
     return (
       <MenuItem
         key={item.text}

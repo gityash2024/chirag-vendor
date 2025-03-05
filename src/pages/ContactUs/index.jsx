@@ -104,6 +104,14 @@ const ContactCard = styled.div`
   }
 `;
 
+const CompanyName = styled.div`
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+`;
+
 const ContactLink = styled.a`
   text-decoration: none;
   color: inherit;
@@ -216,7 +224,8 @@ const ContactUs = () => {
   return (
     <Container>
       <Title>{translate("contact.title")}</Title>
-      <FormContainer>
+    <CompanyName>SVRC TECHNO INNOVATIONS PRIVATE LIMITED</CompanyName>
+    <FormContainer>
         {/* <FormTitle>{translate("contact.formTitle")}</FormTitle> */}
         <Form onSubmit={handleSubmit}>
           <InputGroup>
