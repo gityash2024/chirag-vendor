@@ -104,23 +104,23 @@ export const requestWithdrawal = (payload) => {
   });
 };
 
-// services/commonService.js
+// Replace these functions
 export const createCashfreeOrder = (payload) => {
-  return instance.post(`${baseUrl}/wallet/create-cashfree-order`, payload, {
+  return instance.post(`${baseUrl}/wallet/create-phonepe-order`, payload, {
     headers: {
       'Content-Type': 'application/json'
     }
   });
 };
+
 export const verifyCashfreePayment = (payload) => {
-  const url = `${baseUrl}/wallet/verify-cashfree-payment`;
+  const url = `${baseUrl}/wallet/verify-phonepe-payment`;
   return instance.post(url, payload, {
     headers: {
       'Content-Type': 'application/json'
     }
   });
-
-}
+};
 
 
 export const acceptBooking = (payload) => {
