@@ -77,50 +77,7 @@ export const updateVendorprofile=(payload)=>{
 }
 
 
-export const getWalletBalance = () => {
-  const url = `${baseUrl}/wallet/balance`;
-  return instance.get(url, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
 
-export const getTransactionHistory = () => {
-  const url = `${baseUrl}/wallet/transactions`;
-  return instance.get(url ,{
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
-
-export const requestWithdrawal = (payload) => {
-  const url = `${baseUrl}/wallet/request-withdrawal`;
-  return instance.post(url, payload, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
-
-// Replace these functions
-export const createCashfreeOrder = (payload) => {
-  return instance.post(`${baseUrl}/wallet/create-phonepe-order`, payload, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
-
-export const verifyCashfreePayment = (payload) => {
-  const url = `${baseUrl}/wallet/verify-phonepe-payment`;
-  return instance.post(url, payload, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
 
 
 export const acceptBooking = (payload) => {
@@ -206,8 +163,84 @@ export const updateBooking = (payload) => {
   });
 };
 
-// Add these to your existing service file:
 
+export const getVendorCommissionSettings = () => {
+  const url = `${baseUrl}/vendors/commission-settings`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const updateVendorCommissionSettings = (payload) => {
+  const url = `${baseUrl}/vendors/commission-settings`;
+  return instance.put(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const addWalletMoney = (payload) => {
+  const url = `${baseUrl}/wallet/add-money`;
+  return instance.post(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+
+
+
+// PhonePe Payment Gateway APIs
+export const createPhonePeOrder = (payload) => {
+  return instance.post(`${baseUrl}/wallet/create-phonepe-order`, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const verifyPhonePePayment = (payload) => {
+  const url = `${baseUrl}/wallet/verify-phonepe-payment`;
+  return instance.post(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+// Wallet APIs
+export const getWalletBalance = () => {
+  const url = `${baseUrl}/wallet/balance`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const getTransactionHistory = () => {
+  const url = `${baseUrl}/wallet/transactions`;
+  return instance.get(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const requestWithdrawal = (payload) => {
+  const url = `${baseUrl}/wallet/request-withdrawal`;
+  return instance.post(url, payload, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+// Bank Account Management
 export const addBankAccount = (payload) => {
   const url = `${baseUrl}/wallet/bank-account`;
   return instance.post(url, payload, {
@@ -271,6 +304,7 @@ export const cancelWithdrawalRequest = (requestId) => {
   });
 };
 
+// Commission and Statistics
 export const getCommissionRates = () => {
   const url = `${baseUrl}/commission/rates`;
   return instance.get(url, {
@@ -283,33 +317,6 @@ export const getCommissionRates = () => {
 export const getCommissionHistory = () => {
   const url = `${baseUrl}/commission/history`;
   return instance.get(url, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
-
-export const getVendorCommissionSettings = () => {
-  const url = `${baseUrl}/vendors/commission-settings`;
-  return instance.get(url, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
-
-export const updateVendorCommissionSettings = (payload) => {
-  const url = `${baseUrl}/vendors/commission-settings`;
-  return instance.put(url, payload, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-};
-
-export const addWalletMoney = (payload) => {
-  const url = `${baseUrl}/wallet/add-money`;
-  return instance.post(url, payload, {
     headers: {
       'Content-Type': 'application/json'
     }
@@ -333,4 +340,3 @@ export const getPaymentMethods = () => {
     }
   });
 };
-

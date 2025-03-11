@@ -6,7 +6,7 @@ import chiragLogo from '../../assets/chirag-logo-dark.png';
 import { toast } from 'react-toastify';
 import CircularProgress from '@mui/material/CircularProgress';
 import WarningIcon from '@mui/icons-material/Warning';
-import { createCashfreeOrder, verifyCashfreePayment } from '../../services/commonService';
+import { createPhonePeOrder, verifyPhonePePayment } from '../../services/commonService';
 import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
@@ -188,43 +188,46 @@ const AddMoney = () => {
   const [selectedQuickAmount, setSelectedQuickAmount] = useState(null);
   
   useEffect(() => {
-    console.log('Location state:', location.state);
-    console.log('URL Search Params:', window.location.search);
-    
     const verifyPayment = async () => {
       const searchParams = new URLSearchParams(window.location.search);
       const transactionId = searchParams.get('transactionId') || localStorage.getItem('lastTransactionId');
+      const merchantTransactionId = transactionId || localStorage.getItem('merchantTransactionId');
       const isProcessed = localStorage.getItem('paymentProcessed');
       const storedAmount = localStorage.getItem('lastPaymentAmount');
   
       console.log('Payment verification params:', {
         transactionId,
+        merchantTransactionId,
+        paymentId: transactionId || merchantTransactionId,
         storedAmount,
         isProcessed,
         searchParams: Object.fromEntries(searchParams.entries()),
         fullUrl: window.location.href
       });
   
-      if (transactionId && !isProcessed) {
+      if ((transactionId || merchantTransactionId) && !isProcessed) {
         try {
           setVerifyingPayment(true);
           setError('');
   
           localStorage.setItem('paymentProcessed', 'true');
   
-          console.log('Starting payment verification for:', { transactionId });
+          console.log('Starting payment verification for:', { paymentId: transactionId || merchantTransactionId });
           
-          const response = await verifyCashfreePayment({ transactionId });
+          const response = await verifyPhonePePayment({ 
+            transactionId: transactionId || merchantTransactionId 
+          });
           
           console.log('Verification API response:', response);
   
           if (response?.data?.success) {
             localStorage.removeItem('lastPaymentAmount');
             localStorage.removeItem('lastTransactionId');
+            localStorage.removeItem('merchantTransactionId');
             localStorage.removeItem('paymentProcessed');
             
             toast.success('Payment successful! Your wallet has been updated.', {
-              toastId: transactionId
+              toastId: transactionId || merchantTransactionId
             });
             
             navigate('/wallet', { 
@@ -261,12 +264,13 @@ const AddMoney = () => {
   
           localStorage.removeItem('lastPaymentAmount');
           localStorage.removeItem('lastTransactionId');
+          localStorage.removeItem('merchantTransactionId');
         } finally {
           setVerifyingPayment(false);
         }
       }
     };
-  
+
     verifyPayment();
   }, [location.pathname, location.search, navigate]);
 
@@ -316,8 +320,9 @@ const AddMoney = () => {
       localStorage.removeItem('paymentProcessed');
       localStorage.removeItem('lastPaymentAmount');
       localStorage.removeItem('lastTransactionId');
+      localStorage.removeItem('merchantTransactionId');
 
-      const orderResponse = await createCashfreeOrder({ amount: Number(amount) });
+      const orderResponse = await createPhonePeOrder({ amount: Number(amount) });
       
       console.log('PhonePe order created:', orderResponse.data);
 
@@ -327,6 +332,7 @@ const AddMoney = () => {
 
       localStorage.setItem('lastPaymentAmount', amount);
       localStorage.setItem('lastTransactionId', orderResponse.data.transactionId);
+      localStorage.setItem('merchantTransactionId', orderResponse.data.orderId);
 
       window.location.href = orderResponse.data.paymentUrl;
 
@@ -335,6 +341,7 @@ const AddMoney = () => {
       
       localStorage.removeItem('lastPaymentAmount');
       localStorage.removeItem('lastTransactionId');
+      localStorage.removeItem('merchantTransactionId');
       localStorage.removeItem('paymentProcessed');
       
       const errorMsg = error.response?.data?.message || 'Payment initialization failed';
@@ -346,7 +353,7 @@ const AddMoney = () => {
       setLoading(false);
     }
   };
-  
+
   if (verifyingPayment) {
     return (
       <Container>
@@ -428,13 +435,13 @@ const AddMoney = () => {
               <p style={{marginTop:"6px"}}>• Minimum amount: ₹{MIN_AMOUNT}</p>
               <p style={{marginTop:"6px"}}>• Maximum amount: ₹{MAX_AMOUNT}</p>
               <p style={{marginTop:"6px"}}>• Transaction charges: 0%</p>
-              <p style={{textAlign:"center", marginTop:"6px"}}> <a href='https://chiragvendor.com/pricing-policy' target="_blank">Pricing & Policy:</a></p>
+              <p style={{textAlign:"center", marginTop:"6px"}}> <a href='https://chiragvendor.com/pricing-policy' target="_blank" rel="noopener noreferrer">Pricing & Policy</a></p>
             </div>
           </FormContent>
         </FormSection>
       </ContentWrapper>
     </Container>
   );
-};
+}
 
 export default AddMoney;
